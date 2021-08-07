@@ -1,0 +1,11 @@
+#signHeader {
+  position: relative;
+  width: 50%;
+  height: 50%;
+}
+img#logoLight {
+  position: absolute;
+  top: 50%;
+  width: 25%;
+  height: 25%;
+}
