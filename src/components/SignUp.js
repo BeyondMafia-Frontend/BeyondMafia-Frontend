@@ -23,14 +23,26 @@ class SignUp extends Component {
   return(
     <div>
 
-    <div id="signHeader" style={{paddingTop:"20px"}}>
-    <div id ="logo">
-      <img
-        src={logo}
-        id="logoLight"
-        alt="BeyondMafia"
-      />
-    </div>
+	<div id="signHeader" style={{paddingTop:"20px"}}>
+	    <div id="createAccount"> 
+
+		<div id ="logo">
+		    <img
+			src={logo}
+			id="logoLight"
+			alt="BeyondMafia"
+		    />
+		</div>
+
+		<div id="headerText">
+		    <p> CREATE A FREE ACCOUNT </p>
+		</div>
+	    </div>
+
+	    <div id="createAccountForm">
+		</div>
+
+	    
     </div>
 
 </div> );
