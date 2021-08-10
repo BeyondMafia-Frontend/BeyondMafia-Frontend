@@ -1,22 +1,12 @@
 import React, {Component} from 'react';
 import logo from '../assets/logo-light.png';
 import '../css/SignUp.css'
-
+import SignUpForm from './SignUpForm.js'
 class SignUp extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      recaptcha: '',
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-      gender: '',
-      pronouns: '',
-      referrer: '',
-      experience: -1,
-      avatar: 1,
-    }
+      this.state = {
+      }
   }
 
   render(){
@@ -40,6 +30,7 @@ class SignUp extends Component {
 	    </div>
 
 	    <div id="createAccountForm">
+		<SignUpForm />
 		</div>
 
 	    
