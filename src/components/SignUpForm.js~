@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../css/SignUpForm.css'
-import Recaptcha from './Recaptcha.js'
+
 
 class SignUpForm extends Component {
   constructor(props){
@@ -68,8 +68,7 @@ render(){
 	
 	<h2 className="prompt" style={{marginTop:"38px"}}> CHOOSE AN AVATAR </h2>
 
-
-	<Recaptcha />
+	
 	</div>
 
 
