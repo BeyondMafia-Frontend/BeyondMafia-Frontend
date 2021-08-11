@@ -56,14 +56,17 @@ h2.prompt{
     color: white;
 }
 input[type="radio"] {
-          vertical-align: top;
-    padding: 10px;
-    margin: 10px;
+    width: 20px!important;
+    padding-right:10px;
+}
+input[type="checkbox"]{
+    width:20px!important;
+    padding-right: 10px;
 }
 
-.formBox form input[type="submit"]{
+.formBox form input[type="button"]{
     max-width:100%;
-    background-color: #677eff;
+    background-color: #d22e2d;
     color: white;
     cursor:pointer;
     font-size: 14px;

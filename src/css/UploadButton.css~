@@ -1,0 +1,48 @@
+.filepond--root .filepond--drop-label{
+    height: 100px;
+    background-color: #d22e2d;
+    color: white;
+}
+.filepond--panel-root {
+    background-color: transparent;
+    border: black;
+}
+.uploadButton{
+    padding-top: 10px;
+}
+
+.filepond--item {
+    width: 184px;
+}
+
+.filepond--drop-label label {
+    font-weight: 600; 
+}
+
+.avatarPrompt{
+    display:inline-block;
+    font-size:10px;
+    opacity: 0.5;
+    margin-top:-10px;
+    vertical-align:middle;
+}
+.uploadWrapper{
+    display:inline-block;    
+}
+.stockAvatar{
+    float:left;
+}
+.upload{
+    float:left;
+    padding-right:10px;
+}
+.upload h2{
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    width:100%;
+    margin-bottom: 10px;
+    color:grey;
+}

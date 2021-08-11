@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import '../css/SignUpForm.css'
 import UploadAvatar from './UploadAvatarButton.js'
-import Recaptcha from './Recaptcha.js'
 class SignUpForm extends Component {
   constructor(props){
       super(props);
@@ -15,9 +14,7 @@ class SignUpForm extends Component {
 	  pronouns: -1,
       referrer: '',
       experience: -1,
-	  avatar: 1,
-	  age: false,
-	  terms:false
+      avatar: 1,
     }
   }
 
@@ -46,28 +43,10 @@ render(){
 			    <option value={1}>She/Her</option>
 			    <option value={2}>They/Them</option>
 
-			</select>
+			    </select>
 
-						<div className="acceptance">
-			    <div>
-				<input type="checkbox" id="accept" name="accept" onChange={e=>this.setState({terms:e.target.value})}/>
-  <label for="accept">I confirm that I am 13 or older.</label>
-</div>
+                        <input type="submit" value="Sign Up" />
 
-<div>
-    <input type="checkbox" id="terms" name="terms" onChange={e=>this.setState({age:e.target.value})}/>
-  <label for="terms">I confirm that I have read and agreed to BeyondMafia's terms and services.</label>
-</div>
-
-			</div>
-
-			
-			<div style={{paddingTop:"10px"}}> 
-
-			    <Recaptcha />
-			</div>
-                        <input type="button" value="SIGN UP" /> 
- 
 			
                         <p className="signup">Already have an Account? <a href="#" onclick="">Login</a></p>
                     </form>
@@ -77,20 +56,12 @@ render(){
 	<h2 className="prompt"> WHAT IS YOUR EXPERIENCE PLAYING MAFIA? </h2>
 	<form>
 	    <div className="experience">
-		<div>
 		<input type="radio" id="opt1" name="exp" value={0} onChange={e=>this.setState({experience: e.target.value})}/>
-		    <label for="opt1">Brand New - I have never played or only a few times on a different medium.</label>
-		</div>
-
-		<div>
+  <label for="opt1">Brand New - I have never played or only a few times on a different medium.</label>
 		<input type="radio" id="opt2" name="exp"  value={1} onChange={e=>this.setState({experience: e.target.value})}/>
-		    <label for="opt2">Semi-Experienced - I have played a little bit of chat and/or forum mafia.</label>
-		</div>
-
-		<div>
+  <label for="opt2">Semi-Experienced - I have played a little bit of chat and/or forum mafia.</label>
 		<input type="radio" id="opt3" name="exp" value={2} onChange={e=>this.setState({experience: e.target.value})}/>
-		    <label for="opt3">Great Pro - I have played chat and/or forum mafia extensively</label>
-		    </div>
+		<label for="opt3">Great Pro - I have played chat and/or forum mafia extensively</label>
 		</div>
 	</form>
 	

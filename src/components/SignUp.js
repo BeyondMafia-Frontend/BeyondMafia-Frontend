@@ -13,7 +13,7 @@ class SignUp extends Component {
   return(
     <div>
 
-	<div id="signHeader" style={{paddingTop:"20px"}}>
+	<div id="signHeader" style={{paddingTop:"20px"}, {overflow:"auto"}}>
 	    <div id="createAccount"> 
 
 		<div id ="logo">
@@ -31,11 +31,8 @@ class SignUp extends Component {
 
 	    <div id="createAccountForm">
 		<SignUpForm />
-		</div>
-
-	    
+	    </div>
     </div>
-
 </div> );
   }
 }
