@@ -1,4 +1,5 @@
 import './App.css';
+import LobbyPage from './pages/LobbyPage.js';
 import NotFound from './components/NotFound.js';
 import SignUp from './components/SignUp.js'
 import {
@@ -24,6 +25,10 @@ function App() {
 
     <Route exact path="/signUp">
     <SignUp />
+    </Route>
+
+    <Route exact path="/lobby">
+    <LobbyPage />
     </Route>
 
 
