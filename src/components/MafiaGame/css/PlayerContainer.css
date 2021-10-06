@@ -1,0 +1,43 @@
+.playerImage{
+  display: inline;
+  height: 50px;
+  width: 50px;
+  border: 1px solid;
+  vertical-align: middle;
+}
+.defaultRole{
+  display: inline;
+  height: 50px;
+  width: 50px;
+  padding-right: 5px;
+  vertical-align: middle
+}
+.role{
+    display: inline;
+    height: 50px;
+    width: 50px;
+    padding-right: 5px;
+    vertical-align: middle
+}
+.player {
+  padding-bottom: 10px;
+}
+.player:hover{
+color:#818181
+}
+.player p{
+  display: inline;
+  vertical-align: middle;
+  padding-left: 10px;
+  font-weight: bold;
+
+}
+.playerContainer h1 {
+  text-align: center;
+  vertical-align: middle;
+  color:#C52213
+
+}
+.graveyard{
+  margin-top: -15px;
+}
