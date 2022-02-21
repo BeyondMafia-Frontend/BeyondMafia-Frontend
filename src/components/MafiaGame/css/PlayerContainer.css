@@ -1,3 +1,6 @@
+.playerContainer{
+    width: 100%;
+}
 .playerImage{
   display: inline;
   height: 50px;
@@ -20,15 +23,15 @@
     vertical-align: middle
 }
 .player {
-  padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 .player:hover{
 color:#818181
 }
-.player p{
-  display: inline;
+.playerName{
+    display: inline-block;
   vertical-align: middle;
-  padding-left: 10px;
+  padding-left: 15px;
   font-weight: bold;
 
 }
