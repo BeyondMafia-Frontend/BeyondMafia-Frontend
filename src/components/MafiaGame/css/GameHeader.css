@@ -1,7 +1,7 @@
 .gameHeader{
     display:flex;
     justify-content:center;
-    height:30px;
+    height:40px;
     background: #EBEBEB;
     align-items:center;
     position:absolute;
