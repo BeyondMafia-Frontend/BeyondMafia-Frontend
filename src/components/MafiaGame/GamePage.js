@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PlayerContainer from './PlayerContainer.js'
 import ChatContainer from './ChatContainer.js'
 import GameBanner from './GameHeader.js'
+import ChatMeeting from './ChatMeeting.js'
+
 import  './css/GameHeader.css'
 class GamePage extends Component {
   constructor(props){
@@ -25,12 +27,19 @@ render(){
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>	
 
 		<div className="players" style={{paddingRight: "30px"}}>
-	      <PlayerContainer players={this.state.players} graveyard={this.state.graveyard} messages={this.state.messages}/>
-	  </div>
+		    <PlayerContainer players={this.state.players} graveyard={this.state.graveyard} messages={this.state.messages}/>
+		</div>
 
-	  <div className="chat" style={{height:"50%"}, {margin:'0 auto'}}>
-	      <ChatContainer messages={this.state.messages}/>
-	  </div>
+
+		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
+		    <ChatContainer messages={this.state.messages}/>
+		</div>
+		
+		<div className="meeting">
+		    <ChatMeeting members={this.state.players}/>
+		</div>
+		
+		
 	    
 	</div>
 	    </div>
