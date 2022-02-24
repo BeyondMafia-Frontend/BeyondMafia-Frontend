@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import MafiaHeader from './MafiaHeader.js'
+import Announcements from './Announcements.js'
 
 class LobbyPage extends Component {
   constructor(props){
@@ -12,7 +13,8 @@ class LobbyPage extends Component {
 render(){
   return(
 	  <div>
-	  <MafiaHeader />
+	      <MafiaHeader />
+	      <Announcements />
 	  </div>
   );
 }
