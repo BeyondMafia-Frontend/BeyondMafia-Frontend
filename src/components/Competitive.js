@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../css/Announcements.css'
+import '../css/Competitive.css'
 import knife from '../assets/knife.png'
 import{
     Link 
@@ -46,8 +46,8 @@ class Competitive extends Component {
 	    var spinner = <div className="loading">
 		<img src={knife}
 		     className="spinner"
-		     width="100px"
-		     height="100px"
+		     width="80px"
+		     height="80px"
 		     />
 			  </div>
 	    console.log("reached");

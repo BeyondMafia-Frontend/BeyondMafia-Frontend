@@ -1,22 +1,23 @@
-.leaderboard .title{
+.competitions .title{
     width:120%;
-    height:100%;
-   }
-.leaderboardDisplay{
+    height:80%;
+}
+.leaderboard{
+}
+.competitiveDisplay{
     border: 1px solid #000000;
     width: 99%;
-    height:100%;
+    height:175px;
     margin-top:-22px;
     overflow-y:scroll;
     background-color:white;
 }
-leaderboard .spinner {
+.competitions .spinner {
     position:relative;
     animation: rotation 3s infinite linear;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top:40px;
     
 }
 
