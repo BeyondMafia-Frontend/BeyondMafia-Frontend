@@ -25,7 +25,7 @@ p.lobbyName{
     border-radius: 0px 15px 0px 0px;
     color: white; 
     font-size: larger;
-    padding: 20px 77.6px; 
+    padding: 20px 76.9px; 
     cursor: pointer; 
     float: left; 
   }
@@ -33,15 +33,11 @@ p.lobbyName{
   .btn-group button:not(:last-child) {
     border-right: none; 
   }
-  
-
   .btn-group:after {
     content: "";
     clear: both;
     display: table;
   }
-  
- 
   .btn-group button:hover {
     background-color: #d43434;
 
