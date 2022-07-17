@@ -29,21 +29,17 @@ class Games extends Component{
 	}
 	
 	return(
-	    <div style={{width:"60%", marginLeft:"100px", marginTop:"22px", border: "1px solid", borderRadius:"0px 15px 0px 0px", backgroundColor:'white'}}>
+	    <div style={{width:"60%", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white'}}>
 		<div className="lobbyHeader">
+			
 		    <div className="lobbies">
-			<div className="lobby">
-			    <p className="lobbyName"> All Lobbies </p> 
+			<div class="btn-group">
+  				<button> All Lobbies </button>
+  				<button> Main </button>
+  				<button> Sandbox </button>
+				<button> Form Games </button>
 			</div>
-			<div className="lobby">
-			    <p className="lobbyName"> Main </p> 
-			</div>
-			<div className="lobby">
-			    <p className="lobbyName"> Sandbox </p> 
-			</div>
-			<div className="lobby">
-			    <p className="lobbyName"> Forum Games </p> 
-			</div>
+			
 		    </div>
 		    {gameDisplay()}
 		</div>
