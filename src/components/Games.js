@@ -34,7 +34,7 @@ class Games extends Component{
 			
 		    <div className="lobbies">
 			<div class="btn-group">
-  				<button> All Lobbies </button>
+  				<button className='active'> All Lobbies </button>
   				<button> Main </button>
   				<button> Sandbox </button>
 				<button> Form Games </button>
