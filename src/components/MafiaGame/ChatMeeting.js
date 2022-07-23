@@ -11,37 +11,40 @@ class ChatMeeting extends Component {
 	      meetingName: "Vilage"
 	  }
       this.handleMeetingVote =  this.handleMeetingVote.bind(this);
+      this.getMeetingVote = this.getMeetingVote.bind(this);
   }
       handleMeetingVote = playerID => () =>{
-	  {/* should also send a websocket message to game server to indicate vote state */} 
-	  this.setState({votedPlayer:playerID});  
+	  {/* should also send a websocket message to game server to indicate vote state */}
+	  this.setState({votedPlayer:playerID});
       }
- 
+
+getMeetingVote(uuid){
+  return this.props.votes[uuid];
+}
     render(){
-	{/* members will contain the js obj list of applicable votes */} 
+	{/* members will contain the js obj list of applicable votes */}
 	var {members} = this.props;
 	let memberArray = [];
 	let votingList = [];
 	members.map(member =>{
-	    if(!member.votedPlayer){
+      var uuid = this.getMeetingVote(member.playerid);
+	    if(!uuid){
 	    memberArray.push(
-		
-		<div className="meetingMember" onClick={this.handleMeetingVote(member.id)}>
-		    <div className="memberName"><span style={{color:"#C52213"}}> {member.name}</span> </div>
+		<div className="meetingMember" onClick={() =>{this.props.sendVote(member.playerid)}}>
+		    <div key={member.playerid} className="memberName"><span style={{color:"#C52213"}}> {member.name}</span> </div>
 		</div>
 	    )
 	    }
 		else{
 		    memberArray.push(
-			<div className="meetingMember" onClick={this.handleMeetingVote(member.id)}>
-			    <div className="memberName"><span style={{color:"#C52213"}}> {member.name} </span>  votes {member.currentVote} </div>
-			</div>
-		    )
-		}
+			<div className="meetingMember" onClick={() =>{this.props.sendVote(member.playerid)}}>
+			    <div key={member.playerid} className="memberName"><span style={{color:"#C52213"}}> {member.name}  </span> votes {uuid}  </div>
+			</div>)
+      }
 	    if(this.state.votingListHovered){
 		votingList.push(
-		    <div className="playerVote" onClick={this.handleMeetingVote(member.id)}>
-		    
+		    <div key={member.playerid} className="playerVote" onClick={() =>{this.props.sendVote(member.playerid)}}>
+
 		    {/*should use playerid to get image of photo*/}
 		    <img src={role} className="votingImage" width="25" length="25" />
 		    <span> {member.name} </span>
@@ -50,12 +53,11 @@ class ChatMeeting extends Component {
 		    )
 		    }
 	})
-	console.log(votingList);
 	return(
 	    <div>
 		<h1> {this.state.meetingName} Meeting </h1>
 		{memberArray}
-		
+
 		<div className="voteToggle"
 		     onMouseEnter={()=> this.setState({votingListHovered:true})}
 		     onMouseLeave={()=> this.setState({votingListHovered:false})} >
@@ -66,8 +68,8 @@ class ChatMeeting extends Component {
 			 {votingList}
 			 </div>
 		</div>
-		
-	    </div>	
+
+	    </div>
 	);
     }
 }

@@ -10,9 +10,26 @@ class GamePage extends Component {
       super(props);
 	  this.state = {
         messages: [],
+        playerVotes:{},
         value: "",
         port: 0,
-	      players : [{name:"test", id:0 },{name:"test2", id:0},{name:"test3", id:0},{name:"test4", id:0},{name:"test5", id:0},{name:"test6", id:0},{name:"test7", id:0},{name:"test8", id:0}],
+	      players : [],
+        maxSize: 0,
+        playerid: 0,
+        getSize: ()=>{
+          return this.state.players.length;
+        },
+        addPlayer: (play)=>{
+          var check = false;
+          this.state.players.forEach( (player) => {
+            if(player.playerid === play.playerid){
+              check = true;
+            }
+          });
+            if(!check){
+              this.setState({players: [...this.state.players, play]})
+        }
+        },
 	      graveyard :[{name:"test", playerid:0, roleid: 0}]
       }
       this.handleChange = this.handleChange.bind(this);
@@ -20,26 +37,66 @@ class GamePage extends Component {
       this.updateMessages = this.updateMessages.bind(this);
       this.setSocket =  this.setSocket.bind(this);
       this.sendMessage = this.sendMessage.bind(this);
+      this.setGameSettings = this.setGameSettings.bind(this);
+      this.addPlayer = this.addPlayer.bind(this);
+      this.setPlayerId = this.setPlayerId.bind(this);
+      this.sendVote = this.sendVote.bind(this);
+      this.addVote = this.addVote.bind(this);
+}
+
+addVote(vote){
+  this.setState(prevState => ({
+    playerVotes: {                   // object that we want to update
+        ...prevState.playerVotes,    // keep all other key-value pairs
+        [vote.playerid]: vote.target       // update the value of specific key
+    }
+}))
 }
 
 handleChange(event){
   this.setState({value: event.target.value})
 }
+
 handleSubmit(event){
+      event.preventDefault();
       this.setState({messages:[]})
       this.setState({port: this.state.value});
       this.setState({start:true});
-      event.preventDefault();
+}
+
+setGameSettings(command){
+  var players = []
+  command.players.forEach((playerid)=>{
+    players.push({name: playerid, playerid: playerid})
+  })
+  this.setState({players:players});
+  this.setState({maxSize:command.maxSize});
+  this.setState({gameState:command.state})
+}
+
+addPlayer(playerid){
+    this.state.addPlayers({name: playerid, playerid: playerid})
 }
 
 updateMessages(message){
   this.setState({ messages: [...this.state.messages, message] });
 }
+
 setSocket(socket){
   this.setState({ws:socket});
 }
 sendMessage(message){
   this.state.ws.send(message);
+}
+sendVote(playerid){
+  var cmd = {cmd:1, roleAction: 0, playerid: playerid};
+  this.state.ws.send(JSON.stringify(cmd));
+}
+
+setPlayerId(playerid){
+  if(this.state.playerid === 0){
+  this.setState({playerid:playerid});
+}
 }
 
 render(){
@@ -59,7 +116,7 @@ render(){
 
       </div>
 	    <div className="gameHeader">
-	    <GameBanner />
+	    <GameBanner maxPlayers={this.state.maxSize} players={this.state.players.length} />
 	    </div>
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
@@ -70,11 +127,11 @@ render(){
 
 
 		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
-		    <ChatContainer sendMessage={this.sendMessage} messages={this.state.messages}/>
+		    <ChatContainer addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">
-		    <ChatMeeting members={this.state.players}/>
+		    <ChatMeeting  votes={this.state.playerVotes} sendVote={this.sendVote} members={this.state.players}/>
 		</div>
 
 

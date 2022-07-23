@@ -4,9 +4,7 @@ class GameHeader extends Component {
   constructor(props){
     super(props);
       this.state = {
-	  numPlayers: 0,
 	  playersUpdated: false,
-	  maxPlayers: 1,
 	  gameStarted: false,
 	  countDownTimer:false,
       }
@@ -15,7 +13,7 @@ class GameHeader extends Component {
     render(){
 	let gameBanner;
 	if(this.state.playersUpdated){
-	    if(this.state.numPlayers === this.state.maxPlayers){ 
+	    if(this.state.numPlayers === this.state.maxPlayers){
 		gameBanner = <div className="gameBanner">
 				    <div className="headerText"> Game is starting...
 				    </div>
@@ -29,16 +27,16 @@ class GameHeader extends Component {
 	else{
 		gameBanner = <div className="gameBanner">
 				    <div className="headerText">
-					Waiting for {this.state.maxPlayers - this.state.numPlayers} more players...
+					Waiting for {this.props.maxPlayers - this.props.players} more players...
 				    </div>
-				 
+
 			     </div>;
-	    
+
 	}
 	if(this.state.gameStarted){
 	    gameBanner = <div className = "gameBanner">
 			     <div className="headerText">
-				 {/* This mode displays the day/night cycle */} 
+				 {/* This mode displays the day/night cycle */}
 				 {this.state.gameState}
 			     </div>
 			 </div>;
@@ -47,7 +45,7 @@ class GameHeader extends Component {
 	    <div>
 		{gameBanner}
 		</div>
-      
+
   )}
 }
 
