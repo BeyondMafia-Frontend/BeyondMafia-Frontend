@@ -2,6 +2,7 @@ import './App.css';
 import NotFound from './components/NotFound.js';
 import SignUp from './components/SignUp.js'
 import GamePage from './components/MafiaGame/GamePage.js'
+import PlayerPage from './components/PlayerPage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,6 +26,9 @@ function App() {
 	<div>
 	<Link to="/game"> Game Page! </Link>
 	</div>
+  <div>
+	<Link to="/player"> Player Page! </Link>
+	</div>
     </div>
     </Route>
 
@@ -34,6 +38,10 @@ function App() {
 	
 	<Route exact path="/game">
 	<GamePage />
+	</Route>
+
+  <Route exact path="/player">
+	<PlayerPage />
 	</Route>
 
 
