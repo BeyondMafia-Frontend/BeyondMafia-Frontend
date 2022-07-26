@@ -1,10 +1,73 @@
 
 .container{
 
-    width: 100vw;
+    width: 96vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 2fr 3.5fr 2fr 1fr;
-    grid-template-rows: 100px 200px 150px 50px 50px 300px 100px 150px 300px
+    grid-template-columns: .3fr 1fr 2fr 1fr .3fr;
+    grid-template-rows: 100px 200px 150px 50px 50px 300px 50px 150px 100px 400px;
+    gap: 10px;
+    padding-right: 2vw;
+    padding-left: 2vw;
+    
+    
+}
+.container div{
+    padding:10px;
+    border: 1px solid black
+}
+.header{
+    grid-column-start: 1;
+    grid-column-end: 6;
+}
+.banner{
+    grid-column-start: 2;
+    grid-column-end: 5;
+}
+.msg-bar{
+    grid-column-start: 2;
+    grid-column-end: 5;
+}
+.bar-left{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.bar-right{
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+.bio-box{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 9;
+}
+.shout-chat{
+    grid-column-start: 2;
+    grid-column-end: 3;
 
+}
+.collect-content{
+    grid-column-start: 4;
+    grid-column-end: 5;
+
+}
+.friends-content{
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+}
+.favs-content{
+    grid-column-start: 4;
+    grid-column-end: 5;
+
+}
+.stat-bar{
+    grid-column-start: 2;
+    grid-column-end: 5;
+
+}
+.stat-content{
+    grid-column-start: 2;
+    grid-column-end: 5;
 }
