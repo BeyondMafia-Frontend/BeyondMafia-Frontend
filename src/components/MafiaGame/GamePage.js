@@ -90,6 +90,12 @@ sendMessage(message){
 }
 sendVote(playerid){
   var cmd = {cmd:1, roleAction: 0, playerid: playerid};
+  if(playerid === -2){
+    cmd.playerid = -2;
+  }
+  else if(this.state.playerVotes[this.state.playerid] === playerid){
+    cmd.playerid = -1;
+  }
   this.state.ws.send(JSON.stringify(cmd));
 }
 

@@ -20,6 +20,7 @@ class ChatContainer extends Component {
       this.handleScroll = this.handleScroll.bind(this);
       this.parseSettingsMessage = this.parseSettingsMessage.bind(this);
       this.parseVoteMessage =  this.parseVoteMessage.bind(this);
+      this.parseRoleMessage = this.parseRoleMessage.bind(this);
 }
 handleScroll(){
   var chat = document.getElementsByClassName('chatContainer')[0];
@@ -54,7 +55,15 @@ parseSettingsMessage(command){
 parseVoteMessage(command){
   this.props.addVote({playerid:command.playerid, target:command.target});
   if(command.playerid !== command.target){
+    if(command.target ===  -1){
+      return(<div className="systemMessage"><body>{command.playerid} unvotes!</body></div>)
+    }
+    else if(command.target === -2){
+      return(<div className="systemMessage"><body>{command.playerid} votes no one!</body></div>)
+    }
+    else{
   return(<div className="systemMessage"><body>{command.playerid} votes {command.target}!</body></div>)
+}
 }
 else{
 return(<div className="systemMessage"><body>{command.playerid} votes themself!</body></div>)
@@ -71,6 +80,11 @@ parseSystemMessage(command){
 
 parseTypingMessage(command){
     return(<div className="systemMessage"><body>{command.playerId} is typing...</body></div>)
+}
+parseRoleMessage(command){
+  if(command.action === 1){
+    return(<div className="systemMessage"><body>{command.playerid} has been sent to the guillotine. </body></div>)
+  }
 }
 
 parseNotTypingMessage(command){
@@ -127,6 +141,9 @@ render(){
     }
     if(command.cmd === 2){
       messageElement = this.parseVoteMessage(command);
+    }
+    if(command.cmd === 3){
+      messageElement = this.parseRoleMessage(command)
     }
     if(command.cmd === 8){
       this.props.addPlayer({name: command.playerid, playerid:  command.playerid})

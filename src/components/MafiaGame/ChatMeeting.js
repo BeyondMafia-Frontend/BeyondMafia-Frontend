@@ -28,14 +28,21 @@ getMeetingVote(uuid){
 	let votingList = [];
 	members.map(member =>{
       var uuid = this.getMeetingVote(member.playerid);
-	    if(!uuid){
+	    if(!uuid || uuid === -1){
 	    memberArray.push(
 		<div className="meetingMember" onClick={() =>{this.props.sendVote(member.playerid)}}>
 		    <div key={member.playerid} className="memberName"><span style={{color:"#C52213"}}> {member.name}</span> </div>
 		</div>
 	    )
 	    }
-		else{
+      else if(uuid === -2){
+        memberArray.push(
+  		<div className="meetingMember" onClick={() =>{this.props.sendVote(member.playerid)}}>
+  		    <div key={member.playerid} className="memberName"><span style={{color:"#C52213"}}> {member.name}</span> votes no one </div>
+  		</div>
+  	    )
+      }
+		    else{
 		    memberArray.push(
 			<div className="meetingMember" onClick={() =>{this.props.sendVote(member.playerid)}}>
 			    <div key={member.playerid} className="memberName"><span style={{color:"#C52213"}}> {member.name}  </span> votes {uuid}  </div>
@@ -53,6 +60,14 @@ getMeetingVote(uuid){
 		    )
 		    }
 	})
+  if(this.state.votingListHovered){
+    votingList.push(<div className="playerVote" onClick={() =>{
+      var playerid = -2;
+      this.props.sendVote(playerid)}}>
+    <span> No one </span>
+    </div>)
+  }
+
 	return(
 	    <div>
 		<h1> {this.state.meetingName} Meeting </h1>
