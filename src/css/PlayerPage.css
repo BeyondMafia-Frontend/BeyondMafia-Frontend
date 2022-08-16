@@ -5,7 +5,7 @@
     height: fit-content;
     display: grid;
     grid-template-columns: .3fr .8fr 1.8fr .8fr .3fr;
-    grid-template-rows: 100px 200px 150px 50px 50px 300px 50px 150px 100px 400px;
+    grid-template-rows: 100px 200px 150px 50px 50px 300px 50px 150px 100px 600px;
     
     row-gap: 3px;
     column-gap: 10px;
@@ -17,6 +17,7 @@
 }
 .container div{
     padding:10px;
+    
    
     
     
@@ -80,39 +81,58 @@
     grid-row-start: 5;
     grid-row-end: 9;
     background-color: white;
+    border: 1px solid grey;
 }
 .shout-chat{
     background-color: white;
     grid-column-start: 2;
     grid-column-end: 3;
+    border: 1px solid grey;
 
 }
 .collect-content{
     background-color: white;
     grid-column-start: 4;
     grid-column-end: 5;
+    border: 1px solid grey;
 
 }
 .friends-content{
     background-color: white;
     grid-column-start: 2;
     grid-column-end: 3;
+    border: 1px solid grey;
 
 }
 .favs-content{
     background-color: white;
     grid-column-start: 4;
     grid-column-end: 5;
+    border: 1px solid grey;
 
 }
 .stat-bar{
+    display: flex;
+    margin-top: 20px;
+    
     grid-column-start: 2;
     grid-column-end: 5;
+    background-color: rgb(48,44,44);
+    justify-content:flex-start;
+    padding-left: 20px;
+    color: rgb(216,44,44);
+    font-weight: bolder;
+    font-size:40px;
+    flex-direction: row;
 
 }
 .stat-content{
     grid-column-start: 2;
     grid-column-end: 5;
+    background-color: white;
+    border: 1px solid grey;
+    margin-top: 5px;
+    margin-bottom: 100px;
 }
 img#profile{
     

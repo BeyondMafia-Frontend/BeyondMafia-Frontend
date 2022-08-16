@@ -53,7 +53,7 @@ class PlayerPage extends Component {
         <div class='bar-right'>Favs</div>
         <div class='friends-content'>my friends</div>
         <div class='favs-content'> my Favs</div>
-        <div class='stat-bar'> USER STATS</div>
+        <div class='stat-bar'> username's Stats </div>
         <div class='stat-content'> USER STATS</div>
         <img src={playerpic} id='profile' alt='banner profile'/> 
 
