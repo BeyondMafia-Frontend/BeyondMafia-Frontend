@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../css/SignUpForm.css'
 import UploadAvatar from './UploadAvatarButton.js'
 import Recaptcha from './Recaptcha.js'
+import axios, { Axios } from 'axios';
 class SignUpForm extends Component {
   constructor(props){
       super(props);
@@ -20,8 +21,33 @@ class SignUpForm extends Component {
 	  terms:false
     }
   }
+  
 
 render(){
+
+	const register = () => {
+
+		fetch('http://localhost:3001/users/register', {
+  			method: 'POST',
+  			headers: {
+    			'Accept': 'application/json',
+    			'Content-Type': 'application/json',
+  			},
+  			body: JSON.stringify({
+    			username: this.state.username,
+				email: this.state.email,
+				hash: this.state.password,
+				ip: 1233456
+  			})
+			}).then(function (response) {
+				console.log(response);
+			  })
+			  .catch(function (error) {
+				console.log(error);
+			  });
+		  
+	  }
+	
   return(
 <div className="signupBox">
                 <div className="formBox">
@@ -66,7 +92,7 @@ render(){
 
 			    <Recaptcha />
 			</div>
-                        <input type="button" value="SIGN UP" /> 
+                        <input onClick={register}type="button" value="SIGN UP" /> 
  
 			
                         <p className="signup">Already have an Account? <a href="#" onclick="">Login</a></p>
