@@ -1,10 +1,25 @@
-.gameHeader{
-    display:flex;
-    justify-content:center;
+.headerText{
+  display: flex;
+  align-items: center;
+  flex-flow: row-wrap;
     height:40px;
     background: #EBEBEB;
-    align-items:center;
-    position:absolute;
-    left: 0;
-    right: 0;
+}
+div.midText{
+  width: 100%;
+  text-align:center;
+}
+img.headerRole {
+  width:40px;
+  height:40px;
+}
+div.prev{
+  padding-left: 10px;
+  width:33.33333%;
+  text-align:left;
+}
+div.next{
+  padding-right: 10px;
+  width:33.33333%;
+  text-align:right;
 }
