@@ -9,7 +9,14 @@ class GamePage extends Component {
   constructor(props){
       super(props);
 	  this.state = {
+        meetings: [],
         messages: [],
+        messageBankLength: -1,
+        meetingBank:{},
+        roles:[],
+        selectedGameState:-1,
+        gameState: 0,
+        roleID:-1,
         playerVotes:{},
         value: "",
         port: 0,
@@ -30,8 +37,11 @@ class GamePage extends Component {
               this.setState({players: [...this.state.players, play]})
         }
         },
-	      graveyard :[{name:"test", playerid:0, roleid: 0}]
+	      graveyard :[]
       }
+      this.setMembers = this.setMembers.bind(this);
+      this.setMessageBankLength = this.setMessageBankLength.bind(this);
+      this.setSelectedGameState = this.setSelectedGameState.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.updateMessages = this.updateMessages.bind(this);
@@ -42,6 +52,24 @@ class GamePage extends Component {
       this.setPlayerId = this.setPlayerId.bind(this);
       this.sendVote = this.sendVote.bind(this);
       this.addVote = this.addVote.bind(this);
+      this.addGraveyard = this.addGraveyard.bind(this);
+      this.updateGameState = this.updateGameState.bind(this)
+      this.setRoleID =  this.setRoleID.bind(this);
+      this.removePlayer = this.removePlayer.bind(this)
+}
+
+setMembers(meeting){
+    this.setState({ meetings: [...this.state.meetings, meeting] });
+}
+setMessageBankLength(length){
+  this.setState({messageBankLength:length})
+}
+setSelectedGameState(gameState){
+  this.setState({selectedGameState:gameState});
+}
+
+setRoleID(id){
+  this.setState({roleID:id});
 }
 
 addVote(vote){
@@ -53,6 +81,29 @@ addVote(vote){
 }))
 }
 
+removePlayer(playerid){
+  this.setState({
+    players: this.state.players.filter((player)=> player.playerid !== playerid)
+  });
+}
+
+updateGameState(gameState){
+  var meetingContext = {
+    meetings: this.state.meetings,
+    playerVotes: this.state.playerVotes
+  }
+  this.setState(prevState => ({
+    meetingBank: {                   // object that we want to update
+        ...prevState.meetingBank,    // keep all other key-value pairs
+      [gameState]: meetingContext      // update the value of specific key
+    }
+  })
+)
+  this.setState({meetings:[]});
+  this.setState({playerVotes:{}});
+  this.setState({selectedGameState:-1});
+  this.setState({gameState:gameState});
+}
 handleChange(event){
   this.setState({value: event.target.value})
 }
@@ -66,14 +117,31 @@ handleSubmit(event){
 
 setGameSettings(command){
   var players = []
+  var graveyard = []
   command.players.forEach((playerid)=>{
     players.push({name: playerid, playerid: playerid})
   })
+  command.graveyard.forEach((playerid)=>{
+    graveyard.push({name:playerid, playerid: playerid})
+  })
+  this.setState({roles:command.roles});
   this.setState({players:players});
+  this.setState({graveyard:graveyard})
+  this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
   this.setState({gameState:command.state})
 }
-
+addGraveyard(player){
+  var check = false;
+  this.state.graveyard.forEach( (play) => {
+    if(player.playerid === play.playerid){
+      check = true;
+    }
+  });
+  if(check === false){
+  this.setState({graveyard: [...this.state.graveyard, player]})
+}
+}
 addPlayer(playerid){
     this.state.addPlayers({name: playerid, playerid: playerid})
 }
@@ -88,13 +156,10 @@ setSocket(socket){
 sendMessage(message){
   this.state.ws.send(message);
 }
-sendVote(playerid){
-  var cmd = {cmd:1, roleAction: 0, playerid: playerid};
-  if(playerid === -2){
-    cmd.playerid = -2;
-  }
-  else if(this.state.playerVotes[this.state.playerid] === playerid){
-    cmd.playerid = -1;
+sendVote(playerid,roleID){
+  var cmd = {cmd:1, roleAction: roleID, playerid: playerid};
+  if(this.state.playerVotes[this.state.playerid] === playerid || this.state.playerVotes[this.state.playerid] === 18446744073709551615){
+    cmd.playerid = 0;
   }
   this.state.ws.send(JSON.stringify(cmd));
 }
@@ -108,10 +173,25 @@ setPlayerId(playerid){
 render(){
   let connection,connected;
   let wsConnection;
+  var meetings = []
+  if(this.state.meetings.length !== 0){
+  if(this.state.selectedGameState === -1 || this.state.messageBankLength+1 === this.state.selectedGameState){
+      this.state.meetings.forEach((stateMeetings) => {
+        meetings.push(<ChatMeeting prev={false}votes={this.state.playerVotes} sendVote={this.sendVote} members={stateMeetings.members} role={stateMeetings.role} players={this.state.players}/>)
+      });
+  }
+  else{
+     var meetingContext = this.state.meetingBank[this.state.selectedGameState+1]
+         meetingContext.meetings.forEach((meeting, i) => {
+           meetings.push(<ChatMeeting prev={true} votes={meetingContext.playerVotes} sendVote={this.sendVote} members={meeting.members} role={meeting.role} players={this.state.players}/>)
+         });
+  }
+}
   if(this.state.start){
     this.setState({start:false});
     connection = <MafiaConnection setSocket={this.setSocket} updateMessages={this.updateMessages} websocketPort={this.state.port}/>
   }
+
     return(
 	<div>
       <div className="websocket">
@@ -122,22 +202,22 @@ render(){
 
       </div>
 	    <div className="gameHeader">
-	    <GameBanner maxPlayers={this.state.maxSize} players={this.state.players.length} />
+	    <GameBanner selectedGameState={this.state.selectedGameState} messageBankLength={this.state.messageBankLength} setSelectedGameState={this.setSelectedGameState} roles={this.state.roles} gameState={this.state.gameState} maxPlayers={this.state.maxSize} players={this.state.players.length} />
 	    </div>
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
 
 		<div className="players" style={{paddingRight: "30px"}}>
-		    <PlayerContainer players={this.state.players} graveyard={this.state.graveyard} />
+		    <PlayerContainer playerid={this.state.playerid} roleID={this.state.roleID} players={this.state.players} graveyard={this.state.graveyard} />
 		</div>
 
 
 		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
-		    <ChatContainer addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
+		    <ChatContainer setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">
-		    <ChatMeeting  votes={this.state.playerVotes} sendVote={this.sendVote} members={this.state.players}/>
+        {meetings}
 		</div>
 
 
