@@ -1,0 +1,49 @@
+.lobbies{
+    display:flex;
+    justify-content:space-between;
+    background-color:grey;
+    border-radius:0px 15px 0px 0px;
+    border-color: grey;
+    
+}
+.lobbyHeader .spinner{
+    position:relative;
+    animation: rotation 3s infinite linear;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:300px;
+}
+
+p.lobbyName{
+    padding-right: 80px;
+}
+.btn-group button {
+    background-color: grey; 
+    border: 1px solid grey; 
+    border-style: none solid none none;
+    border-radius: 0px 15px 0px 0px;
+    color: white; 
+    font-size: larger;
+    padding: 20px 76px; 
+    cursor: pointer; 
+    float: left; 
+  }
+  
+  .btn-group button:not(:last-child) {
+    border-right: none; 
+  }
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .btn-group button:hover {
+    background-color: #d43434;
+
+  }
+  .button.active {
+    background-color: #d43434;
+
+  }
+  

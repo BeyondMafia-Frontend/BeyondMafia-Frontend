@@ -1,0 +1,55 @@
+footer{
+    position:relative;
+    bottom:10px ;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    height: 200px;
+    width: 89.1%;
+    background-color: white;
+    border-width: 20px 225px 70px 75px;
+    border-style: solid;
+    border-color: rgb(239, 239, 238);
+    
+    
+    
+}
+.footer-dividerl{
+    position:absolute;
+    left:480px;
+    top:30px;
+    bottom:30px;
+    border-left:5px solid rgb(239, 239, 238);;
+}
+.footer-dividerr{
+    position:absolute;
+    left:840px;
+    top:30px;
+    bottom:30px;
+    border-left:5px solid rgb(239, 239, 238);;
+}
+
+.greyDiv {
+    color: grey;
+    width: 100%;
+
+}
+div.btn-square{
+    display: flex;
+  flex-wrap: wrap;
+  
+  max-width: 340px
+}
+button.footer{
+  border: 3px solid white;
+  color: white;  
+  width: 170px;
+  height: 45px;
+  background-color: rgb(44, 44, 44);
+}
+h3.center{
+    text-align: center;
+}
+p.footer{
+    text-align: center;
+}
