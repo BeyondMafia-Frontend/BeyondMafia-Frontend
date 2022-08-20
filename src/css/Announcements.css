@@ -1,0 +1,38 @@
+.title{
+    width:120%;
+    height:100%;
+}
+.announcements{
+}
+.announcementDisplay{
+    border: 1px solid #000000;
+    width: 99%;
+    height:100%;
+    margin-top:-22px;
+    overflow-y:scroll;
+    background-color:white;
+}
+.spinner {
+    position:relative;
+    animation: rotation 3s infinite linear;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:40px;
+    
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+.title h1 {
+    color: white;
+    text-align:center;
+    padding-top:5px;
+    background-color:black;
+}

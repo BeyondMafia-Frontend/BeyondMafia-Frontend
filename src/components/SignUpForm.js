@@ -24,8 +24,10 @@ class SignUpForm extends Component {
     cookies : cookies
     }
   }
+  
 
 render(){
+	
   return(
 <div className="signupBox">
                 <div className="formBox">
@@ -69,7 +71,7 @@ render(){
 			<div style={{paddingTop:"10px"}}>
 
 			    <Recaptcha />
-			</div>
+			</div> 
                         <input type="button" onClick={async ()=>{
                           var sendJSON = {};
                           sendJSON.username = this.state.username;
@@ -89,7 +91,6 @@ render(){
                             window.location.href = "../home";
                           }
                       }}value="SIGN UP" />
-
 
                         <p className="signup">Already have an Account? <a href="#" onclick="">Login</a></p>
                     </form>

@@ -1,0 +1,45 @@
+.Links{
+    display:flex;
+    justify-content:space-around;
+}
+p.divder {
+    color: white;
+    font-size:20px;
+    opacity:.3;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+
+}
+p.headerLink {
+    margin-left: -100px;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+}
+a.specialLink:link{
+    color:white;
+    text-decoration:none;
+    background-color:transparent;
+}
+a.specialLink:visited{
+    background-color:transparent;
+    text-decoration:none;
+    color:white;
+}
+p.headerLink:hover{
+    color:#C52213;
+}
+
+.MafiaHeader{
+    background-color:#2d2e2e;
+    padding-top:10px;
+    padding-left:10px;
+    padding-bottom:5px;
+    margin-top:-15px;
+    width:110%;
+    margin-left:-15px;
+    overflow-x:none;
+}
