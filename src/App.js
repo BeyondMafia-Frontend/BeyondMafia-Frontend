@@ -2,6 +2,7 @@ import './App.css';
 import NotFound from './components/NotFound.js';
 import SignUp from './components/SignUp.js'
 import GamePage from './components/MafiaGame/GamePage.js'
+import PlayerPage from './components/PlayerPage';
 import LobbyPage from './components/LobbyPage.js'
 import {
   BrowserRouter as Router,
@@ -20,7 +21,6 @@ function App() {
 
     <Route exact path="/">
     <div className="App">
-
 	  <div>
 	  <Link to="/signUp"> Sign Up! </Link>
 	  </div>
@@ -31,8 +31,8 @@ function App() {
 	  <div>
 	  <Link to="/lobby"> Lobby Page! </Link>
 	  </div>
-
-    
+    <Link to="/player"> Lobby Page! </Link>
+	  </div>
     </div>
     </Route>
 
@@ -47,6 +47,10 @@ function App() {
 	  <Route exact path="/lobby">
 	  <LobbyPage />
 	  </Route>
+
+  <Route exact path="/player">
+	<PlayerPage />
+	</Route>
 
 
     <Route path='*'>
