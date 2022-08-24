@@ -1,10 +1,56 @@
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: white;
+  border-radius: 50%;
+  margin: 1px;
+  border: 2px solid green;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+.dot-highlighted {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin: 1px;
+  border: 2px solid green;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+.game{
+  display: flex
+}
+.players{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.joinGame{
+  height:25px;
+  width:100px;
+  background-color: #d22e2d;
+  color: white;
+  cursor:pointer;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+  transition: 0.5s;
+  border-radius: 5px 5px 5px 5px;
+}
 .lobbies{
     display:flex;
     justify-content:space-between;
     background-color:grey;
     border-radius:0px 15px 0px 0px;
     border-color: grey;
-    
+
 }
 .lobbyHeader .spinner{
     position:relative;
@@ -19,19 +65,19 @@ p.lobbyName{
     padding-right: 80px;
 }
 .btn-group button {
-    background-color: grey; 
-    border: 1px solid grey; 
+    background-color: grey;
+    border: 1px solid grey;
     border-style: none solid none none;
     border-radius: 0px 15px 0px 0px;
-    color: white; 
+    color: white;
     font-size: larger;
-    padding: 20px 76px; 
-    cursor: pointer; 
-    float: left; 
+    padding: 20px 76px;
+    cursor: pointer;
+    float: left;
   }
-  
+
   .btn-group button:not(:last-child) {
-    border-right: none; 
+    border-right: none;
   }
   .btn-group:after {
     content: "";
@@ -46,4 +92,3 @@ p.lobbyName{
     background-color: #d43434;
 
   }
-  

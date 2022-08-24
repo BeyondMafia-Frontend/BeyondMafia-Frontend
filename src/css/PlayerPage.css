@@ -6,21 +6,21 @@
     display: grid;
     grid-template-columns: .3fr .8fr 1.8fr .8fr .3fr;
     grid-template-rows: 100px 200px 150px 50px 50px 300px 50px 150px 100px 600px;
-    
+
     row-gap: 3px;
     column-gap: 10px;
     padding-right: 2vw;
     padding-left: 2vw;
     background-color: rgb(224,220,220);
-    
-    
+
+
 }
 .container div{
     padding:10px;
-    
-   
-    
-    
+
+
+
+
 }
 .header{
     display: flex;
@@ -30,14 +30,14 @@
     grid-column-start: 1;
     grid-column-end: 6;
     background-color: rgb(44,48,40);
-   
+
 }
 .banner{
     grid-column-start: 2;
     grid-column-end: 5;
     background-image: linear-gradient(rgb(216,44,44), rgb(150, 31, 31));
     border: 0;
-    
+
 }
 .user-banner{
     display:grid;
@@ -57,7 +57,7 @@
     grid-column-end: 5;
     color: white;
     align-items: center;
-    
+
 }
 .bar-left{
     background-color: rgb(48,44,44);
@@ -114,7 +114,7 @@
 .stat-bar{
     display: flex;
     margin-top: 20px;
-    
+
     grid-column-start: 2;
     grid-column-end: 5;
     background-color: rgb(48,44,44);
@@ -135,7 +135,7 @@
     margin-bottom: 100px;
 }
 img#profile{
-    
+
     width: 1.7in;
     height: 2.5;
     position: absolute;
@@ -156,6 +156,12 @@ img#player-pfp{
 .nav-links{
     font-family: 'Montserrat', sans-serif;
     color: white;
+    text-decoration: none;
+    font-size: 1.5vw;
+}
+.nav-links-highlighted{
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(216,44,44);
     text-decoration: none;
     font-size: 1.5vw;
 }

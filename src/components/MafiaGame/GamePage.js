@@ -3,12 +3,15 @@ import PlayerContainer from './PlayerContainer.js'
 import ChatContainer from './ChatContainer.js'
 import GameBanner from './GameHeader.js'
 import ChatMeeting from './ChatMeeting.js'
+import Cookies from 'universal-cookie';
 import MafiaConnection from './MafiaConnection.js'
 import  './css/GameHeader.css'
 class GamePage extends Component {
   constructor(props){
       super(props);
+      var cookies = new Cookies();
 	  this.state = {
+        cookies: cookies,
         meetings: [],
         messages: [],
         messageBankLength: -1,
@@ -43,7 +46,6 @@ class GamePage extends Component {
       this.setMessageBankLength = this.setMessageBankLength.bind(this);
       this.setSelectedGameState = this.setSelectedGameState.bind(this);
       this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.updateMessages = this.updateMessages.bind(this);
       this.setSocket =  this.setSocket.bind(this);
       this.sendMessage = this.sendMessage.bind(this);
@@ -58,6 +60,26 @@ class GamePage extends Component {
       this.removePlayer = this.removePlayer.bind(this)
 }
 
+async componentDidMount(){
+  var cookie = this.state.cookies.get('bmcookie');
+  const rawResponse = await fetch('http://127.0.0.1:3001/getSocket',{
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'bmcookie' : cookie
+      },
+    });
+    const content = await rawResponse.json()
+    if(content.cmd === 1){
+    this.setState({messages:[]})
+    this.setState({port:content.port});
+    this.setState({start:true});
+  }
+  else{
+    window.location.href = '/lobby'
+  }
+}
 setMembers(meeting){
     this.setState({ meetings: [...this.state.meetings, meeting] });
 }
@@ -106,13 +128,6 @@ updateGameState(gameState){
 }
 handleChange(event){
   this.setState({value: event.target.value})
-}
-
-handleSubmit(event){
-      event.preventDefault();
-      this.setState({messages:[]})
-      this.setState({port: this.state.value});
-      this.setState({start:true});
 }
 
 setGameSettings(command){
@@ -188,18 +203,20 @@ render(){
   }
 }
   if(this.state.start){
-    this.setState({start:false});
-    connection = <MafiaConnection setSocket={this.setSocket} updateMessages={this.updateMessages} websocketPort={this.state.port}/>
+    connection = <MafiaConnection bmcookie={this.state.cookies.get('bmcookie')} setSocket={this.setSocket} updateMessages={this.updateMessages} websocketPort={this.state.port}/>
   }
 
     return(
 	<div>
       <div className="websocket">
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
-      </form>
       {connection}
 
+      </div>
+
+      <div onClick={()=>{
+        this.state.ws.send(JSON.stringify({cmd:2}));
+      }}>
+      fuck
       </div>
 	    <div className="gameHeader">
 	    <GameBanner selectedGameState={this.state.selectedGameState} messageBankLength={this.state.messageBankLength} setSelectedGameState={this.setSelectedGameState} roles={this.state.roles} gameState={this.state.gameState} maxPlayers={this.state.maxSize} players={this.state.players.length} />

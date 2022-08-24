@@ -29,7 +29,7 @@ getMessages(){
 
 handleConnection(){
 let websocketString = `ws://127.0.0.1:${this.props.websocketPort}`
-let socket = new WebSocket(websocketString);
+let socket = new WebSocket(websocketString,this.props.bmcookie);
 
 socket.onopen = (e) =>{
   if(e){
