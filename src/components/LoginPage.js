@@ -81,6 +81,7 @@ class LogIn extends Component {
                   }
               }}value="LOG IN" />
                 </form>
+                <a href ="/signUp"> No Account? </a>
 
 </div>
      </Modal>
