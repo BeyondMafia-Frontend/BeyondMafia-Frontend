@@ -52,12 +52,13 @@ class PlayerPage extends Component {
 
     <div class='container'>
         <div class='header'>
+        <a href="/">
         <img
-			    src={logo}
-			    id="logoLightplayer"
-			    alt="BeyondMafia"
-
-		    />
+          src={logo}
+          id="logoLightplayer"
+          alt="BeyondMafia"
+        />
+        </a>
         <a class='nav-links'href='/lobby'>L O B B Y</a>
         <p class='nav-divider'>|</p>
         {parseInt(this.state.playerid) === parseInt(this.state.currentId)

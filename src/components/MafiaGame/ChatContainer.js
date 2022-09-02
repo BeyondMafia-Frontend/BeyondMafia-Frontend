@@ -6,6 +6,7 @@ class ChatContainer extends Component {
 	  this.state = {
       reading: false,
       messages:[],
+      messagesQueue:[],
       messageBank:{},
       messageCount:-1,
       scrollBottom:undefined,
@@ -24,6 +25,7 @@ class ChatContainer extends Component {
       this.parseVoteMessage =  this.parseVoteMessage.bind(this);
       this.parseRoleMessage = this.parseRoleMessage.bind(this);
       this.getRoleDetails = this.getRoleDetails.bind(this);
+      this.parseLeaveMessage = this.parseLeaveMessage.bind(this);
 }
 iterateMessages(gameState){
   this.setState(prevState => ({
@@ -42,6 +44,9 @@ getRoleDetails(roleID){
   }
   if(roleID === 1){
     role = "Mafia"
+  }
+  if(roleID === 16){
+    role = "Town Drunk"
   }
     return(<div className="systemMessage"><body>You have been assigned the {role}!</body></div>)
 }
@@ -77,7 +82,7 @@ parseSettingsMessage(command){
 }
 
 parseVoteMessage(command){
-  this.props.addVote({playerid:command.playerid, target:command.target});
+  this.props.addVote({playerid:command.playerid, target:command.target, roleAction:command.roleAction});
   if(command.playerid !== command.target){
     if(command.target ===  -1){
       return(<div className="systemMessage"><body>{command.playerid} unvotes!</body></div>)
@@ -109,13 +114,31 @@ parseRoleMessage(command){
   if(command.action === 1){
     var playerid = command.playerid;
     this.props.removePlayer(playerid);
-    this.props.addGraveyard({name: playerid, playerid: playerid,roleid:0});
-    return(<div className="systemMessage"><body>{playerid} has been sent to the guillotine. </body></div>)
+    this.props.addGraveyard({name: playerid, playerid: playerid,roleid:command.role});
+    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{playerid} has been sent to the guillotine. </body></div>)]})
+    return;
+  }
+  if(command.action === 2){
+    if(command.alignment === 1){
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {playerid} is sided with the mafia.</body></div>)]})
+      return;
+    }
+    else{
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {playerid} is sided with the village.</body></div>)]})
+      return;
+    }
+  }
+  if(command.action === 3){
+    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>)]})
   }
 }
 
 parseNotTypingMessage(command){
     return(<div className="systemMessage"><body>{command.playerId} has stopped typing!</body></div>)
+}
+
+parseLeaveMessage(command){
+    return(<div className="systemMessage"><body>{command.playerid} has left the game!</body></div>)
 }
 
 handleType(event) {
@@ -151,6 +174,9 @@ render(){
   messages.map(message => {
     let messageElement;
     var command = JSON.parse(message);
+    if(command.cmd === -4){
+      alert('game over');
+    }
     if(command.cmd === -3){
       this.props.setPlayerId(command.playerId)
     }
@@ -183,11 +209,16 @@ render(){
       };
       this.props.setMembers(meeting);
     }
+    if(command.cmd === 6){
+      this.props.removePlayer(command.playerid);
+      messageElement = this.parseLeaveMessage(command);
+    }
     if(command.cmd === 7){
       this.setState({currentGameState:command.state});
       this.props.updateGameState(command.state);
       this.iterateMessages(command.state);
-      this.setState({messages:[]})
+      this.setState({messages:this.state.messagesQueue});
+      this.setState({messagesQueue:[]})
       this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
       messages.shift();
       return;
@@ -210,7 +241,7 @@ if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).le
   displayedMessages = this.state.messages;
 }
 else{
-  displayedMessages = this.state.messageBank[this.props.selectedGameState];
+  displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
   return(
   <div>

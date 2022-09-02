@@ -7,9 +7,15 @@ class Games extends Component{
 	super(props);
 	this.state={
 	    doneLoading: false,
+      headerState: 1,
+      currentRoles: [],
 	}
+  this.addRole = this.addRole.bind(this);
     }
 
+addRole(role){
+    this.setState({ currentRoles: [...this.state.currentRoles, role] });
+}
     render(){
 	const gameDisplay = () => {
 	switch(this.props.games.length !== 0){
@@ -22,7 +28,7 @@ class Games extends Component{
         const set = new Set(games.roles);
         set.forEach((role)=>{
           roles.push(
-            <div className="role">
+            <div className="lobbyRole">
             <strong> {countOccurrences(games.roles,role)  > 1
                       ? countOccurrences(games.roles,role)
                       : null} </strong>
@@ -62,6 +68,7 @@ class Games extends Component{
               alert(content.msg);
             }
         }}>
+
         Join Game
         </div>
         <div className="players">
@@ -73,7 +80,7 @@ class Games extends Component{
         gamesArr.push(game);
       });
 
-      var display = <div classsName="games">
+      var display = <div className="games">
       {gamesArr}
       </div>
 	    return display;
@@ -89,19 +96,112 @@ class Games extends Component{
 	}
 	}
 
+  var createGameDisplay = () =>{
+   var roles = [];
+   var currentRoles = [];
+   var currentRolesSet = new Set(this.state.currentRoles)
+   const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+   currentRolesSet.forEach((role) => {
+     currentRoles.push(
+       <div>
+       <strong> {countOccurrences(this.state.currentRoles,role) > 1
+                 ? countOccurrences(this.state.currentRoles,role)
+                 : null} </strong>
+       <img onClick={()=>{
+         var index = this.state.currentRoles.indexOf(role);
+         var newArr =  this.state.currentRoles;
+         for(var i = 0 ; i < newArr.length; i++){
+           if(newArr[i]=== role){
+             newArr[i] = this.state.currentRoles[0];
+             newArr.shift();
+             break;
+           }
+         }
+         this.setState({currentRoles: newArr})
+       }} src={utils.resolveRole(role)} width='100px' height='100px'/>
+     </div>);
+   });
+
+   utils.getAvailableRoles().forEach((role) => {
+     roles.push(<img onClick={()=>{
+       this.setState({ currentRoles: [...this.state.currentRoles, role] });
+     }} src={utils.resolveRole(role)} width='100px' height='100px'/>)
+   });
+
+    return (<div className="createHolder">
+        {currentRoles.length !== 0
+          ?
+          <div>
+          <div className="createGameOptions">
+          <div className="createGameInner" onClick={async ()=>{
+            await fetch('http://127.0.0.1:3001/createGame',{
+      method: 'POST',
+      keepalive:false,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Connection':"close",
+        'bmcookie': this.props.bmcookie
+      },
+      body: JSON.stringify({cmd:0,roles:this.state.currentRoles,settings:0})
+    });
+          }}>
+          Create Game
+          </div>
+          <img onClick={()=>{
+            this.setState({currentRoles:[]})
+          } } className="trash" src="/assets/trash.png" width="100px" height="100px"/>
+          </div>
+          <div className="createTitle">
+          Current Setup
+          </div>
+          <div className="currentRoleHolder">
+          {currentRoles}
+          </div>
+          </div>
+          : null}
+        <div className="createTitle"> Available Roles
+        </div>
+      <div className="createGameRole">
+    {roles}
+    </div>
+  </div>)
+  }
+
+  function displayGame(){
+    return gameDisplay()
+  }
+  function displayCreateGame(){
+    window.document.getElementsByClassName('allLobbies')[0].className = "allLobbies"
+    window.document.getElementsByClassName('allLobbies')[0].style = ""
+    window.document.getElementsByClassName('createGame')[0].style = "background-color: #d43434";
+    return createGameDisplay();
+  }
+
 	return(
-	    <div style={{width:"60%", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white'}}>
+	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white'}}>
 		<div className="lobbyHeader">
 		    <div className="lobbies">
 			<div class="btn-group">
-  				<button className='active'> All Lobbies </button>
-  				<button> Main </button>
-  				<button> Sandbox </button>
-				<button> Form Games </button>
+  				<button className='allLobbies active' onClick={()=>{
+            window.document.getElementsByClassName('createGame')[0].style = ""
+            window.document.getElementsByClassName('allLobbies')[0].style = "background-color: #d43434";
+            this.setState({headerState:1})
+          }}> All Lobbies </button>
+  				<button className="mainLobby"> Main </button>
+  				<button className="sandbox"> Sandbox </button>
+				<button className="createGame" onClick={()=>{
+          this.setState({headerState:4})
+        }}> Create Game </button>
 			</div>
 
 		    </div>
-		    {gameDisplay()}
+		    {this.state.headerState === 1
+          ? displayGame()
+          : this.state.headerState === 4
+            ? displayCreateGame()
+            : null
+          }
 		</div>
 	    </div>
 	)

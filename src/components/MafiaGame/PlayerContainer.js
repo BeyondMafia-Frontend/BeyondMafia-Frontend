@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import './css/PlayerContainer.css'
-import defaultRole from './assets/roles/default-role.png';
+import * as utils from '../utils/image-resolver.js';
 
+var defaultRole = '/assets/roles/default-role.png';
 class PlayerContainer extends Component {
   constructor(props){
       super(props);
@@ -9,17 +10,10 @@ class PlayerContainer extends Component {
         roleImages:[],
 	      selectedPlayer: 0
 	  }
-    this.importAll = this.importAll.bind(this);
   }
 
-  importAll(r) {
-      let images = {};
-      r.keys().map(item => { images[item.replace('./', '')] = r(item); });
-      return images;
-  }
 
   componentDidMount(){
-  this.setState({roleImages:this.importAll(require.context('./assets/roles', true, /.*/))})
   }
 
 handlePlayerClick = playerid => () => {
@@ -33,12 +27,7 @@ render(){
     players.map((player) => {
       if(this.props.playerid === player.playerid){
         if(this.props.roleID !== -1){
-           if(this.props.roleID === 0){
-             roleImage = this.state.roleImages['roleimg_EM-00-00-villager.png'].default;
-           }
-           if(this.props.roleID === 1){
-             roleImage = this.state.roleImages['roleimg_EM-01-00-vanilla.png'].default;
-           }
+           roleImage = utils.resolveRole(this.props.roleID)
         }
         else{
           roleImage = defaultRole;
@@ -60,12 +49,14 @@ render(){
       let graveyardArr = [];
 
       /* In production we will use roleid + playerid to resolve the player image and the accurate role image. */
-    graveyard.map(player => graveyardArr.push(
+    graveyard.map(player => {
+      graveyardArr.push(
         <div className="player">
-	    <img src={defaultRole} className="defaultRole"/>
+	    <img src={utils.resolveRole(player.role)} className="role"/>
 	    <img className="playerImage" src={"/static/media/kfy8nir1jq131.5c2dc0c7.jpg"} />
 	<div className="playerName"> {player.name} </div> </div>
       )
+    }
     )
     graveyardElement = <div className="graveyard"><h1>Graveyard</h1>{graveyardArr}</div>
   }

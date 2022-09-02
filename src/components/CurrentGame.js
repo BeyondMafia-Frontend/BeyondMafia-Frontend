@@ -16,7 +16,7 @@ class CurrentGame extends Component {
         const set = new Set(this.props.currentGame.roles);
         set.forEach((role)=>{
           roles.push(
-            <div className="role">
+            <div className="lobbyRole">
             <strong> {countOccurrences(this.props.currentGame.roles,role)  > 1
                       ? countOccurrences(this.props.currentGame.roles,role)
                       : null} </strong>
@@ -26,12 +26,30 @@ class CurrentGame extends Component {
           game = (<ul className="currentGame">
           <li>
           <p> Game #{this.props.currentGame.gameId}</p>
-          <div className="roleHolder">
+          <div className="currentRoles">
           {roles}
           </div>
           <div className="commands">
-          <div className="option"> Leave Game </div>
-          <div className="option"> Enter Game </div>
+          <div className="option" onClick={async()=>{
+            var sendJSON = {
+              gameId : this.props.currentGame.gameId,
+              playerid: this.props.playerid
+            }
+            const rawResponse = await fetch('http://127.0.0.1:3001/leaveGame',{
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'bmcookie' : this.props.bmcookie
+                },
+                body: JSON.stringify(sendJSON)
+              });
+              const content = await rawResponse.json()
+              if(content.cmd === 1){
+                window.location.href = "/lobby";
+              }
+          }}> Leave Game </div>
+          <div className="option" onClick={()=>{ window.location.href = `game/${this.props.currentGame.gameId}`}}> Enter Game </div>
           </div>
       </li>
           </ul>)

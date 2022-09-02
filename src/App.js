@@ -21,34 +21,13 @@ function App() {
     <Switch>
 
     <Route exact path="/">
-    <div className="App">
-	  <div>
-	  <Link to="/signUp"> Sign Up! </Link>
-	  </div>
-
-	  <div>
-	  <Link to="/game"> Game Page! </Link>
-	  </div>
-	  <div>
-	  <Link to="/lobby"> Lobby Page! </Link>
-	  </div>
-    <div>
-    <Link to="/player"> Player Page! </Link>
-	  </div>
-    <div>
-    <Link to="/login"> Login Page! </Link>
-	  </div>
-
-    </div>
+    <LoginPage/>
     </Route>
 
 	  <Route exact path="/signUp">
 	  <SignUp />
 	  </Route>
 
-    <Route exact path="/login">
-	  <LoginPage/>
-	  </Route>
 
 	  <Route exact path="/game/:id">
 	  <GamePage />

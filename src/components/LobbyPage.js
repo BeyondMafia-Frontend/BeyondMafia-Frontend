@@ -56,13 +56,14 @@ async componentDidMount(){
 render(){
   return(
 	  <div>
-    <div class='header'>
+    <div class='header' >
+    <a href="/">
     <img
       src={logo}
       id="logoLightplayer"
       alt="BeyondMafia"
-
     />
+    </a>
     <a class='nav-links-highlighted'>L O B B Y</a>
     <p class='nav-divider'>|</p>
     <a class='nav-links' href={'/players/'+this.state.playerid.toString()}>P L A Y E R</a>
@@ -90,7 +91,7 @@ render(){
 		  </div>
 		  <Games bmcookie={this.state.cookies.get('bmcookie')} playerid={this.state.playerid} games={this.state.games}/>
       <div className="info-right" style={{display:"flex", flexFlow:"column", gap:"15px",marginLeft:"75px"}}>
-      <CurrentGame currentGame={this.state.currentGame}/>
+      <CurrentGame bmcookie={this.state.cookies.get('bmcookie')} playerid={this.state.playerid} currentGame={this.state.currentGame}/>
       </div>
 	      </div>
 

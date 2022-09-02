@@ -1,16 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap');
 .login_container{
-
-    width: 96vw;
-    height: fit-content;
-    display: grid;
-    grid-template-columns: .3fr .8fr 1.8fr .8fr .3fr;
-    grid-template-rows: 100px 50px 200px 150px 50px 100px 300px 50px 150px 100px 600px;
-    padding-right: 2vw;
-    padding-left: 2vw;
-    background-color: white;
-
-
+  display: flex;
+  flex-direction:column;
 }
 
 .header{
@@ -49,54 +40,89 @@ img#player-pfp{
     font-size:1.6vw;
 }
 .splash{
-  
-    grid-column-start: 1;
-    grid-column-end: 6;
-    grid-row-start: 2;
-    grid-row-end: 6;
-    
-
+display: flex
 }
 .splash>img{
     object-fit: cover;
     width: 100%;
 }
 .play{
-    grid-column: 3;
-    grid-row: 7;
-    justify-content: center;
-    vertical-align: middle;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center
 }
 .play>img{
-    
-    width: 70%;
-    height: auto;
-    margin-bottom: 5px;
-    
+    width:25%;
+    cursor: pointer;
+}
+.loginSecondRow{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.chatMafia{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.forumMafia{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.otherModes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.otherModes>p{
+    font-size:larger;
+    color: rgb(97, 97, 97);
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    font-weight:600;
+
+
+}
+.forumMafia>p{
+    font-size:larger;
+    color: rgb(97, 97, 97);
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    font-weight:600;
+
+
+}
+.chatMafia>p{
+    font-size:larger;
+    color: rgb(97, 97, 97);
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    font-weight:600;
+
+
 }
 .play>p{
     font-size:larger;
     color: rgb(97, 97, 97);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     text-decoration: none;
     font-weight:600;
 
 
 }
 button#login{
-    margin-top: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-top:50px;
     font-family: 'Ariel', sans-serif;
     font-size: larger;
     font-weight: bolder;
-
     background-color: rgb(216,44,44);
     color: white;
-    grid-row:2;
-    grid-column-start: 4;
-    grid-column-end: 5;
-    border: none;
+    border:none;
+    height: 50px;
+    margin-left: -150px;
+    width: 100px;
+    cursor: pointer;
 
 }

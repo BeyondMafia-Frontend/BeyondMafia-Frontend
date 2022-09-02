@@ -24,12 +24,57 @@
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+.createGameOptions{
+  display: flex;
+  justify-content: space-between;
+}
+.createGameInner {
+    height: 100px;
+    width: 100px;
+    background-color: rgb(212, 52, 52);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: 0.5s;
+    border-radius: 5px 5px 5px 5px;
+    border-radius: 50%;
+    margin: middle;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.trash{
+  cursor:pointer;
+}
+.currentRoleHolder{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 220px;
+}
+.games{
+  display: flex;
+  flex-direction: column;
+  padding-left:25px;
+  padding-top:35px
+}
 .game{
-  display: flex
+  display: flex;
+  padding-bottom: 20px;
+}
+.lobbyRole{
+  padding-left:10px;
+}
+.currentRoles{
+  display: flex;
+  width:50%;
+  margin:0 auto;
 }
 .players{
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 .joinGame{
   height:25px;
@@ -60,6 +105,9 @@
     margin-right: auto;
     margin-top:300px;
 }
+.active{
+  background-color: #d43434!important;
+}
 
 p.lobbyName{
     padding-right: 80px;
@@ -75,7 +123,28 @@ p.lobbyName{
     cursor: pointer;
     float: left;
   }
-
+  .createHolder{
+    display:flex;
+    flex-direction: column;
+    margin-top: auto;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size:50px;
+    font-weight:bolder;
+    color:
+  }
+.createTitle{
+    display:flex;
+    justify-content: center;
+}
+.createGameRole{
+  display:flex;
+  justify-content: center;
+}
+.lobbyHeader{
+  display:flex;
+  flex-direction: column;
+}
   .btn-group button:not(:last-child) {
     border-right: none;
   }

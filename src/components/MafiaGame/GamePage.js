@@ -57,7 +57,7 @@ class GamePage extends Component {
       this.addGraveyard = this.addGraveyard.bind(this);
       this.updateGameState = this.updateGameState.bind(this)
       this.setRoleID =  this.setRoleID.bind(this);
-      this.removePlayer = this.removePlayer.bind(this)
+      this.removePlayer = this.removePlayer.bind(this);
 }
 
 async componentDidMount(){
@@ -80,6 +80,8 @@ async componentDidMount(){
     window.location.href = '/lobby'
   }
 }
+
+
 setMembers(meeting){
     this.setState({ meetings: [...this.state.meetings, meeting] });
 }
@@ -95,12 +97,25 @@ setRoleID(id){
 }
 
 addVote(vote){
+  if(this.state.playerVotes[vote.playerid.toString()] === undefined){
   this.setState(prevState => ({
     playerVotes: {                   // object that we want to update
         ...prevState.playerVotes,    // keep all other key-value pairs
-        [vote.playerid]: vote.target       // update the value of specific key
+        [vote.playerid]: [{target:vote.target, roleAction: vote.roleAction}]       // update the value of specific key
     }
 }))
+}
+else{
+
+  var votesArr = this.state.playerVotes[vote.playerid.toString()].filter(votes => votes.roleAction !== vote.roleAction);
+  votesArr.push({target:vote.target, roleAction: vote.roleAction})
+  this.setState(prevState => ({
+    playerVotes: {                   // object that we want to update
+        ...prevState.playerVotes,    // keep all other key-value pairs
+        [vote.playerid]: votesArr       // update the value of specific key
+    }
+}))
+}
 }
 
 removePlayer(playerid){
@@ -148,21 +163,19 @@ setGameSettings(command){
 }
 addGraveyard(player){
   var check = false;
-  this.state.graveyard.forEach( (play) => {
-    if(player.playerid === play.playerid){
-      check = true;
-    }
-  });
-  if(check === false){
-  this.setState({graveyard: [...this.state.graveyard, player]})
-}
+  var grave = this.state.graveyard.filter(p =>
+    p.playerid !== player.playerid);
+    grave.push({name:player.playerid,playerid:player.playerid,role:player.roleid})
+  this.setState({graveyard:grave})
 }
 addPlayer(playerid){
     this.state.addPlayers({name: playerid, playerid: playerid})
 }
 
 updateMessages(message){
+  if(message.length > 0){
   this.setState({ messages: [...this.state.messages, message] });
+}
 }
 
 setSocket(socket){
@@ -173,8 +186,12 @@ sendMessage(message){
 }
 sendVote(playerid,roleID){
   var cmd = {cmd:1, roleAction: roleID, playerid: playerid};
-  if(this.state.playerVotes[this.state.playerid] === playerid || this.state.playerVotes[this.state.playerid] === 18446744073709551615){
-    cmd.playerid = 0;
+  if(this.state.playerVotes[this.state.playerid.toString()] !== undefined){
+    this.state.playerVotes[this.state.playerid.toString()].forEach((item) => {
+        if(roleID === item.roleAction && (item.target === playerid || item.target === 18446744073709551615)){
+          cmd.playerid = 0;
+        }
+    });
   }
   this.state.ws.send(JSON.stringify(cmd));
 }

@@ -29,11 +29,12 @@ getMessages(){
 
 handleConnection(){
 let websocketString = `ws://127.0.0.1:${this.props.websocketPort}`
-let socket = new WebSocket(websocketString,this.props.bmcookie);
+let socket = new WebSocket(websocketString);
 
 socket.onopen = (e) =>{
   if(e){
     this.onOpen(socket);
+    socket.send(JSON.stringify({cmd:-3,auth:this.props.bmcookie}));
   }
 };
 
@@ -42,13 +43,7 @@ socket.onmessage = (event) =>{
 };
 
 socket.onclose = function(event) {
-  if (event.wasClean) {
-    window.alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-  } else {
-    // e.g. server process killed or network down
-    // event.code is usually 1006 in this case
-    window.alert('[close] Connection died');
-  }
+  window.location.href = "/lobby"
 };
 
 socket.onerror = function(error) {

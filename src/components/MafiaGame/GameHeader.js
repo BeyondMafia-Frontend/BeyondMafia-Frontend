@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './css/GameHeader.css'
+import * as utils from '../utils/image-resolver.js';
 class GameHeader extends Component {
   constructor(props){
     super(props);
@@ -11,22 +12,14 @@ class GameHeader extends Component {
 	  gameStarted: false,
 	  countDownTimer:false,
       }
-    this.importAll = this.importAll.bind(this);
-  }
-
-  importAll(r) {
-      let images = {};
-      r.keys().map(item => { images[item.replace('./', '')] = r(item); });
-      return images;
   }
 
 componentDidMount(){
-  this.setState({roleImages:this.importAll(require.context('./assets/roles', true, /.*/))})
 }
   render(){
 	let gameBanner;
   let rolesArray = [];
-  if(!this.state.roleSet && this.state.roleImages.length !== 0 && this.props.roles && this.props.roles.length !== 0){
+  if(!this.state.roleSet && this.props.roles && this.props.roles.length !== 0){
     var counter = {};
     this.props.roles.forEach((roleID, i) => {
     if(counter[roleID]){
@@ -44,18 +37,10 @@ componentDidMount(){
 if(this.state.roleSet){
   Object.keys(this.state.addedRoles).forEach((keys) => {
     var value =  parseInt(keys);
-    if(value === 0){
     rolesArray.push(<div>
       <strong>{this.state.addedRoles[keys]}</strong>
-      <img className="headerRole" key={keys} src={this.state.roleImages['roleimg_EM-00-00-villager.png'].default}/>
+      <img src={utils.resolveRole(value)} width='35px' height='35px'/>
     </div>)
-  }
-    if(value === 1){
-    rolesArray.push(<div>
-    <strong>{this.state.addedRoles[keys]}</strong>
-    <img className="headerRole" key={keys} src={this.state.roleImages['roleimg_EM-01-00-vanilla.png'].default}/>
-  </div>)
-}
   });
 }
 	if(this.state.playersUpdated){
