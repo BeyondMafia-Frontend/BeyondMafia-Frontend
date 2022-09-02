@@ -4,6 +4,7 @@ import SignUp from './components/SignUp.js'
 import GamePage from './components/MafiaGame/GamePage.js'
 import PlayerPage from './components/PlayerPage';
 import LobbyPage from './components/LobbyPage.js'
+import LoginPage from './components/LoginPage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,12 +35,19 @@ function App() {
     <div>
     <Link to="/player"> Player Page! </Link>
 	  </div>
+    <div>
+    <Link to="/login"> Login Page! </Link>
+	  </div>
 
     </div>
     </Route>
 
 	  <Route exact path="/signUp">
 	  <SignUp />
+	  </Route>
+
+    <Route exact path="/login">
+	  <LoginPage/>
 	  </Route>
 
 	  <Route exact path="/game/:id">
