@@ -51,7 +51,7 @@ addRole(role){
             gameId : games.gameId,
             playerid: this.props.playerid
           }
-          const rawResponse = await fetch('http://127.0.0.1:3001/joinGame',{
+          const rawResponse = await fetch('http://45.63.0.156/joinGame',{
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -134,7 +134,7 @@ addRole(role){
           <div>
           <div className="createGameOptions">
           <div className="createGameInner" onClick={async ()=>{
-            await fetch('http://127.0.0.1:3001/createGame',{
+            await fetch('http://45.63.0.156/createGame',{
       method: 'POST',
       keepalive:false,
       headers: {

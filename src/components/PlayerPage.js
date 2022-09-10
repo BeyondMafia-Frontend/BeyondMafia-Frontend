@@ -19,7 +19,7 @@ class PlayerPage extends Component {
     var cookie = this.state.cookies.get('bmcookie');
     console.log(cookie)
     if(cookie){
-    var rawResponse = await fetch('http://127.0.0.1:3001/verifyUser',{
+    var rawResponse = await fetch('http://45.63.0.156/verifyUser',{
         method: 'GET',
         headers:{
           bmcookie: this.state.cookies.get('bmcookie')
@@ -35,7 +35,7 @@ class PlayerPage extends Component {
     var sendJSON = {};
     sendJSON.id = arr[arr.length-1];
     this.setState({currentId:sendJSON.id});
-    rawResponse = await fetch('http://127.0.0.1:3001/getUser',{
+    rawResponse = await fetch('http://45.63.0.156/getUser',{
         method: 'POST',
         headers: {
           'Accept': 'application/json',

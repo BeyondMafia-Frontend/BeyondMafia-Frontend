@@ -77,7 +77,7 @@ render(){
                           sendJSON.username = this.state.username;
                           sendJSON.password = this.state.password;
                           sendJSON.email = this.state.email;
-                          const rawResponse = await fetch('http://127.0.0.1:3001/users/register',{
+                          const rawResponse = await fetch('http://45.63.0.156/users/register',{
                               method: 'POST',
                               headers: {
                                 'Accept': 'application/json',
