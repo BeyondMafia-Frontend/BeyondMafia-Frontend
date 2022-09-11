@@ -10,6 +10,8 @@ class GamePage extends Component {
   constructor(props){
       super(props);
       var cookies = new Cookies();
+      var day = new Audio("/assets/day.wav");
+      var night = new Audio("/assets/night.wav");
 	  this.state = {
         cookies: cookies,
         meetings: [],
@@ -26,6 +28,8 @@ class GamePage extends Component {
 	      players : [],
         maxSize: 0,
         playerid: 0,
+        day: day,
+        night: night,
         getSize: ()=>{
           return this.state.players.length;
         },
@@ -136,6 +140,14 @@ updateGameState(gameState){
     }
   })
 )
+if(gameState > this.state.state){
+  if(gameState % 2){
+    this.state.day.play();
+  }
+  else{
+    this.state.night.play();
+  }
+}
   this.setState({meetings:[]});
   this.setState({playerVotes:{}});
   this.setState({selectedGameState:-1});

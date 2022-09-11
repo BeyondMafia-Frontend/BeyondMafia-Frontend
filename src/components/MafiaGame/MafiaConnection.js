@@ -3,8 +3,10 @@ import React, {Component} from 'react';
 class MafiaConnection extends Component {
   constructor(props){
     super(props);
+    var joined = new Audio("/assets/ding.mp3");
 	  this.state = {
-      ws: undefined
+      ws: undefined,
+      joined: joined
       }
       this.handleConnection = this.handleConnection.bind(this);
       this.onOpen = this.onOpen.bind(this);
@@ -17,6 +19,7 @@ componentDidMount(){
 }
 
 onOpen(socket){
+  this.state.joined.play();
   this.props.setSocket(socket);
 }
 onMessage(message){
