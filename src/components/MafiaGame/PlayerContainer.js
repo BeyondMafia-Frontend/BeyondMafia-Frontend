@@ -64,9 +64,7 @@ render(){
   return(
     <div className="playerContainer" style={{paddingLeft:'20px'}}>
     <h1>
-    <img src="/assets/village.png" width="50px" height="50px" style="
-    padding-right: 10px;
-    " />
+    <img src="/assets/village.png" width="50px" height="50px" style={{paddingRight:"10px"}}/>
     Village</h1>
       {playerArr}
       {graveyardElement}
