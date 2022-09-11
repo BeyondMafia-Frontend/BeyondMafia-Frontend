@@ -50,7 +50,7 @@ class LogIn extends Component {
         <a class='nav-links' >F O R U M</a>
         <p class='nav-divider'>|</p>
         <a class='nav-links'>L E A R N</a>
-        <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
+        <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
         </div>
         <Modal open={this.state.open} onClose={this.onCloseModal} center>
         <div className="formBox">
@@ -117,7 +117,7 @@ class LogIn extends Component {
         </div>
         <div class="play">
         <a href='/lobby'>
-        <img src={playButton} alt="play mafia button"/>
+        <img src="/assets/playMafia.png" alt="play mafia button"/>
         </a>
         </div>
 

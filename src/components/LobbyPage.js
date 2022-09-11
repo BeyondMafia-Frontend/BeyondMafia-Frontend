@@ -71,7 +71,7 @@ render(){
     <a class='nav-links'>F O R U M</a>
     <p class='nav-divider'>|</p>
     <a class='nav-links' href=''>L E A R N</a>
-    <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
+    <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
     </div>
 
 	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", width:"110%"}}>

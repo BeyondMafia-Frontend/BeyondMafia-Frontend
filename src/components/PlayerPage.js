@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { withRouter } from "react-router";
-import logo from '../assets/logo-light.png';
 import '../css/PlayerPage.css'
 import Cookies from 'universal-cookie';
 class PlayerPage extends Component {
@@ -52,7 +51,7 @@ class PlayerPage extends Component {
         <div class='header'>
         <a href="/">
         <img
-          src={logo}
+          src="/assets/logo-light.png"
           id="logoLightplayer"
           alt="BeyondMafia"
         />
@@ -72,7 +71,7 @@ class PlayerPage extends Component {
         <a class='nav-links' >F O R U M</a>
         <p class='nav-divider'>|</p>
         <a class='nav-links'>L E A R N</a>
-        <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
+        <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
         </div>
         <div class='banner'></div>
         <div class='user-banner'>
@@ -98,7 +97,7 @@ class PlayerPage extends Component {
         <div class='favs-content'>Coming soon...</div>
         <div class='stat-bar'> {this.state.username}'s Stats </div>
         <div class='stat-content'> USER STATS</div>
-        <img src={playerpic} id='profile' alt='banner profile'/>
+        <img src="/assets/default-avis/neurondark.png" id='profile' alt='banner profile'/>
 
 
 

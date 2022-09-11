@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-
 import "../css/AvatarGallery.css"
 
 function importAll(r) {
     return r.keys().map(r);
 }
 
-const images = importAll(require.context('../assets/default-avis/', false, /\.(png|jpe?g|svg)$/));
+const images = ["/assets/default-avis/kfy8nir1jq131.jpg", "/assets/default-avis/neurondark.png", "/assets/default-avis/nomad.png"]
 
 export default class AvatarCarousel extends Component {
     constructor(props) {

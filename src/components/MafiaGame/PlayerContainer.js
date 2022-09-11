@@ -66,7 +66,7 @@ render(){
     <h1>
     <img src="/assets/village.png" width="50px" height="50px" style="
     padding-right: 10px;
-    ">
+    " />
     Village</h1>
       {playerArr}
       {graveyardElement}
