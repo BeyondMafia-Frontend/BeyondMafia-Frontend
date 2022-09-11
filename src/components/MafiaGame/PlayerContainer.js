@@ -39,7 +39,7 @@ render(){
     playerArr.push(
     <div className="player" onClick={this.handlePlayerClick(player.id)}>
   <img src={roleImage} className="role"/>
-  <img className="playerImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} />
+  <img className="playerImage" src={"/assets/default-avis/neurondark.png"} />
   <div className="playerName"> {player.name} </div>
     </div>
     )}
@@ -53,7 +53,7 @@ render(){
       graveyardArr.push(
         <div className="player">
 	    <img src={utils.resolveRole(player.role)} className="role"/>
-	    <img className="playerImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} />
+	    <img className="playerImage" src={"/assets/default-avis/neurondark.png"} />
 	<div className="playerName"> {player.name} </div> </div>
       )
     }

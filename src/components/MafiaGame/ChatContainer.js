@@ -92,7 +92,7 @@ return(<div className="systemMessage"><body>{command.playerid} votes themself!</
 
 }
 parsePlayerMessage(command){
- return (<div className="playerChat"><img className="chatImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{command.playerId}</strong> | {command.msg} </body> </div>);
+ return (<div className="playerChat"><img className="chatImage" src={"/assets/default-avis/neurondark.png"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{command.playerId}</strong> | {command.msg} </body> </div>);
 }
 
 parseSystemMessage(command){
