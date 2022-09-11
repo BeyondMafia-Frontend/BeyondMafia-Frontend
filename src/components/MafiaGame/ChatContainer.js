@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './css/ChatContainer.css'
+import * as utils from '../utils/image-resolver.js';
 class ChatContainer extends Component {
   constructor(props){
       super(props);
@@ -38,17 +39,8 @@ iterateMessages(gameState){
 }
 
 getRoleDetails(roleID){
-  let role;
-  if(roleID === 0){
-    role = "Villager"
-  }
-  if(roleID === 1){
-    role = "Mafia"
-  }
-  if(roleID === 16){
-    role = "Town Drunk"
-  }
-    return(<div className="systemMessage"><body>You have been assigned the {role}!</body></div>)
+  let role = utils.resolveRoleString(roleID);
+  return(<div className="systemMessage"><body>You have been assigned the {role}!</body></div>)
 }
 handleScroll(){
   var chat = document.getElementsByClassName('chatContainer')[0];
@@ -100,7 +92,7 @@ return(<div className="systemMessage"><body>{command.playerid} votes themself!</
 
 }
 parsePlayerMessage(command){
- return (<div className="playerChat"><img className="chatImage" src={"/static/media/kfy8nir1jq131.5c2dc0c7.jpg"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{command.playerId}</strong> | {command.msg} </body> </div>);
+ return (<div className="playerChat"><img className="chatImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{command.playerId}</strong> | {command.msg} </body> </div>);
 }
 
 parseSystemMessage(command){
@@ -131,9 +123,13 @@ parseRoleMessage(command){
   if(command.action === 3){
     this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>)]})
   }
+  if(command.action === 4){
+    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>You learned that {playerid} is {utils.resolveRoleString(command.role)}! </body></div>)]})
+  }
 }
 
 parseNotTypingMessage(command){
+    //hidebubble
     return(<div className="systemMessage"><body>{command.playerId} has stopped typing!</body></div>)
 }
 
