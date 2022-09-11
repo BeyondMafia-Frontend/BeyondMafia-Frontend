@@ -61,7 +61,7 @@ class LogIn extends Component {
                   var sendJSON = {};
                   sendJSON.username = this.state.username;
                   sendJSON.password = this.state.password;
-                  const rawResponse = await fetch('http://127.0.0.1:3001/users/login',{
+                  const rawResponse = await fetch('http://45.63.0.156/users/login',{
                       method: 'POST',
                       headers: {
                         'Accept': 'application/json',
