@@ -19,7 +19,6 @@ componentDidMount(){
 }
 
 onOpen(socket){
-  this.state.joined.play();
   this.props.setSocket(socket);
 }
 onMessage(message){
@@ -38,6 +37,7 @@ socket.onopen = (e) =>{
   if(e){
     this.onOpen(socket);
     socket.send(JSON.stringify({cmd:-3,auth:this.props.bmcookie}));
+    this.state.joined.play();
   }
 };
 
