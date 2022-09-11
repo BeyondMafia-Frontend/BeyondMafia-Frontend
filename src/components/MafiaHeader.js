@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "../css/MafiaHeader.css"
-import logo from '../assets/logo-light.png'
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,11 +18,11 @@ class MafiaHeader extends Component {
 render(){
   return(
       <div className="MafiaHeader">
-	 
+
 	  <div className="Links">
-	      <Link to="/"><img src={logo} height="100%" width="200px" style={{marginLeft:"-60px"}}/> </Link>
+	      <Link to="/"><img src="/assets/logo-light.png" height="100%" width="200px" style={{marginLeft:"-60px"}}/> </Link>
 	      <Link className="specialLink" to="/lobby"> <p className="headerLink"> Lobby </p></Link>
-	      
+
 	      <p className="divder"> | </p>
 	      <Link className="specialLink" to="/player">  <p className="headerLink"> Player </p> </Link>
 	      <p className="divder"> | </p>

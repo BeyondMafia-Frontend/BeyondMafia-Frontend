@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import '../css/Competitive.css'
-import knife from '../assets/knife.png'
 import{
-    Link 
+    Link
 } from "react-router-dom"
 
 class Competitive extends Component {
@@ -14,7 +13,7 @@ class Competitive extends Component {
     }
   }
     componentDidMount(){
-	{/*Change this to the competitive endpoint in production*/} 
+	{/*Change this to the competitive endpoint in production*/}
 	fetch("https://httpbin.org/get")
 	    .then(resp => resp.json())
 	    .then(data=> {
@@ -24,27 +23,27 @@ class Competitive extends Component {
 	    }
 		 )
     }
-    
+
     render(){
-	
+
 	const competitiveDisplay = () => {
 	switch(this.state.doneLoading){
 	case true:
 	    let competitionElements;
-	    {/*message should have account user id associated with post, thats how profile link and profile image get resolved*/} 
+	    {/*message should have account user id associated with post, thats how profile link and profile image get resolved*/}
 	    this.state.competitions.map(competition =>{
 		competitionElements.push(
 			<div className="competition">
 	 		    <Link className="competitionLink" to={`/users/${competition.id}`}>
 				<p> {competition.name} </p>
 			    </Link>
-			</div>			
+			</div>
 			    )
 	    });
 	    return competitionElements;
 	default:
 	    var spinner = <div className="loading">
-		<img src={knife}
+		<img src="/assets/knife.png"
 		     className="spinner"
 		     width="80px"
 		     height="80px"
@@ -55,7 +54,7 @@ class Competitive extends Component {
 	}
 	}
 
-				  
+
   return(
       <div className="competitions">
 	  <div className="title" >

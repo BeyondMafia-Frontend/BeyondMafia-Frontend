@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import { withRouter } from "react-router";
 import logo from '../assets/logo-light.png';
 import '../css/PlayerPage.css'
-import playerpic from '../assets/default-avis/neuron dark.png';
-import msg from '../assets/msg.png'
 import Cookies from 'universal-cookie';
 class PlayerPage extends Component {
   constructor(props){
@@ -74,7 +72,7 @@ class PlayerPage extends Component {
         <a class='nav-links' >F O R U M</a>
         <p class='nav-divider'>|</p>
         <a class='nav-links'>L E A R N</a>
-        <img src={playerpic} id="player-pfp" alt="BeyondMafia"/>
+        <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
         </div>
         <div class='banner'></div>
         <div class='user-banner'>
@@ -83,7 +81,7 @@ class PlayerPage extends Component {
             </div>
         </div>
         <div class='msg-bar'>
-          <img src={msg} id='msg' alt="msg"/>
+          <img src="/assets/msg.png" id='msg' alt="msg"/>
           <p>Message</p>
         </div>
 

@@ -7,8 +7,6 @@ import Games from './Games.js'
 import Footer from './Footer'
 import CurrentGame from './CurrentGame.js'
 import Cookies from 'universal-cookie';
-import logo from '../assets/logo-light.png';
-import playerpic from '../assets/default-avis/neuron dark.png';
 import * as utils from './utils/image-resolver.js';
 
 class LobbyPage extends Component {
@@ -59,7 +57,7 @@ render(){
     <div class='header' >
     <a href="/">
     <img
-      src={logo}
+      src="/assets/logo-light.png"
       id="logoLightplayer"
       alt="BeyondMafia"
     />
@@ -73,7 +71,7 @@ render(){
     <a class='nav-links'>F O R U M</a>
     <p class='nav-divider'>|</p>
     <a class='nav-links' href=''>L E A R N</a>
-    <img src={playerpic} id="player-pfp" alt="BeyondMafia"/>
+    <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
     </div>
 
 	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", width:"110%"}}>

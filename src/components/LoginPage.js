@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from "react-router";
-import logo from '../assets/logo-light.png';
 import '../css/PlayerPage.css'
-import playerpic from '../assets/default-avis/neuron dark.png';
-import msg from '../assets/msg.png'
-import loginHeader from '../assets/login_header.png'
-import playButton from '../assets/playMafia.png'
 import '../css/Login.css'
 import 'react-responsive-modal/styles.css';
 import Modal from "react-responsive-modal";
@@ -35,7 +30,7 @@ class LogIn extends Component {
         <div class='login_container'>
         <div class='header'>
         <img
-			    src={logo}
+			    src="/assets/logo-light.png"
 			    id="logoLightplayer"
 			    alt="BeyondMafia"
 
@@ -55,7 +50,7 @@ class LogIn extends Component {
         <a class='nav-links' >F O R U M</a>
         <p class='nav-divider'>|</p>
         <a class='nav-links'>L E A R N</a>
-        <img src={playerpic} id="player-pfp" alt="BeyondMafia"/>
+        <img src="/assets/default-avis/neuron dark.png" id="player-pfp" alt="BeyondMafia"/>
         </div>
         <Modal open={this.state.open} onClose={this.onCloseModal} center>
         <div className="formBox">
@@ -86,14 +81,14 @@ class LogIn extends Component {
 </div>
      </Modal>
         <div class="splash">
-            <img src={loginHeader}alt="login pic"/>
+            <img src="/assets/login_header.png" alt="login pic"/>
                 <button onClick={()=>{
                   this.setState({open:true});
                 }} id="login">LOG IN</button>
         </div>
         <div class="play">
         <a href='/lobby'>
-        <img src={playButton} alt="play mafia button"/>
+        <img src="/assets/playMafia.png" alt="play mafia button"/>
         </a>
         <p style={{width:"50%"}}> BeyondMafia is the mafia site that is revolutionary in design, safety,
         and has a thriving community of users from all walks of life all over the world.

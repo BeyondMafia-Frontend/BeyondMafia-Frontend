@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import '../css/Announcements.css'
-import knife from '../assets/knife.png'
 import{
-    Link 
+    Link
 } from "react-router-dom"
 
 class Announcements extends Component {
@@ -14,7 +13,7 @@ class Announcements extends Component {
     }
   }
     componentDidMount(){
-	{/*Change this to the announcement endpoint in production*/} 
+	{/*Change this to the announcement endpoint in production*/}
 	fetch("https://httpbin.org/get")
 	    .then(resp => resp.json())
 	    .then(data=> {
@@ -24,14 +23,14 @@ class Announcements extends Component {
 	    }
 		 )
     }
-    
+
     render(){
-	
+
 	const announcementDisplay = () => {
 	switch(this.state.doneLoading){
 	case true:
 	    let messagesElement;
-	    {/*message should have account user id associated with post, thats how profile link and profile image get resolved*/} 
+	    {/*message should have account user id associated with post, thats how profile link and profile image get resolved*/}
 	    this.state.messages.map(message =>{
 		messagesElement.push(
 		    <div className="message">
@@ -48,7 +47,7 @@ class Announcements extends Component {
 			    </Link>
 			    <div className="timestamp">
 				{/*TODO conversion of UNIX timestamp difference of current time*/}
-				
+
 			    </div>
 			</div>
 		    </div>
@@ -57,7 +56,7 @@ class Announcements extends Component {
 	    return messagesElement;
 	default:
 	    var spinner = <div className="loading">
-		<img src={knife}
+		<img src="/assets/knife.png"
 		     className="spinner"
 		     width="100px"
 		     height="100px"
@@ -68,7 +67,7 @@ class Announcements extends Component {
 	}
 	}
 
-				  
+
   return(
       <div className="announcements">
 	  <div className="title" >

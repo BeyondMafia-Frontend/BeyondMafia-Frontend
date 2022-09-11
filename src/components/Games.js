@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "../css/Games.css"
-import knife from '../assets/knife.png'
 import * as utils from './utils/image-resolver.js';
 class Games extends Component{
     constructor(props){
@@ -86,7 +85,7 @@ addRole(role){
 	    return display;
 	default:
 	    var spinner = <div className="loading">
-		<img src={knife}
+		<img src="/assets/knife.png"
 		     className="spinner"
 		     width="100px"
 		     height="100px"

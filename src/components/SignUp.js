@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from '../assets/logo-light.png';
 import '../css/SignUp.css'
 import SignUpForm from './SignUpForm.js'
 class SignUp extends Component {
@@ -14,11 +13,11 @@ class SignUp extends Component {
     <div>
 
 	<div id="signHeader" style={{paddingTop:"20px"}, {overflow:"auto"}}>
-	    <div id="createAccount"> 
+	    <div id="createAccount">
 
 		<div id ="logo">
 		    <img
-			src={logo}
+			src="/assets/logo-light.png"
 			id="logoLight"
 			alt="BeyondMafia"
 		    />
