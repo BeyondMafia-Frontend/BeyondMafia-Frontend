@@ -20,6 +20,26 @@ export function resolveRole(id){
   }
 }
 
+export function resolveRoleString(id){
+  switch(id){
+    case(0):
+      return "Villager";
+    case(1):
+      return "Mafia"
+    case(2):
+      return "Doctor";
+    case(4):
+      return "Cop";
+    case(5):
+      return "Stalker"
+    case(8):
+      return "Bulletproof"
+    case(16):
+      return "Drunk"
+    case(17):
+      return "Hooker"
+  }
+}
 
 export function getAvailableRoles(){
   return availableRoles;

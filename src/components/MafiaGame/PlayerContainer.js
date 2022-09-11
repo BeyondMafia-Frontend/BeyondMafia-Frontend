@@ -39,7 +39,7 @@ render(){
     playerArr.push(
     <div className="player" onClick={this.handlePlayerClick(player.id)}>
   <img src={roleImage} className="role"/>
-  <img className="playerImage" src={"/static/media/kfy8nir1jq131.5c2dc0c7.jpg"} />
+  <img className="playerImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} />
   <div className="playerName"> {player.name} </div>
     </div>
     )}
@@ -53,7 +53,7 @@ render(){
       graveyardArr.push(
         <div className="player">
 	    <img src={utils.resolveRole(player.role)} className="role"/>
-	    <img className="playerImage" src={"/static/media/kfy8nir1jq131.5c2dc0c7.jpg"} />
+	    <img className="playerImage" src={"/assets/default-avis/kfy8nir1jq131.5c2dc0c7.jpg"} />
 	<div className="playerName"> {player.name} </div> </div>
       )
     }
@@ -63,7 +63,11 @@ render(){
 
   return(
     <div className="playerContainer" style={{paddingLeft:'20px'}}>
-    <h1>Village</h1>
+    <h1>
+    <img src="/assets/village.png" width="50px" height="50px" style="
+    padding-right: 10px;
+    ">
+    Village</h1>
       {playerArr}
       {graveyardElement}
     </div>

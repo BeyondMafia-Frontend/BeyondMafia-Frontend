@@ -233,7 +233,7 @@ render(){
       <div onClick={()=>{
         this.state.ws.send(JSON.stringify({cmd:2}));
       }}>
-      fuck
+      Leave Game
       </div>
 	    <div className="gameHeader">
 	    <GameBanner selectedGameState={this.state.selectedGameState} messageBankLength={this.state.messageBankLength} setSelectedGameState={this.setSelectedGameState} roles={this.state.roles} gameState={this.state.gameState} maxPlayers={this.state.maxSize} players={this.state.players.length} />
