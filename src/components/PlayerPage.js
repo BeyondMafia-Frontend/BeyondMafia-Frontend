@@ -40,7 +40,7 @@ class PlayerPage extends Component {
     var sendJSON = {};
     sendJSON.id = arr[arr.length-1];
     this.setState({currentId:sendJSON.id});
-    rawResponse = await fetch('http://45.63.0.156/getUser',{
+    rawResponse = await fetch('http://beyondmafia.live/getUser',{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -58,7 +58,7 @@ class PlayerPage extends Component {
         await player.playVideo()
       }
     if(cookie){
-    var rawResponse = await fetch('http://45.63.0.156/verifyUser',{
+    var rawResponse = await fetch('http://beyondmafia.live/verifyUser',{
         method: 'GET',
         headers:{
           bmcookie: this.state.cookies.get('bmcookie')
