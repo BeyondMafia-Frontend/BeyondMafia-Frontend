@@ -147,7 +147,7 @@
 }
 .leftStats{
   display: flex;
-  margin-top:-3vh;
+  margin-top:-2vh;
   margin-left: 5vw;
 }
 .stat-content{
@@ -204,7 +204,6 @@ img#msg{
   flex-direction: column;
   border-top:1px solid black;
   margin-left: 25vw;
-  margin-bottom: 5px;
   width: 55vw;
 }
 p.user-name{
