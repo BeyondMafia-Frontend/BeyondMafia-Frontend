@@ -12,6 +12,10 @@ p.divder {
     user-select: none; /* Standard */
 
 }
+.stats{
+  font-weight: bold;
+  font-size: 20px;
+}
 p.headerLink {
     margin-left: -100px;
     color:white;
