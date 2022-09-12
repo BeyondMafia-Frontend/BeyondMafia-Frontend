@@ -204,6 +204,7 @@ img#msg{
   flex-direction: column;
   border-top:1px solid black;
   margin-left: 25vw;
+  margin-bottom: 5px;
   width: 55vw;
 }
 p.user-name{
