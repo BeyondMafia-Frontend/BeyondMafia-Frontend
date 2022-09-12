@@ -2,32 +2,40 @@ import React, {Component} from 'react';
 import { withRouter } from "react-router";
 import '../css/PlayerPage.css'
 import Cookies from 'universal-cookie';
+import * as utils from './utils/image-resolver.js';
+import YouTubePlayer from 'youtube-player';
+import Modal from "react-responsive-modal";
 class PlayerPage extends Component {
   constructor(props){
     var cookies = new Cookies();
     super(props);
       this.state = {
         cookies: cookies,
-        playerid : -1
+        playerid : -1,
+        youtubeString: "https://www.youtube.com/watch?v=Iaoeedmw-H8",
+        youtubeUrl:"",
       }
+      this.playYoutube = this.playYoutube.bind(this);
   }
 
-  async componentDidMount(){
-    var cookie = this.state.cookies.get('bmcookie');
-    console.log(cookie)
-    if(cookie){
-    var rawResponse = await fetch('http://45.63.0.156/verifyUser',{
-        method: 'GET',
-        headers:{
-          bmcookie: this.state.cookies.get('bmcookie')
-        }
-      });
-      var content = await rawResponse.json()
-      if(content.playerid){
-      this.setState({playerid:content.playerid});
-    }
-    }
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
 
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
+  playYoutube(){
+    var player = YouTubePlayer('youtube',{
+      videoId: utils.parseYoutubeString(this.state.youtubeString)
+    });
+    player.playVideo().then(()=>{
+      return;
+    });
+  }
+  async componentDidMount(){;
+    var cookie = this.state.cookies.get('bmcookie');
     var arr = window.location.pathname.split('/');
     var sendJSON = {};
     sendJSON.id = arr[arr.length-1];
@@ -43,6 +51,24 @@ class PlayerPage extends Component {
        content = await rawResponse.json()
       this.setState({username:content.username})
       this.setState({bio:content.bio})
+      if(content.youtube != null){
+        var player = YouTubePlayer('youtube',{
+          videoId: content.youtube
+        });
+        await player.playVideo()
+      }
+    if(cookie){
+    var rawResponse = await fetch('http://45.63.0.156/verifyUser',{
+        method: 'GET',
+        headers:{
+          bmcookie: this.state.cookies.get('bmcookie')
+        }
+      });
+      var content = await rawResponse.json()
+      if(content.playerid){
+      this.setState({playerid:content.playerid});
+    }
+    }
   }
   render(){
   return(
@@ -73,7 +99,20 @@ class PlayerPage extends Component {
     <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
     </div>
     <div class='container'>
-
+    <Modal open={this.state.open} onClose={this.onCloseModal} center >
+    <div className="formBox">
+          <form >
+            <input type="link" placeholder="Enter Youtube URL" onChange={e=> this.setState({youtubeUrl:e.target.value})}  />
+            <input type="button" onClick={async ()=>{
+              if(this.state.youtubeUrl.length > 5){
+              this.setState({youtubeString: this.state.youtubeUrl});
+              this.setState({youtubeUrl:""})
+              this.playYoutube();
+            }
+          }}value="SUBMIT" />
+            </form>
+            </div>
+    </Modal>
         <div class='banner'>
         <img src="/assets/default-avis/neurondark.png" id='profile' alt='banner profile'/>
 </div>
@@ -103,6 +142,9 @@ class PlayerPage extends Component {
         <div class='msg-bar'>
           <img src="/assets/msg.png" id='msg' alt="msg"/>
           <p>Message</p>
+          <img onClick={()=>{
+            this.setState({open:true});
+          }}src="/assets/settings.png" id='settings' alt="settings"/>
         </div>
 
         <div class="secondLayer">
@@ -112,9 +154,13 @@ class PlayerPage extends Component {
         <div class='bar-left'>Friends</div>
         <div class='friends-content'>{this.state.username} has no friends!</div>
         </div>
-        <div class='bio-box'>{this.state.bio === null
+        <div  class='bio-box'>
+        <div className="youtubeHolder"><div id="youtube" /></div>
+        <div class="bio-text">{this.state.bio === null
                               ? "N/A"
-                              : this.state.bio}</div>
+                              : this.state.bio}
+                              </div>
+                            </div>
         <div class="right-profile">
         <div class='bar-right'>Collections</div>
         <div class='collect-content'>{this.state.username} has no items in their collection!</div>
