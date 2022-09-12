@@ -14,12 +14,25 @@
     background-color: rgb(44,48,40);
 
 }
+.splashHolder{
+  width:100%;
+  display: flex;
+  height: 50vh;
+  align-self: center;
+  flex-direction: row;
+  justify-content: center;
+}
+img#splash{
+  width: 95%;
+  height: 100%;
+  display:flex;
+}
 img#logoLightplayer{
-    width: 250px;
+    width: 15vw;
 
 }
 img#player-pfp{
-    width: .7in;
+    width: 7vh;
     border-radius: 50%;
 
 }
@@ -40,7 +53,8 @@ img#player-pfp{
     font-size:1.6vw;
 }
 .splash{
-display: flex
+display: flex;
+width:100%;
 }
 .splash>img{
     object-fit: cover;
@@ -58,22 +72,30 @@ display: flex
 .loginSecondRow{
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  height: 100%
 }
 .chatMafia{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  align-self:center;
 }
 .forumMafia{
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  width: 100%;
+  align-self:center;
 }
 .otherModes{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  justify-content: center
 
 }
 .otherModes>p{
@@ -103,6 +125,10 @@ display: flex
 
 
 }
+img#playButton{
+  height: 15vh;
+  width: 30vw;
+}
 .play>p{
     font-size:larger;
     color: rgb(97, 97, 97);
@@ -112,8 +138,14 @@ display: flex
 
 
 }
+
+img#lobbyPic{
+  width:30vw;
+  height: 40vh;
+}
+
 button#login{
-    margin-top:50px;
+    margin-top:5px;
     font-family: 'Ariel', sans-serif;
     font-size: larger;
     font-weight: bolder;
@@ -121,8 +153,7 @@ button#login{
     color: white;
     border:none;
     height: 50px;
-    margin-left: -150px;
-    width: 100px;
     cursor: pointer;
+    position: absolute;
 
 }

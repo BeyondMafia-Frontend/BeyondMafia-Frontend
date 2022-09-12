@@ -81,14 +81,16 @@ class LogIn extends Component {
 </div>
      </Modal>
         <div class="splash">
-            <img src="/assets/login_header.png" alt="login pic"/>
+        <div class="splashHolder">
+            <img id="splash" src="/assets/login_header.png" alt="login pic"/>
                 <button onClick={()=>{
                   this.setState({open:true});
                 }} id="login">LOG IN</button>
         </div>
+        </div>
         <div class="play">
         <a href='/lobby'>
-        <img src="/assets/playMafia.png" alt="play mafia button"/>
+        <img src="/assets/playMafia.png" id="playButton" alt="play mafia button"/>
         </a>
         <p style={{width:"50%"}}> BeyondMafia is the mafia site that is revolutionary in design, safety,
         and has a thriving community of users from all walks of life all over the world.
@@ -96,14 +98,14 @@ class LogIn extends Component {
         you're sure to find something that suits how YOU want to play!</p>
         <div className="loginSecondRow">
         <div className="forumMafia">
-        <img src="/assets/forum.png" alt="Forum Mafia picture"/>
+        <img src="/assets/forum.png"  id="lobbyPic" alt="Forum Mafia picture"/>
         <p style={{width:"50%"}}>Play mafia in the forums! Host your
         own game, or use BeyondBot to host one for you.</p>
         </div>
         <div className="chatMafia">
 
 
-          <img src="/assets/chat.png" alt="Chat Mafia picture"/>
+          <img src="/assets/chat.png"  id="lobbyPic" alt="Chat Mafia picture"/>
         <p style={{width:"50%"}}>10-20~ minute games with a variety of roles!
                 Play with classic roles, or try out something different in the Sandbox lobby. You can
                 create your own custom roles too with the Role Builder!</p>
@@ -111,13 +113,13 @@ class LogIn extends Component {
         </div>
         </div>
         <div className="otherModes">
-          <img src="/assets/other.png" alt="Other game modes picture"/>
+          <img src="/assets/other.png" id="lobbyPic" alt="Other game modes picture"/>
         <p style={{width:"25%"}}>Explore other mafia-esque games like Survivor,
         or have a break with minigames such as Ghost or battle snakes</p>
         </div>
         <div class="play">
         <a href='/lobby'>
-        <img src="/assets/playMafia.png" alt="play mafia button"/>
+        <img src="/assets/playMafia.png" id="playButton" alt="play mafia button"/>
         </a>
         </div>
 
