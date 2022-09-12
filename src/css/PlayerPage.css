@@ -119,6 +119,7 @@ img#settings:hover{
     font-weight: bolder;
     font-size: x-large;
     margin-top:5px;
+    text-align: center;
 }
 .bio-box{
     width:60%;
