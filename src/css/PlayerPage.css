@@ -147,7 +147,7 @@
 }
 .leftStats{
   display: flex;
-  margin-top:5vh;
+  margin-top:-3vh;
   margin-left: 5vw;
 }
 .stat-content{
