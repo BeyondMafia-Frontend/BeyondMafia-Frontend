@@ -35,7 +35,7 @@ class CurrentGame extends Component {
               gameId : this.props.currentGame.gameId,
               playerid: this.props.playerid
             }
-            const rawResponse = await fetch('http://beyondmafia.live/leaveGame',{
+            const rawResponse = await fetch('https://beyondmafia.live/leaveGame',{
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
