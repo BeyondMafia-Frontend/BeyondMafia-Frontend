@@ -50,7 +50,7 @@ addRole(role){
             gameId : games.gameId,
             playerid: this.props.playerid
           }
-          const rawResponse = await fetch('https://beyondmafia.live/joinGame',{
+          const rawResponse = await fetch('https://www.beyondmafia.live/joinGame',{
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -133,7 +133,7 @@ addRole(role){
           <div>
           <div className="createGameOptions">
           <div className="createGameInner" onClick={async ()=>{
-            await fetch('https://beyondmafia.live/createGame',{
+            await fetch('https://www.beyondmafia.live/createGame',{
       method: 'POST',
       keepalive:false,
       headers: {

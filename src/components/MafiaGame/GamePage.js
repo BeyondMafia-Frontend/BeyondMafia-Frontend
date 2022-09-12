@@ -66,7 +66,7 @@ class GamePage extends Component {
 
 async componentDidMount(){
   var cookie = this.state.cookies.get('bmcookie');
-  const rawResponse = await fetch('https://beyondmafia.live/getSocket',{
+  const rawResponse = await fetch('https://www.beyondmafia.live/getSocket',{
       method: 'GET',
       headers: {
         'Accept': 'application/json',
