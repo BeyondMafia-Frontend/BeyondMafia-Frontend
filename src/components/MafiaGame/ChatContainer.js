@@ -224,6 +224,8 @@ render(){
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
+      messages.shift();
+      return;
     }
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
