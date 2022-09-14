@@ -65,10 +65,10 @@ handlePlayerClick = playerName => () => {
   window.msgText = this.state.msgText;
 }
 
-async parseSettingsMessage(command){
+parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({currentGameState:command.state})
-  await this.props.setGameSettings(command);
+  this.props.setGameSettings(command);
   this.setState({parsed:true});
 }
 }
@@ -167,7 +167,7 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
 
-  messages.map(async(message) => {
+  messages.map(message => {
     let messageElement;
     var command = JSON.parse(message);
     if(command.cmd === -4){
@@ -223,7 +223,7 @@ render(){
       this.props.addPlayer({name: command.playerid, playerid:  command.playerid})
     }
     if(command.cmd === 9){
-      await this.parseSettingsMessage(command);
+      this.parseSettingsMessage(command);
     }
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
