@@ -62,7 +62,6 @@ class GamePage extends Component {
       this.updateGameState = this.updateGameState.bind(this)
       this.setRoleID =  this.setRoleID.bind(this);
       this.removePlayer = this.removePlayer.bind(this);
-      this.getPlayerName = this.getPlayerName.bind(this);
 }
 
 async componentDidMount(){
@@ -86,18 +85,6 @@ async componentDidMount(){
   }
 }
 
-getPlayerName(playerid){
-  this.state.players.forEach((playerObject) => {
-    if(playerObject.playerid === playerid){
-      return playerObject.name;
-    }
-  });
-  this.state.graveyard.forEach((playerObject) => {
-    if(playerObject.playerid === playerid){
-      return playerObject.name;
-    }
-  });
-}
 
 setMembers(meeting){
     this.setState({ meetings: [...this.state.meetings, meeting] });
@@ -170,7 +157,7 @@ handleChange(event){
   this.setState({value: event.target.value})
 }
 
- async setGameSettings(command){
+ setGameSettings(command){
   var players = []
   var graveyard = []
   var playerPromise = command.players.map(async(playerid)=>{
@@ -187,6 +174,9 @@ handleChange(event){
        var content = await rawResponse.json();
        players.push({name:content.username, playerid:playerid});
   })
+  Promise.all(playerPromise).then(()=>{
+      this.setState({players:players});
+  })
   var commandPromise = command.graveyard.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
@@ -201,10 +191,10 @@ handleChange(event){
        var content = await rawResponse.json();
        graveyard.push({name:content.username, playerid:playerid});
   })
-  await Promise.all(playerPromise)
-  await Promise.all(commandPromise)
-  this.setState({graveyard:graveyard})
-  this.setState({players:players});
+
+  Promise.all(commandPromise).then(()=>{
+      this.setState({graveyard:graveyard})
+  })
   this.setState({roles:command.roles});
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
@@ -296,7 +286,7 @@ render(){
 
 
 		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
-		    <ChatContainer getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
+		    <ChatContainer setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">
