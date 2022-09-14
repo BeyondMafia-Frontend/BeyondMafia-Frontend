@@ -157,14 +157,36 @@ handleChange(event){
   this.setState({value: event.target.value})
 }
 
-setGameSettings(command){
+ setGameSettings(command){
   var players = []
   var graveyard = []
-  command.players.forEach((playerid)=>{
-    players.push({name: playerid, playerid: playerid})
+  command.players.map(async(playerid)=>{
+    var sendJSON = {};
+    sendJSON.id = playerid
+    var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sendJSON)
+      });
+       var content = await rawResponse.json();
+       players.push({name:content.name, playerid:playerid});
   })
-  command.graveyard.forEach((playerid)=>{
-    graveyard.push({name:playerid, playerid: playerid})
+  command.graveyard.map(async(playerid)=>{
+    var sendJSON = {};
+    sendJSON.id = playerid
+    var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sendJSON)
+      });
+       var content = await rawResponse.json();
+       graveyard.push({name:content.name, playerid:playerid});
   })
   this.setState({roles:command.roles});
   this.setState({players:players});
