@@ -77,22 +77,22 @@ parseVoteMessage(command){
   this.props.addVote({playerid:command.playerid, target:command.target, roleAction:command.roleAction});
   if(command.playerid !== command.target){
     if(command.target ===  -1){
-      return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} unvotes!</body></div>)
+      return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} unvotes!</body></div>)
     }
     else if(command.target === 18446744073709551615){
-      return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} votes no one!</body></div>)
+      return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} votes no one!</body></div>)
     }
     else{
-  return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} votes {this.props.nameMapping[command.target]}!</body></div>)
+  return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} votes {this.props.getPlayerName(command.target)}!</body></div>)
 }
 }
 else{
-return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} votes themself!</body></div>)
+return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} votes themself!</body></div>)
 }
 
 }
 parsePlayerMessage(command){
- return (<div className="playerChat"><img className="chatImage" src={"/assets/default-avis/neurondark.png"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{this.props.nameMapping[command.playerid]}</strong> | {command.msg} </body> </div>);
+ return (<div className="playerChat"><img className="chatImage" src={"/assets/default-avis/neurondark.png"} /> <body> <strong onClick={this.handlePlayerClick(command.playerId)}>{this.props.getPlayerName(command.playerId)}</strong> | {command.msg} </body> </div>);
 }
 
 parseSystemMessage(command){
@@ -100,23 +100,23 @@ parseSystemMessage(command){
 }
 
 parseTypingMessage(command){
-    return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} is typing...</body></div>)
+    return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerId)} is typing...</body></div>)
 }
 parseRoleMessage(command){
   if(command.action === 1){
     var playerid = command.playerid;
     this.props.removePlayer(playerid);
     this.props.addGraveyard({name: playerid, playerid: playerid,roleid:command.role});
-    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.nameMapping[playerid]} has been sent to the guillotine. </body></div>)]})
+    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>)]})
     return;
   }
   if(command.action === 2){
     if(command.alignment === 1){
-      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.nameMapping[playerid]} is sided with the mafia.</body></div>)]})
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the mafia.</body></div>)]})
       return;
     }
     else{
-      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.nameMapping[playerid]} is sided with the village.</body></div>)]})
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the village.</body></div>)]})
       return;
     }
   }
@@ -124,17 +124,17 @@ parseRoleMessage(command){
     this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>)]})
   }
   if(command.action === 4){
-    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>You learned that {this.props.nameMapping[playerid]} is {utils.resolveRoleString(command.role)}! </body></div>)]})
+    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>You learned that {this.props.getPlayerName(playerid)} is {utils.resolveRoleString(command.role)}! </body></div>)]})
   }
 }
 
 parseNotTypingMessage(command){
     //hidebubble
-    return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} has stopped typing!</body></div>)
+    return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerId)} has stopped typing!</body></div>)
 }
 
 parseLeaveMessage(command){
-    return(<div className="systemMessage"><body>{this.props.nameMapping[command.playerid]} has left the game!</body></div>)
+    return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has left the game!</body></div>)
 }
 
 handleType(event) {
