@@ -69,6 +69,7 @@ async parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({currentGameState:command.state})
   await this.props.setGameSettings(command);
+  this.setState({parsed:true});
 }
 }
 
