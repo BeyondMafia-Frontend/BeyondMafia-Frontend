@@ -30,7 +30,7 @@ getMessages(){
 }
 
 handleConnection(){
-let websocketString = `ws://beyondmafia.live:${this.props.websocketPort}`
+let websocketString = `wss://www.beyondmafia.live/websocket/${this.props.websocketPort}/`
 let socket = new WebSocket(websocketString);
 
 socket.onopen = (e) =>{
