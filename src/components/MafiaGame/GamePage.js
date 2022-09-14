@@ -160,7 +160,7 @@ handleChange(event){
  setGameSettings(command){
   var players = []
   var graveyard = []
-  command.players.map(async(playerid)=>{
+  var playerPromise = command.players.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
     var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -174,7 +174,10 @@ handleChange(event){
        var content = await rawResponse.json();
        players.push({name:content.username, playerid:playerid});
   })
-  command.graveyard.map(async(playerid)=>{
+  Promise.all(playerPromise).then(()=>{
+      this.setState({players:players});
+  })
+  var commandPromise = command.graveyard.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
     var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -188,9 +191,11 @@ handleChange(event){
        var content = await rawResponse.json();
        graveyard.push({name:content.username, playerid:playerid});
   })
+
+  Promise.all(commandPromise).then(()=>{
+      this.setState({graveyard:graveyard})
+  })
   this.setState({roles:command.roles});
-  this.setState({players:players});
-  this.setState({graveyard:graveyard})
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
   this.setState({gameState:command.state})
