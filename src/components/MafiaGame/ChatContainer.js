@@ -68,8 +68,10 @@ handlePlayerClick = playerName => () => {
 parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({currentGameState:command.state})
-  this.props.setGameSettings(command);
-  this.setState({parsed:true});
+  this.props.setGameSettings(command).then(()=>{
+
+    this.setState({parsed:true});
+  })
 }
 }
 
