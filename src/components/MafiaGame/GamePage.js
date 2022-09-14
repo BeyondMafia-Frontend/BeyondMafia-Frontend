@@ -170,7 +170,7 @@ handleChange(event){
   this.setState({value: event.target.value})
 }
 
- setGameSettings(command){
+ async setGameSettings(command){
   var players = []
   var graveyard = []
   var playerPromise = command.players.map(async(playerid)=>{
@@ -187,9 +187,7 @@ handleChange(event){
        var content = await rawResponse.json();
        players.push({name:content.username, playerid:playerid});
   })
-  Promise.all(playerPromise).then(()=>{
-      this.setState({players:players});
-  })
+  
   var commandPromise = command.graveyard.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
@@ -205,9 +203,11 @@ handleChange(event){
        graveyard.push({name:content.username, playerid:playerid});
   })
 
-  Promise.all(commandPromise).then(()=>{
+  await Promise.all(commandPromise)
+  await Promise.all(playerPromise)
+
       this.setState({graveyard:graveyard})
-  })
+  this.setState({players:players});
   this.setState({roles:command.roles});
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
