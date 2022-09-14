@@ -172,7 +172,7 @@ handleChange(event){
         body: JSON.stringify(sendJSON)
       });
        var content = await rawResponse.json();
-       players.push({name:content.name, playerid:playerid});
+       players.push({name:content.username, playerid:playerid});
   })
   command.graveyard.map(async(playerid)=>{
     var sendJSON = {};
@@ -186,7 +186,7 @@ handleChange(event){
         body: JSON.stringify(sendJSON)
       });
        var content = await rawResponse.json();
-       graveyard.push({name:content.name, playerid:playerid});
+       graveyard.push({name:content.username, playerid:playerid});
   })
   this.setState({roles:command.roles});
   this.setState({players:players});
