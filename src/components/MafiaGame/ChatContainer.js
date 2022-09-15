@@ -166,7 +166,7 @@ handleType(event) {
 render(){
   var {messages} = this.props;
   var messagesArr = [];
-
+  var displayedMessages;
   var messagePromise = messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
@@ -233,7 +233,6 @@ var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
   chatContainer.scrollBy(0,Number.MAX_SAFE_INTEGER);
 }
-var displayedMessages;
 if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
   displayedMessages = this.state.messages;
 }
