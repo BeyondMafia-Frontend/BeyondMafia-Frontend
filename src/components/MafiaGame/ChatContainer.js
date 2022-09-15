@@ -213,7 +213,7 @@ while(messages.length !== 0){
       messageElement = this.parseLeaveMessage(command);
     }
     if(command.cmd === 7){
-      if(completed){
+      if(this.state.completed){
       this.setState({currentGameState:command.state});
       this.props.updateGameState(command.state);
       this.iterateMessages(command.state);
@@ -232,7 +232,7 @@ while(messages.length !== 0){
       messages.shift();
       return;
     }
-    if(completed){
+    if(this.state.completed){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
   }
