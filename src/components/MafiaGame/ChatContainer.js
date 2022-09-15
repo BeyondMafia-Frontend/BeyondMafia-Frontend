@@ -169,6 +169,7 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
   var gameInit = new Promise(async (res,reject)=>{
+  if(!this.state.completed){
   for(var i = 0; i < messages.length;i++){
     var command = JSON.parse(messages[i]);
     if(command.cmd === -3){
@@ -183,6 +184,7 @@ render(){
       break;
     }
   }
+}
 });
 
 var displayedMessages;
