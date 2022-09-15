@@ -228,7 +228,7 @@ render(){
       return;
     }
     if(command.cmd === 8){
-      this.props.addPlayer({name: command.playerid, playerid:  command.playerid})
+      this.props.addPlayer(command.playerid)
       messages.shift();
       return;
     }

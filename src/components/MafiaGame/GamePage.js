@@ -33,17 +33,6 @@ class GamePage extends Component {
         getSize: ()=>{
           return this.state.players.length;
         },
-        addPlayer: (play)=>{
-          var check = false;
-          this.state.players.forEach( (player) => {
-            if(player.playerid === play.playerid){
-              check = true;
-            }
-          });
-            if(!check){
-              this.setState({players: [...this.state.players, play]})
-        }
-        },
 	      graveyard :[]
       }
       this.setMembers = this.setMembers.bind(this);
@@ -229,7 +218,7 @@ async addPlayer(playerid){
       body: JSON.stringify(sendJSON)
     });
   var content = await rawResponse.json();
-  this.state.addPlayers({name: content.username, playerid: playerid})
+  this.setState({ players: [...this.state.players, {name:content.username,playerid:playerid}]});
 }
 
 updateMessages(message){
@@ -307,7 +296,7 @@ render(){
 
 
 		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
-		    <ChatContainer getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.state.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
+		    <ChatContainer getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">
