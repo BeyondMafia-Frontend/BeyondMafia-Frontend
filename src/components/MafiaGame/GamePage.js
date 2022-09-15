@@ -197,16 +197,14 @@ handleChange(event){
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(sendJSON)
-             var content = await rawResponse.json();
-
-              graveyard.push({name:content.username, playerid:playerid});
       });
+       var content = await rawResponse.json();
+       graveyard.push({name:content.username, playerid:playerid});
   })
-
-  await Promise.all(playerPromise);
-  await Promise.all(commandPromise);
-  this.setState({players:players});
+await Promise.all(playerPromise)
+  await Promise.all(commandPromise)
   this.setState({graveyard:graveyard})
+  this.setState({players:players});
   this.setState({roles:command.roles});
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
