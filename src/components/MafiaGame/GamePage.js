@@ -76,14 +76,9 @@ async componentDidMount(){
 }
 
 getPlayerName(playerid){
-  for(var i = 0 ; i < this.state.players.length;i++){
-    if(this.state.players[i].playerid === playerid){
-      return this.state.players[i].name;
-    }
-  }
-  for(var i = 0 ; i < this.state.graveyard.length;i++){
-    if(this.state.graveyard[i].playerid === playerid){
-      return this.state.graveyard[i].name;
+  for(var i = 0 ; i < playerMap.length;i++){
+    if(playerMap[i].playerid === playerid){
+       return playerMap[i].name;
     }
   }
 }
@@ -160,9 +155,10 @@ handleChange(event){
 }
 
  async setGameSettings(command){
+  var playerMap = []
   var players = []
   var graveyard = []
-  var playerPromise = command.players.map(async(playerid)=>{
+  var globalPlayers = command.globalPlayers.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
     var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -174,26 +170,29 @@ handleChange(event){
         body: JSON.stringify(sendJSON)
       });
        var content = await rawResponse.json();
-       players.push({name:content.username, playerid:playerid});
-  })
-  var commandPromise = command.graveyard.map(async(playerid)=>{
-    var sendJSON = {};
-    sendJSON.id = playerid
-    var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(sendJSON)
-      });
-       var content = await rawResponse.json();
-       graveyard.push({name:content.username, playerid:playerid});
-  })
-await Promise.all(playerPromise)
-  await Promise.all(commandPromise)
+       playerMap.push({name:content.username, playerid:playerid});
+})
+var playersPromise = command.players.map(async(playerid)=>{
+  for(var i = 0 ; i < playerMap.length;i++){
+    if(playerMap[i].playerid === playerid){
+      players.push(playerMap[i]);
+      break;
+    }
+  }
+});
+var graveyardPromise = command.players.map(async(playerid)=>{
+  for(var i = 0 ; i < playerMap.length;i++){
+    if(playerMap[i].playerid === playerid){
+      graveyard.push(playerMap[i]);
+      break;
+    }
+  }
+});
+await Promise.all(playersPromise);
+await Promise.all(globalPlayers);
+this.setState({players:players});
   this.setState({graveyard:graveyard})
-  this.setState({players:players});
+  this.setState({graveyard:playerMap})
   this.setState({roles:command.roles});
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
@@ -220,6 +219,7 @@ async addPlayer(playerid){
   var content = await rawResponse.json();
   this.setState({ players: [...this.state.players, {name:content.username,playerid:playerid}]});
 }
+
 
 updateMessages(message){
   if(message.length > 0){
