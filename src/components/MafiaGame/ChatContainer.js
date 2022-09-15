@@ -228,6 +228,7 @@ render(){
         messages.shift();
         this.setState({parsed:true});
       })
+      return;
     }
     if(this.state.parsed){
     messages.shift();
