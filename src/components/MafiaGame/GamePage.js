@@ -76,9 +76,9 @@ async componentDidMount(){
 }
 
 getPlayerName(playerid){
-  for(var i = 0 ; i < playerMap.length;i++){
-    if(playerMap[i].playerid === playerid){
-       return playerMap[i].name;
+  for(var i = 0 ; i < this.state.playerMap.length;i++){
+    if(this.state.playerMap[i].playerid === playerid){
+       return this.state.playerMap[i].name;
     }
   }
 }
