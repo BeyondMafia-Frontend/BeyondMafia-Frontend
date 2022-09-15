@@ -15,6 +15,7 @@ class ChatContainer extends Component {
       parsed:false,
       typingDisabled: false,
       msgText: '',
+      completed: false,
       }
       this.handleType = this.handleType.bind(this);
       this.handleSendMessage = this.handleSendMessage.bind(this);
@@ -69,7 +70,8 @@ async parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({parsed:true});
   this.setState({currentGameState:command.state})
-  this.props.setGameSettings(command);
+  await this.props.setGameSettings(command);
+  this.setState({completed:true});
 }
 }
 
@@ -167,6 +169,7 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
 
+while(messages.length !== 0){
   messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
@@ -210,6 +213,7 @@ render(){
       messageElement = this.parseLeaveMessage(command);
     }
     if(command.cmd === 7){
+      if(completed){
       this.setState({currentGameState:command.state});
       this.props.updateGameState(command.state);
       this.iterateMessages(command.state);
@@ -217,6 +221,7 @@ render(){
       this.setState({messagesQueue:[]})
       this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
       messages.shift();
+    }
       return;
     }
     if(command.cmd === 8){
@@ -224,10 +229,16 @@ render(){
     }
     if(command.cmd === 9){
       this.parseSettingsMessage(command);
+      messages.shift();
+      return;
     }
+    if(completed){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
+  }
   });
+}
+
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
   chatContainer.scrollBy(0,Number.MAX_SAFE_INTEGER);
