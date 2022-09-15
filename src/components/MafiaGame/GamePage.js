@@ -174,7 +174,7 @@ handleChange(event){
        playerMap.push({name:content.username, playerid:playerid});
   })
   await Promise.all(globalPlayersPromise);
-
+  this.setState({playerMap:playerMap});
   var playersPromise = command.players.map(async(playerid)=>{
      players.push({name:this.getPlayerName(playerid), playerid:playerid});
    })

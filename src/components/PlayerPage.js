@@ -105,9 +105,13 @@ class PlayerPage extends Component {
             <input type="link" placeholder="Enter Youtube URL" onChange={e=> this.setState({youtubeUrl:e.target.value})}  />
             <input type="button" onClick={async ()=>{
               if(this.state.youtubeUrl.length > 5){
+              var yt = new Promise((res,rej)=>{
               this.setState({youtubeString: this.state.youtubeUrl});
               this.setState({youtubeUrl:""})
-              this.playYoutube();
+              resolve();
+            });
+            await Promise.all(yt);
+            this.playYoutube();
             }
           }}value="SUBMIT" />
             </form>
