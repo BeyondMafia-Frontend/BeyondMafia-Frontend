@@ -166,8 +166,8 @@ handleType(event) {
 render(){
   var {messages} = this.props;
   var messagesArr = [];
-  var displayedMessages;
-  var messagePromise = messages.map(async(message) => {
+
+  messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
     if(command.cmd === -4){
@@ -223,23 +223,22 @@ render(){
       this.props.addPlayer({name: command.playerid, playerid:  command.playerid})
     }
     if(command.cmd === 9){
-      await this.parseSettingsMessage(command);
+      this.parseSettingsMessage(command);
     }
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
   });
-Promise.all(messagePromise).then(()=>{
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
   chatContainer.scrollBy(0,Number.MAX_SAFE_INTEGER);
 }
+var displayedMessages;
 if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
   displayedMessages = this.state.messages;
 }
 else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
-});
   return(
   <div>
   <div className="chatContainer" onScroll={this.handleScroll}>
