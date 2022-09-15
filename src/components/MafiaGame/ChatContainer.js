@@ -228,7 +228,7 @@ render(){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
   });
-  await Promise.all(messagePromise);
+Promise.all(messagePromise).then(()=>{
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
   chatContainer.scrollBy(0,Number.MAX_SAFE_INTEGER);
@@ -240,6 +240,7 @@ if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).le
 else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
+});
   return(
   <div>
   <div className="chatContainer" onScroll={this.handleScroll}>
