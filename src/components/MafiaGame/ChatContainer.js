@@ -233,7 +233,7 @@ render(){
       return;
     }
     if(command.cmd === 9){
-      this.parseSettingsMessage(command);
+      await this.parseSettingsMessage(command);
       messages.shift();
       return;
     }
