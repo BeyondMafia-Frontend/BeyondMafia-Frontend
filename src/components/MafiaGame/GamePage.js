@@ -217,8 +217,19 @@ addGraveyard(player){
     grave.push({name:player.playerid,playerid:player.playerid,role:player.roleid})
   this.setState({graveyard:grave})
 }
-addPlayer(playerid){
-    this.state.addPlayers({name: playerid, playerid: playerid})
+async addPlayer(playerid){
+  var sendJSON = {};
+  sendJSON.id = playerid
+  var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendJSON)
+    });
+  var content = await rawResponse.json();
+  this.state.addPlayers({name: content.username, playerid: playerid})
 }
 
 updateMessages(message){
