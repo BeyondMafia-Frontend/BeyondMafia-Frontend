@@ -169,7 +169,6 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
 
-while(messages.length !== 0){
   messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
@@ -243,7 +242,6 @@ while(messages.length !== 0){
     this.setState({messages: [...this.state.messages, messageElement]})
   }
   });
-}
 
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
