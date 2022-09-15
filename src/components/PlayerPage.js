@@ -110,8 +110,9 @@ class PlayerPage extends Component {
               this.setState({youtubeUrl:""})
               res();
             });
-            await Promise.all(yt);
-            this.playYoutube();
+            yt.then(()=>{
+              this.playYoutube();
+            });
             }
           }}value="SUBMIT" />
             </form>

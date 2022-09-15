@@ -16,6 +16,7 @@ class GamePage extends Component {
         cookies: cookies,
         meetings: [],
         messages: [],
+        playerMap:[],
         messageBankLength: -1,
         meetingBank:{},
         roles:[],
