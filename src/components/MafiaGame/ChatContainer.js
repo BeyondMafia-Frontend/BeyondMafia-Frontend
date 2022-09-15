@@ -167,7 +167,7 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
 
-  messages.map(async(message) => {
+  var messagePromise = messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
     if(command.cmd === -4){
@@ -228,6 +228,7 @@ render(){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
   });
+  await Promise.all(messagePromise);
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
   chatContainer.scrollBy(0,Number.MAX_SAFE_INTEGER);
