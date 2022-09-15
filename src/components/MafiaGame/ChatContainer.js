@@ -169,7 +169,7 @@ render(){
   var {messages} = this.props;
   var messagesArr = [];
 
-  messages.map(async(message) => {
+  var chatPromise = messages.map(async(message) => {
     let messageElement;
     var command = JSON.parse(message);
     if(command.cmd === -4){
@@ -242,13 +242,16 @@ render(){
     this.setState({messages: [...this.state.messages, messageElement]})
   }
   });
+
 var displayedMessages;
+Promise.all(chatPromise).then(()=>{
 if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
   displayedMessages = this.state.messages;
 }
 else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
+})
   return(
   <div>
   <div className="chatContainer" onScroll={this.handleScroll}>
