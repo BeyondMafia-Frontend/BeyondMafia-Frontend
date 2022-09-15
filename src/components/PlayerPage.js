@@ -108,7 +108,7 @@ class PlayerPage extends Component {
               var yt = new Promise((res,rej)=>{
               this.setState({youtubeString: this.state.youtubeUrl});
               this.setState({youtubeUrl:""})
-              resolve();
+              res();
             });
             await Promise.all(yt);
             this.playYoutube();
