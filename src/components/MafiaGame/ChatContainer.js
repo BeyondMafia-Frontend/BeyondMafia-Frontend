@@ -69,7 +69,7 @@ async parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({currentGameState:command.state})
   await this.props.setGameSettings(command);
-          this.setState({parsed:true});
+  this.setState({parsed:true});
 }
 }
 
@@ -210,7 +210,6 @@ render(){
       messageElement = this.parseLeaveMessage(command);
     }
     if(command.cmd === 7){
-      if(this.state.parsed){
       this.setState({currentGameState:command.state});
       this.props.updateGameState(command.state);
       this.iterateMessages(command.state);
@@ -218,22 +217,16 @@ render(){
       this.setState({messagesQueue:[]})
       this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
       messages.shift();
-    }
       return;
     }
     if(command.cmd === 8){
       this.props.addPlayer({name: command.playerid, playerid:  command.playerid})
     }
     if(command.cmd === 9){
-      this.parseSettingsMessage(command).then(()=>{
-        messages.shift();
-      })
-      return;
+      this.parseSettingsMessage(command);
     }
-    if(this.state.parsed){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
-  }
   });
 var chatContainer = document.getElementsByClassName('chatContainer')[0];
 if(chatContainer){
