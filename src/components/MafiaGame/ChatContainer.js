@@ -178,6 +178,8 @@ while(messages.length !== 0){
     }
     if(command.cmd === -3){
       this.props.setPlayerId(command.playerId)
+      messages.shift();
+      return;
     }
     if(command.cmd === -2){
       messageElement = this.parseNotTypingMessage(command);
@@ -207,6 +209,8 @@ while(messages.length !== 0){
         role: command.role
       };
       this.props.setMembers(meeting);
+      messages.shift();
+      return;
     }
     if(command.cmd === 6){
       this.props.removePlayer(command.playerid);
