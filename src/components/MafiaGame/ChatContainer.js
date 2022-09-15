@@ -69,6 +69,7 @@ async parseSettingsMessage(command){
   if(this.state.parsed === false){
   this.setState({currentGameState:command.state})
   await this.props.setGameSettings(command);
+          this.setState({parsed:true});
 }
 }
 
@@ -226,7 +227,6 @@ render(){
     if(command.cmd === 9){
       this.parseSettingsMessage(command).then(()=>{
         messages.shift();
-        this.setState({parsed:true});
       })
       return;
     }
