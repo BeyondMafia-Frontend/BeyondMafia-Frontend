@@ -178,9 +178,8 @@ render(){
       this.props.addPlayer(command.playerid)
     }
     if(command.cmd === 9){
-      this.parseSettingsMessage().then(()=>{
-        res();
-      })
+      await this.parseSettingsMessage(command);
+      resolve();
       break;
     }
   }
