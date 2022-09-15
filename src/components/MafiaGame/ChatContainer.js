@@ -185,6 +185,9 @@ render(){
     }
   }
 }
+else{
+  res();
+}
 });
 
 var displayedMessages;
