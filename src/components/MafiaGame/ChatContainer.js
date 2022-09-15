@@ -170,7 +170,7 @@ render(){
   var messagesArr = [];
   var gameInit = new Promise(async (res,reject)=>{
   for(var i = 0; i < messages.length;i++){
-    var command = JSON.parse(message);
+    var command = JSON.parse(message[i]);
     if(command.cmd === -3){
       this.props.setPlayerId(command.playerId)
     }
@@ -179,7 +179,7 @@ render(){
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
-      resolve();
+      res();
       break;
     }
   }
