@@ -76,6 +76,9 @@ async componentDidMount(){
 }
 
 getPlayerName(playerid){
+  if(!this.state.playerMap){
+    return;
+  }
   for(var i = 0 ; i < this.state.playerMap.length;i++){
     if(this.state.playerMap[i].playerid === playerid){
        return this.state.playerMap[i].name;
@@ -192,7 +195,6 @@ await Promise.all(playersPromise);
 await Promise.all(globalPlayers);
 this.setState({players:players});
   this.setState({graveyard:graveyard})
-  this.setState({graveyard:playerMap})
   this.setState({roles:command.roles});
   this.setState({state:command.state})
   this.setState({maxSize:command.maxSize});
