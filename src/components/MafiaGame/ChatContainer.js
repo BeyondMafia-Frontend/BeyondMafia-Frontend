@@ -226,6 +226,8 @@ while(messages.length !== 0){
     }
     if(command.cmd === 8){
       this.props.addPlayer({name: command.playerid, playerid:  command.playerid})
+      messages.shift();
+      return;
     }
     if(command.cmd === 9){
       this.parseSettingsMessage(command);
