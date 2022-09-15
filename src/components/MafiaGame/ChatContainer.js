@@ -179,7 +179,7 @@ render(){
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
-      resolve();
+      res();
       break;
     }
   }
