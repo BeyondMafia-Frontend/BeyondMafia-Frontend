@@ -168,17 +168,35 @@ handleType(event) {
 render(){
   var {messages} = this.props;
   var messagesArr = [];
+  var gameInit = new Promise(async (res,reject)=>{
+  if(!this.state.completed){
+  for(var i = 0; i < messages.length;i++){
+    var command = JSON.parse(messages[i]);
+    if(command.cmd === -3){
+      this.props.setPlayerId(command.playerId)
+    }
+    if(command.cmd === 8){
+      this.props.addPlayer(command.playerid)
+    }
+    if(command.cmd === 9){
+      await this.parseSettingsMessage(command);
+      res();
+      break;
+    }
+  }
+}
+else{
+  res();
+}
+});
 
-  messages.map(async(message) => {
+var displayedMessages;
+gameInit.then(()=>{
+  messages.map((message) => {
     let messageElement;
     var command = JSON.parse(message);
     if(command.cmd === -4){
       alert('game over');
-    }
-    if(command.cmd === -3){
-      this.props.setPlayerId(command.playerId)
-      messages.shift();
-      return;
     }
     if(command.cmd === -2){
       messageElement = this.parseNotTypingMessage(command);
@@ -208,15 +226,12 @@ render(){
         role: command.role
       };
       this.props.setMembers(meeting);
-      messages.shift();
-      return;
     }
     if(command.cmd === 6){
       this.props.removePlayer(command.playerid);
       messageElement = this.parseLeaveMessage(command);
     }
     if(command.cmd === 7){
-      if(this.state.completed){
       this.setState({currentGameState:command.state});
       this.props.updateGameState(command.state);
       this.iterateMessages(command.state);
@@ -224,25 +239,12 @@ render(){
       this.setState({messagesQueue:[]})
       this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
       messages.shift();
-    }
       return;
     }
-    if(command.cmd === 8){
-      this.props.addPlayer(command.playerid)
-      messages.shift();
-      return;
-    }
-    if(command.cmd === 9){
-      await this.parseSettingsMessage(command);
-      messages.shift();
-      return;
-    }
-    if(this.state.completed){
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
-  }
   });
-var displayedMessages;
+})
 if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
   displayedMessages = this.state.messages;
 }

@@ -16,6 +16,7 @@ class GamePage extends Component {
         cookies: cookies,
         meetings: [],
         messages: [],
+        playerMap:[],
         messageBankLength: -1,
         meetingBank:{},
         roles:[],
@@ -76,12 +77,10 @@ async componentDidMount(){
 }
 
 getPlayerName(playerid){
-  if(!this.state.playerMap){
-    return;
-  }
   for(var i = 0 ; i < this.state.playerMap.length;i++){
     if(this.state.playerMap[i].playerid === playerid){
-       return this.state.playerMap[i].name;
+      return this.state.playerMap[i].name;
+      break;
     }
   }
 }
@@ -161,7 +160,7 @@ handleChange(event){
   var playerMap = []
   var players = []
   var graveyard = []
-  var globalPlayers = command.globalPlayers.map(async(playerid)=>{
+  var globalPlayersPromise = command.globalPlayers.map(async(playerid)=>{
     var sendJSON = {};
     sendJSON.id = playerid
     var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -174,26 +173,17 @@ handleChange(event){
       });
        var content = await rawResponse.json();
        playerMap.push({name:content.username, playerid:playerid});
-})
-var playersPromise = command.players.map(async(playerid)=>{
-  for(var i = 0 ; i < playerMap.length;i++){
-    if(playerMap[i].playerid === playerid){
-      players.push(playerMap[i]);
-      break;
-    }
-  }
-});
-var graveyardPromise = command.players.map(async(playerid)=>{
-  for(var i = 0 ; i < playerMap.length;i++){
-    if(playerMap[i].playerid === playerid){
-      graveyard.push(playerMap[i]);
-      break;
-    }
-  }
-});
-await Promise.all(playersPromise);
-await Promise.all(globalPlayers);
-this.setState({players:players});
+  })
+  await Promise.all(globalPlayersPromise);
+  this.setState({playerMap:playerMap});
+  var playersPromise = command.players.map(async(playerid)=>{
+     players.push({name:this.getPlayerName(playerid), playerid:playerid});
+   })
+   var graveyardPromise = command.graveyard.map(async(playerid)=>{
+      graveyard.push({name:this.getPlayerName(playerid), playerid:playerid});
+    })
+  await Promise.all(playersPromise);
+  await Promise.all(graveyardPromise)
   this.setState({graveyard:graveyard})
   this.setState({roles:command.roles});
   this.setState({state:command.state})
