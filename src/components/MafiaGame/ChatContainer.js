@@ -241,6 +241,9 @@ gameInit.then(()=>{
       messages.shift();
       return;
     }
+    if(command.cmd === 8){
+      this.props.addPlayer(command.playerid)
+    }
     messages.shift();
     this.setState({messages: [...this.state.messages, messageElement]})
   });
