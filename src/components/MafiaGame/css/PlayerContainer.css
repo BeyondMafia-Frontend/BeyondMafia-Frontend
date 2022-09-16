@@ -17,9 +17,8 @@
   vertical-align: middle
 }
 .role{
-    display: inline;
-    height: 50px;
-    width: 50px;
+    height: 2vw;
+    width: 2vw;
     padding-right: 5px;
     vertical-align: middle
 }

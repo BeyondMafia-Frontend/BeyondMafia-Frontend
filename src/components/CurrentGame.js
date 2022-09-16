@@ -20,7 +20,7 @@ class CurrentGame extends Component {
             <strong> {countOccurrences(this.props.currentGame.roles,role)  > 1
                       ? countOccurrences(this.props.currentGame.roles,role)
                       : null} </strong>
-            <img src={utils.resolveRole(role)} width='35px' height='35px'/>
+            <img src={utils.resolveRole(role)} width='4vw' height='4vw'/>
           </div>)
         })
           game = (<ul className="currentGame">

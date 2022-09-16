@@ -7,8 +7,8 @@ class Footer extends Component {
     constructor(props){
       super(props);
       this.state = {
-  
-      }  
+
+      }
     }
 
 render(){
@@ -16,7 +16,7 @@ render(){
     return(
 
         <footer>
-                
+
             <div className='footer-col'>
                 <h3 className='center'>Quick Links</h3>
                     <div className='btn-square'>
@@ -24,12 +24,11 @@ render(){
                         <button class='footer'>Pinned Topics</button>
                         <button class='footer'>Pinned Topics</button>
                         <button class='footer'>Pinned Topics</button>
-                        
+
                     </div>
-                    <div class='footer-dividerl'></div>
             </div>
-          
-            
+                              <div class='footer-dividerl'></div>
+
 
             <div className='footer-col'>
                 <h3 className='center'>Recent Forums</h3>
@@ -38,14 +37,14 @@ render(){
                         <li>Why I definitly deserve...</li>
 
                     </ul>
-                    <div class='footer-dividerr'></div>
 
             </div>
+                                <div class='footer-dividerl'></div>
             <div className='footer-col'>
-                
+
                 <h3 className='center'>Mod Mail</h3>
                     <p class="footer">
-                        Contact the mod team for any issue you 
+                        Contact the mod team for any issue you
                         <br></br>
                         may have. Please review the FAQ page first
                         <br></br>
@@ -56,7 +55,7 @@ render(){
 
             </div>
 
-                
+
         </footer>
 
     )

@@ -74,7 +74,7 @@ render(){
     <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
     </div>
 
-	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", width:"110%","font-family": `Montserrat`}}>
+	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", width:"100vw","font-family": `Montserrat`}}>
 
 		  <div className="info" style={{display:"flex", flexFlow:"column", gap:"15px",marginLeft:"75px"}}>
 		      <Announcements />
@@ -93,7 +93,7 @@ render(){
       </div>
 	      </div>
 
-		  <div className="divide" style={{paddingTop:'50px', backgroundColor:"rgb(239, 239, 238)", width:"110%"}}>
+		  <div className="divide" style={{paddingTop:'50px', backgroundColor:"rgb(239, 239, 238)", width:"100vw"}}>
 		      </div>
 
 		  <Footer />

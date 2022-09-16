@@ -31,7 +31,7 @@ addRole(role){
             <strong> {countOccurrences(games.roles,role)  > 1
                       ? countOccurrences(games.roles,role)
                       : null} </strong>
-            <img src={utils.resolveRole(role)} width='35px' height='35px'/>
+            <img src={utils.resolveRole(role)} className="role" />
           </div>)
         })
 
@@ -117,14 +117,14 @@ addRole(role){
            }
          }
          this.setState({currentRoles: newArr})
-       }} src={utils.resolveRole(role)} width='100px' height='100px'/>
+       }} src={utils.resolveRole(role)} className="currentRole"/>
      </div>);
    });
 
    utils.getAvailableRoles().forEach((role) => {
-     roles.push(<img onClick={()=>{
+     roles.push(<img className="currentRole" onClick={()=>{
        this.setState({ currentRoles: [...this.state.currentRoles, role] });
-     }} src={utils.resolveRole(role)} width='100px' height='100px'/>)
+     }} src={utils.resolveRole(role)} />)
    });
 
     return (<div className="createHolder">
@@ -178,7 +178,7 @@ addRole(role){
   }
 
 	return(
-	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white'}}>
+	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'70vw'}}>
 		<div className="lobbyHeader">
 		    <div className="lobbies">
 			<div class="btn-group">

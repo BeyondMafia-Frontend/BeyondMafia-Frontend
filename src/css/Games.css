@@ -11,6 +11,13 @@
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+.btn-group{
+  width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 75px;
+}
 .dot-highlighted {
   height: 10px;
   width: 10px;
@@ -72,6 +79,12 @@
   width:50%;
   margin:0 auto;
 }
+.currentRole{
+  height: 4vw;
+  width: 4vw;
+  padding-right: 5px;
+  vertical-align: middle
+}
 .players{
   padding-left: 25px;
   padding-right: 25px;
@@ -95,6 +108,7 @@
     background-color:grey;
     border-radius:0px 15px 0px 0px;
     border-color: grey;
+    width:70vw;
 
 }
 .lobbyHeader .spinner{
@@ -119,9 +133,9 @@ p.lobbyName{
     border-radius: 0px 15px 0px 0px;
     color: white;
     font-size: larger;
-    padding: 20px 76px;
     cursor: pointer;
     float: left;
+    width: 100%;
   }
   .createHolder{
     display:flex;
@@ -144,6 +158,7 @@ p.lobbyName{
 .lobbyHeader{
   display:flex;
   flex-direction: column;
+  width:70vw;
 }
   .btn-group button:not(:last-child) {
     border-right: none;
