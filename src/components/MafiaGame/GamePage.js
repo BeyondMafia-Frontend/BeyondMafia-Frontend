@@ -59,10 +59,10 @@ class GamePage extends Component {
 containsUser(playerid){
   for(var i = 0; i < this.state.playerMap.length;i++){
     if(this.state.playerMap[i].playerid === playerid){
-      return false;
+      return true;
     }
   }
-  return true;
+  return false;
 }
 async componentDidMount(){
   var cookie = this.state.cookies.get('bmcookie');
