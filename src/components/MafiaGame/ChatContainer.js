@@ -176,7 +176,7 @@ render(){
       this.props.setPlayerId(command.playerId)
     }
     if(command.cmd === 8){
-      this.props.addPlayer(command.playerid)
+      await this.props.addPlayer(command.playerid)
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
