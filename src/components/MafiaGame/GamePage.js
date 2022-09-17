@@ -220,6 +220,7 @@ async addPlayer(playerid){
     });
   var content = await rawResponse.json();
   this.setState({ players: [...this.state.players, {name:content.username,playerid:playerid}]});
+  this.setState({ playerMap:[...this.state.playerMap, {name:content.username,playerid:playerid}]});
 }
 }
 
