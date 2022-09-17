@@ -53,8 +53,17 @@ class GamePage extends Component {
       this.setRoleID =  this.setRoleID.bind(this);
       this.removePlayer = this.removePlayer.bind(this);
       this.getPlayerName = this.getPlayerName.bind(this);
+      this.containsUser = this.containsUser.bind(this);
 }
 
+containsUser(playerid){
+  for(var i = 0; i < playerMap.length;i++){
+    if(playerMap[i].playerid === playerid){
+      return false;
+    }
+  }
+  return true;
+}
 async componentDidMount(){
   var cookie = this.state.cookies.get('bmcookie');
   const rawResponse = await fetch('https://www.beyondmafia.live/getSocket',{
@@ -198,6 +207,7 @@ addGraveyard(player){
   this.setState({graveyard:grave})
 }
 async addPlayer(playerid){
+  if(!this.containsUser(playerid)){
   var sendJSON = {};
   sendJSON.id = playerid
   var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -210,6 +220,7 @@ async addPlayer(playerid){
     });
   var content = await rawResponse.json();
   this.setState({ players: [...this.state.players, {name:content.username,playerid:playerid}]});
+}
 }
 
 
