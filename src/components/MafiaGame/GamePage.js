@@ -185,14 +185,16 @@ handleChange(event){
   })
   await Promise.all(globalPlayersPromise);
   this.setState({playerMap:playerMap});
-  var playersPromise = command.players.map(async(playerid)=>{
-     players.push({name:this.getPlayerName(playerid), playerid:playerid});
-   })
-   var graveyardPromise = command.graveyard.map(async(playerid)=>{
-      graveyard.push({name:this.getPlayerName(playerid), playerid:playerid});
-    })
+  var playersPromise = playerMap.forEach(async(player) => {
+    if(command.players.includes(player.playerid)){
+      players.push(players);
+    }
+    if(command.graveyard.includes(player.playerid)){
+      graveyard.push(garveyard)
+    }
+  });
   await Promise.all(playersPromise);
-  await Promise.all(graveyardPromise)
+  this.setState({players:players})''
   this.setState({graveyard:graveyard})
   this.setState({roles:command.roles});
   this.setState({state:command.state})
