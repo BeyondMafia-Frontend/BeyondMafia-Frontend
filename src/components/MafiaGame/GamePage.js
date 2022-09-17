@@ -57,8 +57,8 @@ class GamePage extends Component {
 }
 
 containsUser(playerid){
-  for(var i = 0; i < playerMap.length;i++){
-    if(playerMap[i].playerid === playerid){
+  for(var i = 0; i < this.state.playerMap.length;i++){
+    if(this.state.playerMap[i].playerid === playerid){
       return false;
     }
   }
