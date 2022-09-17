@@ -174,9 +174,11 @@ render(){
     var command = JSON.parse(messages[i]);
     if(command.cmd === -3){
       this.props.setPlayerId(command.playerId)
+      messages.splice(i,1);
     }
     if(command.cmd === 8){
-      await this.props.addPlayer(command.playerid)
+      this.props.addPlayer(command.playerid)
+      messages.splice(i,1);
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
