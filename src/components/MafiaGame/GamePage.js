@@ -185,7 +185,7 @@ handleChange(event){
   })
   await Promise.all(globalPlayersPromise);
   this.setState({playerMap:playerMap});
-  var playersPromise = playerMap.forEach(async(player) => {
+  var playersPromise = playerMap.map(async(player) => {
     if(command.players.includes(player.playerid)){
       players.push(player);
     }
