@@ -187,14 +187,14 @@ handleChange(event){
   this.setState({playerMap:playerMap});
   var playersPromise = playerMap.forEach(async(player) => {
     if(command.players.includes(player.playerid)){
-      players.push(players);
+      players.push(player);
     }
     if(command.graveyard.includes(player.playerid)){
-      graveyard.push(garveyard)
+      graveyard.push(player)
     }
   });
   await Promise.all(playersPromise);
-  this.setState({players:players})''
+  this.setState({players:players});
   this.setState({graveyard:graveyard})
   this.setState({roles:command.roles});
   this.setState({state:command.state})
