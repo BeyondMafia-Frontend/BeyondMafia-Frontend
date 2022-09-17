@@ -207,7 +207,6 @@ addGraveyard(player){
   this.setState({graveyard:grave})
 }
 async addPlayer(playerid){
-  if(!this.containsUser(playerid)){
   var sendJSON = {};
   sendJSON.id = playerid
   var rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
@@ -221,7 +220,6 @@ async addPlayer(playerid){
   var content = await rawResponse.json();
   this.setState({ players: [...this.state.players, {name:content.username,playerid:playerid}]});
   this.setState({ playerMap:[...this.state.playerMap, {name:content.username,playerid:playerid}]});
-}
 }
 
 
