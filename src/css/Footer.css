@@ -5,15 +5,13 @@ footer{
     justify-content: space-around;
     flex-wrap: wrap;
     height: 200px;
-    width: 89.1%;
+    width: 100vw;
     background-color: white;
     border-width: 20px 225px 70px 75px;
     border-style: solid;
     border-color: rgb(239, 239, 238);
-
-
-
 }
+
 .footer-dividerl{
     border-left:5px solid rgb(239, 239, 238);;
 }
@@ -24,17 +22,22 @@ footer{
     bottom:30px;
     border-left:5px solid rgb(239, 239, 238);;
 }
-
+.footer-col{
+  background: white;
+width: 33%;
+display: flex;
+flex-direction: column;
+}
 .greyDiv {
     color: grey;
     width: 100%;
 
 }
 div.btn-square{
-    display: flex;
-  flex-wrap: wrap;
-
-  max-width: 340px
+  display: flex;
+      align-self: center;
+      flex-wrap: wrap;
+      max-width: 340px;
 }
 button.footer{
   border: 3px solid white;
