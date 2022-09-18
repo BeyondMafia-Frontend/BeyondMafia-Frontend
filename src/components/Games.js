@@ -24,7 +24,21 @@ addRole(role){
         var roles = [];
         var players = [];
         const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
-        const set = new Set(games.roles);
+        const set = new Set(games.roles.sort((a,b)=>{
+          if(a % 2 === 1 && b % 2 !== 1){
+            return 1;
+          }
+          else if(b % 2 === 1 && a % 2 !== 1){
+            return -1;
+          }
+          else if(a < b){
+            return -1;
+          }
+          else if(a > b){
+            return 1;
+          }
+          return 0;
+        }));
         set.forEach((role)=>{
           roles.push(
             <div className="lobbyRole">
@@ -105,7 +119,21 @@ addRole(role){
   var createGameDisplay = () =>{
    var roles = [];
    var currentRoles = [];
-   var currentRolesSet = new Set(this.state.currentRoles)
+   var currentRolesSet = new Set(this.state.currentRoles.sort((a,b)=>{
+     if(a % 2 === 1 && b % 2 !== 1){
+       return 1;
+     }
+     else if(b % 2 === 1 && a % 2 !== 1){
+       return -1;
+     }
+     else if(a < b){
+       return -1;
+     }
+     else if(a > b){
+       return 1;
+     }
+     return 0;
+   }))
    const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
    currentRolesSet.forEach((role) => {
      currentRoles.push(
@@ -128,7 +156,21 @@ addRole(role){
      </div>);
    });
 
-   utils.getAvailableRoles().forEach((role) => {
+   utils.getAvailableRoles().sort((a,b)=>{
+     if(a % 2 === 1 && b % 2 !== 1){
+       return 1;
+     }
+     else if(b % 2 === 1 && a % 2 !== 1){
+       return -1;
+     }
+     else if(a < b){
+       return -1;
+     }
+     else if(a > b){
+       return 1;
+     }
+     return 0;
+   }).forEach((role) => {
      roles.push(<img className="currentRole" onClick={()=>{
        this.setState({ currentRoles: [...this.state.currentRoles, role] });
      }} src={utils.resolveRole(role)} />)

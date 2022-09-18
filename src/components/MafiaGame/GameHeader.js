@@ -22,20 +22,20 @@ componentDidMount(){
   if(!this.state.roleSet && this.props.roles && this.props.roles.length !== 0){
     var counter = {};
     this.props.roles.sort((a,b)=>{
-          if(a % 2 === 1 && b % 2 !== 1){
-            return 1;
-          }
-          else if(b % 2 === 1 && a % 2 !== 1){
-            return -1;
-          }
-          else if(a < b){
-            return -1;
-          }
-          else if(a > b){
-            return 1;
-          }
-          return 0;
-        }).forEach((roleID, i) => {
+      if(a % 2 === 1 && b % 2 !== 1){
+        return 1;
+      }
+      else if(b % 2 === 1 && a % 2 !== 1){
+        return -1;
+      }
+      else if(a < b){
+        return -1;
+      }
+      else if(a > b){
+        return 1;
+      }
+      return 0;
+    }).forEach((roleID, i) => {
     if(counter[roleID]){
       counter[roleID] = counter[roleID]+1;
     }
