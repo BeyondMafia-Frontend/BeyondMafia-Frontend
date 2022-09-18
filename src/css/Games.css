@@ -88,6 +88,8 @@
 .currentRole{
   height: 4vw;
   width: 4vw;
+  min-width: 200px;
+  min-height: 200px;
   padding-right: 5px;
   vertical-align: middle
 }
