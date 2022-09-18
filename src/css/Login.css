@@ -41,17 +41,17 @@ img#player-pfp{
     font-family: 'Montserrat', sans-serif;
     color: white;
     text-decoration: none;
-    font-size: 1.5vw;
+    font-size: calc(15px + 0.5vw);
 }
 .nav-links-highlighted{
     font-family: 'Montserrat', sans-serif;
     color: rgb(216,44,44);
     text-decoration: none;
-    font-size: 1.5vw;
+    font-size: calc(15px + 0.5vw);
 }
 .nav-divider{
     color: white;
-    font-size:1.6vw;
+    font-size:calc(15px + 0.5vw);
 }
 .splash{
 display: flex;
