@@ -77,7 +77,7 @@ addRole(role){
         {roles}
         {games.maxPlayers !== games.currentPlayers
           ?
-          <div>
+          <div className="gameStatus">
           Pregame
           <img className="lobbyHome" title="Pregame" src="/assets/home.png"/>
           </div>

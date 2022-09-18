@@ -11,6 +11,11 @@
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+.gameStatus{
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+}
 .btn-group{
   width: 70vw;
     display: flex;
