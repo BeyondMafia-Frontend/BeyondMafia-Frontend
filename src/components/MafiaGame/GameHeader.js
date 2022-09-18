@@ -49,7 +49,21 @@ componentDidMount(){
 });
 }
 if(this.state.roleSet){
-  Object.keys(this.state.addedRoles).forEach((keys) => {
+  Object.keys(this.state.addedRoles).sort((a,b)=>{
+    if(a % 2 === 1 && b % 2 !== 1){
+      return 1;
+    }
+    else if(b % 2 === 1 && a % 2 !== 1){
+      return -1;
+    }
+    else if(a < b){
+      return -1;
+    }
+    else if(a > b){
+      return 1;
+    }
+    return 0;
+  }).forEach((keys) => {
     var value =  parseInt(keys);
     rolesArray.push(<div>
       <strong>{this.state.addedRoles[keys]}</strong>
