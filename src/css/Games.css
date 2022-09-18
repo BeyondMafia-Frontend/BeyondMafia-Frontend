@@ -17,7 +17,7 @@
   margin: 0 0 0 auto;
 }
 .btn-group{
-  width: 70vw;
+  width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -71,6 +71,7 @@
   flex-direction: column;
   padding-left:25px;
   padding-top:35px
+  overflow:auto;
 }
 .game{
   display: flex;
@@ -113,7 +114,7 @@
     background-color:grey;
     border-radius:0px 15px 0px 0px;
     border-color: grey;
-    width:70vw;
+    overflow: auto;
 
 }
 .lobbyHeader .spinner{
@@ -123,6 +124,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top:300px;
+    overflow: auto;
 }
 .active{
   background-color: #d43434!important;
@@ -137,10 +139,11 @@ p.lobbyName{
     border-style: none solid none none;
     border-radius: 0px 15px 0px 0px;
     color: white;
-    font-size: larger;
+    font-weight: bold;
     cursor: pointer;
-    float: left;
+    float:left;
     width: 100%;
+
   }
   .createHolder{
     display:flex;
@@ -163,7 +166,8 @@ p.lobbyName{
 .lobbyHeader{
   display:flex;
   flex-direction: column;
-  width:70vw;
+  width:100%;
+  min-width: 500px;
 }
   .btn-group button:not(:last-child) {
     border-right: none;

@@ -185,7 +185,7 @@ addRole(role){
   }
 
 	return(
-	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'70vw',"font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
+	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"min-width":"500px","font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
 		<div className="lobbyHeader">
 		    <div className="lobbies">
 			<div class="btn-group">
