@@ -98,8 +98,11 @@
   padding-right: 25px;
 }
 .joinGame{
-  height:25px;
-  width:100px;
+  height:4vh;
+  width:5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #d22e2d;
   color: white;
   cursor:pointer;
