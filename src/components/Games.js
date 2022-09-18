@@ -76,9 +76,11 @@ addRole(role){
         {"GAME " + games.gameId + ' ' + games.maxPlayers.toString() + ' ' + games.currentPlayers.toString() + ' '}
         {roles}
         {games.maxPlayers !== games.currentPlayers
-          ? <img className="lobbyHome" title="Pregame" src="/assets/home.png">
+          ?
+          <div>
           Pregame
-          </img>
+          <img className="lobbyHome" title="Pregame" src="/assets/home.png">
+          </div>
           : null}
         </div>
         gamesArr.push(game);
