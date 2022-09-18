@@ -17,6 +17,8 @@
 .lobbyHome{
   width: 3vw;
   height: 3vw;
+  min-width: 50px;
+  min-height: 50px;
   display: flex;
   margin: 0 0 0 auto;
 }

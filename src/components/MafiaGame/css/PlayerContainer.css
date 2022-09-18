@@ -17,8 +17,10 @@
   vertical-align: middle
 }
 .role{
-    height: 2vw;
-    width: 2vw;
+    height: 1vw;
+    width: 1vw;
+    min-width: 50px;
+    min-height: 50px;
     padding-right: 5px;
     vertical-align: middle
 }
