@@ -93,7 +93,7 @@ render(){
       </div>
 	      </div>
 
-		  <div className="divide" style={{paddingTop:'50px', backgroundColor:"rgb(239, 239, 238)", width:"100vw"}}>
+		  <div className="divide" style={{paddingTop:'50px', backgroundColor:"rgb(239, 239, 238)", width:"100%"}}>
 		      </div>
 
 		  <Footer />
