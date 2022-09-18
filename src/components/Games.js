@@ -79,7 +79,7 @@ addRole(role){
           ?
           <div>
           Pregame
-          <img className="lobbyHome" title="Pregame" src="/assets/home.png">
+          <img className="lobbyHome" title="Pregame" src="/assets/home.png"/>
           </div>
           : null}
         </div>
