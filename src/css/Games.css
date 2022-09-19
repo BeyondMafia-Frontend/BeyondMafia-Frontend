@@ -100,6 +100,8 @@
 .joinGame{
   height:4vh;
   width:5vw;
+  min-width: fit-content;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

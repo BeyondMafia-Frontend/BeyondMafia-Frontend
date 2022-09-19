@@ -182,7 +182,7 @@ addRole(role){
           <div>
           <div className="createGameOptions">
           <div className="createGameInner" onClick={async ()=>{
-            await fetch('https://www.beyondmafia.live/createGame',{
+        var rawResponse = await fetch('https://www.beyondmafia.live/createGame',{
       method: 'POST',
       keepalive:false,
       headers: {
@@ -193,6 +193,10 @@ addRole(role){
       },
       body: JSON.stringify({cmd:0,roles:this.state.currentRoles,settings:0})
     });
+    var content = await rawResponse.json();
+    if(content.cmd === 1){
+      window.location.href = '/lobby';
+    }
           }}>
           Create Game
           </div>
@@ -227,7 +231,7 @@ addRole(role){
   }
 
 	return(
-	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"min-width":"500px","font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
+	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"min-width":"fit-content","font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
 		<div className="lobbyHeader">
 		    <div className="lobbies">
 			<div class="btn-group">
