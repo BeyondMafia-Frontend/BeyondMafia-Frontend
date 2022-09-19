@@ -74,7 +74,7 @@ render(){
     <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
     </div>
 
-	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", "min-width":"fit-content"}}>
+	      <div className="lobbyPage" style={{display:"flex", backgroundColor:"#efefee", "min-width":"max-content"}}>
 
 		  <div className="info" style={{display:"flex", flexFlow:"column", gap:"15px",marginLeft:"75px"}}>
 		      <Announcements />
