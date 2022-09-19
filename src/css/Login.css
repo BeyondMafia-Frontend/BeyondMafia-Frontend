@@ -4,18 +4,6 @@
   flex-direction:column;
   min-width: min-content;
 }
-
-.header{
-    display: flex;
-    flex-direction: row;
-    justify-content:space-around;
-    align-items: center;
-    grid-column-start: 1;
-    grid-column-end: 6;
-    background-color: rgb(44,48,40);
-    width: 100%;
-    min-width: max-content;
-}
 .splashHolder{
   width:100%;
   display: flex;
@@ -148,7 +136,7 @@ img#lobbyPic{
 
 button#login{
     margin-top:5px;
-    font-family: 'Ariel', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: larger;
     font-weight: bolder;
     background-color: rgb(216,44,44);
@@ -159,4 +147,17 @@ button#login{
     position: absolute;
     margin-left: 70vw;
 
+}
+
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    background-color: rgb(44,48,40);
+    width: 100%;
+    min-width: max-content;
 }
