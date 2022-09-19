@@ -8,6 +8,7 @@
 
 #createAccountForm{
     background-color:#efefef;
+    min-width: min-content;
 }
 
 #createAccount{
@@ -15,7 +16,7 @@
     display:flex;
     justify-content: center;
     align-items:center;
-    flex-direction: column;    
+    flex-direction: column;
 }
 
 #logo{

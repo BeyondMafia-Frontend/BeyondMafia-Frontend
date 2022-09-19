@@ -13,22 +13,22 @@ class SignUp extends Component {
     <div>
 
 	<div id="signHeader" style={{paddingTop:"20px"}, {overflow:"auto"}}>
-	    <div id="createAccount">
-
-		<div id ="logo">
-		    <img
-			src="/assets/logo-light.png"
-			id="logoLight"
-			alt="BeyondMafia"
-		    />
-		</div>
-
-		<div id="headerText">
-		    <p> CREATE A FREE ACCOUNT </p>
-		</div>
-	    </div>
 
 	    <div id="createAccountForm">
+      <div id="createAccount">
+
+    <div id ="logo">
+        <img
+      src="/assets/logo-light.png"
+      id="logoLight"
+      alt="BeyondMafia"
+        />
+    </div>
+
+    <div id="headerText">
+        <p> CREATE A FREE ACCOUNT </p>
+    </div>
+      </div>
 		<SignUpForm />
 	    </div>
     </div>
