@@ -19,9 +19,13 @@ componentDidMount(){
 }
 
 onOpen(socket){
+  this.setState({ws:socket});
   this.props.setSocket(socket);
 }
 onMessage(message){
+  if(message.length === 0){
+    this.state.ws.send('');
+  }
   this.props.updateMessages(message);
 }
 
