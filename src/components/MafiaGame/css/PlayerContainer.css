@@ -1,7 +1,9 @@
 .playerContainer{
     width: 100%;
     padding-right:50px;
+    min-width: max-content;
 }
+
 .playerImage{
   display: inline;
   height: 50px;
@@ -26,13 +28,14 @@
 }
 .player {
     padding-bottom: 15px;
+    display: flex
 }
 .player:hover{
 color:#818181
 }
 .playerName{
-    display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
   padding-left: 15px;
   font-weight: bold;
 

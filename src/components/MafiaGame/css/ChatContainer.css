@@ -6,6 +6,7 @@
   vertical-align: middle;
 }
 .chatContainer{
+  min-width: 500px;
   width: 100%;
   height: 650px;
   background: #EBEBEB;

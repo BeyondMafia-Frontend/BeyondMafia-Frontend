@@ -156,19 +156,8 @@ if(this.state.roleSet){
          })()
        }
 
-       {this.props.selectedGameState === -1
-         ?  <div className="next" onClick={()=>{this.props.setSelectedGameState(this.props.gameState+1)}}>
-          {
-            (this.props.gameState < this.props.messageBankLength+1)
-            ? <div className="nextText"> {(this.props.gameState % 2)
-                      ? "Day"
-                      : "Night"} {this.props.gameState+1}
-                      </div>
-            :  this.props.gameState === this.props.messageBankLength
-             ? null
-             : null
-           }
-       </div>
+       {this.props.selectedGameState === -1 || this.props.selectedGameState === this.props.gameState
+         ? null
        : <div className="next" onClick={()=>{this.props.setSelectedGameState(this.props.selectedGameState+1)}}>
         {
           (this.props.selectedGameState < this.props.messageBankLength+1)

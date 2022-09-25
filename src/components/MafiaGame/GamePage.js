@@ -16,6 +16,7 @@ class GamePage extends Component {
         cookies: cookies,
         meetings: [],
         messages: [],
+        typingMap:{},
         playerMap:[],
         messageBankLength: -1,
         meetingBank:{},
@@ -54,6 +55,16 @@ class GamePage extends Component {
       this.removePlayer = this.removePlayer.bind(this);
       this.getPlayerName = this.getPlayerName.bind(this);
       this.containsUser = this.containsUser.bind(this);
+      this.setTyping = this.setTyping.bind(this);
+}
+
+setTyping(playerid,bool){
+  if(bool === true){
+    window.document.getElementById(playerid.toString()).lastChild.style.display = "inherit";
+  }
+  else{
+      window.document.getElementById(playerid.toString()).lastChild.style.display = "none";
+  }
 }
 
 containsUser(playerid){
@@ -260,15 +271,15 @@ render(){
   let wsConnection;
   var meetings = []
   if(this.state.meetings.length !== 0){
-  if(this.state.selectedGameState === -1 || this.state.messageBankLength+1 === this.state.selectedGameState){
+  if(this.state.selectedGameState === -1 || this.state.messageBankLength+1 === this.state.selectedGameState || this.state.selectedGameState === this.state.gameState){
       this.state.meetings.forEach((stateMeetings) => {
-        meetings.push(<ChatMeeting prev={false}votes={this.state.playerVotes} sendVote={this.sendVote} members={stateMeetings.members} role={stateMeetings.role} players={this.state.players}/>)
+        meetings.push(<ChatMeeting getPlayerName={this.getPlayerName} prev={false}votes={this.state.playerVotes} sendVote={this.sendVote} members={stateMeetings.members} role={stateMeetings.role} players={this.state.players}/>)
       });
   }
   else{
      var meetingContext = this.state.meetingBank[this.state.selectedGameState+1]
          meetingContext.meetings.forEach((meeting, i) => {
-           meetings.push(<ChatMeeting prev={true} votes={meetingContext.playerVotes} sendVote={this.sendVote} members={meeting.members} role={meeting.role} players={this.state.players}/>)
+           meetings.push(<ChatMeeting getPlayerName={this.getPlayerName} prev={true} votes={meetingContext.playerVotes} sendVote={this.sendVote} members={meeting.members} role={meeting.role} players={this.state.players}/>)
          });
   }
 }
@@ -277,7 +288,7 @@ render(){
   }
 
     return(
-	<div>
+	<div style={{"min-width":"fit-content"}}>
       <div className="websocket">
       {connection}
 
@@ -294,13 +305,13 @@ render(){
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
 
-		<div className="players" style={{paddingRight: "30px"}}>
+		<div className="players" style={{paddingRight: "30px",width:"25%","min-width":"300px"}}>
 		    <PlayerContainer playerid={this.state.playerid} roleID={this.state.roleID} players={this.state.players} graveyard={this.state.graveyard} />
 		</div>
 
 
-		<div className="chat" style={{margin:'0 auto', overflowX: "hidden"}}>
-		    <ChatContainer getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
+		<div className="chat" style={{margin:'0 auto', overflowX: "hidden",width:"50%","min-width":"500px"}}>
+		    <ChatContainer setTyping={this.setTyping} getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">

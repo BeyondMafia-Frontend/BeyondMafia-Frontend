@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./css/ChatMeeting.css"
+import * as utils from '../utils/image-resolver.js';
 var dropDown = "/assets/caret-square-down.svg"
 var role = '/assets/roles/default-role.png';
 class ChatMeeting extends Component {
@@ -34,7 +35,7 @@ getMeetingVote(uuid){
 	    if(votes === undefined){
         memberArray.push(
       <div className="meetingMember" onClick={() =>{this.props.sendVote(playerid,this.props.role)}}>
-          <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {playerid}</span> </div>
+          <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {this.props.getPlayerName(playerid)}</span> </div>
       </div>
     )
 	    }
@@ -43,21 +44,21 @@ getMeetingVote(uuid){
         if(vote.target === -1 && vote.roleAction == this.props.role){
         memberArray.push(
       <div className="meetingMember" onClick={() =>{this.props.sendVote(playerid,this.props.role)}}>
-          <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {playerid}</span> </div>
+          <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {this.props.getPlayerName(playerid)}</span> </div>
       </div>
         )
         }
         else if((vote.roleAction == this.props.role && vote.target === 18446744073709551614)){
           memberArray.push(
     		<div className="meetingMember" onClick={() =>{this.props.sendVote(playerid,this.props.role)}}>
-    		    <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {playerid}</span> votes no one </div>
+    		    <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {this.props.getPlayerName(playerid)}</span> votes no one </div>
     		</div>
     	    )
         }
         else if(vote.roleAction == this.props.role){
 		    memberArray.push(
 			<div className="meetingMember" onClick={() =>{this.props.sendVote(playerid,this.props.role)}}>
-			    <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {playerid}  </span> votes {vote.target}  </div>
+			    <div key={playerid} className="memberName"><span style={{color:"#C52213"}}> {this.props.getPlayerName(playerid)}  </span> votes {this.props.getPlayerName(vote.target)}  </div>
 			</div>)
       }
     });
@@ -71,7 +72,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -86,7 +87,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -101,7 +102,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -116,7 +117,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -131,7 +132,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -146,7 +147,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -161,7 +162,7 @@ getMeetingVote(uuid){
 
         {/*should use playerid to get image of photo*/}
         <img src={role} className="votingImage" width="25" length="25" />
-        <span> {player.playerid} </span>
+        <span> {this.props.getPlayerName(player.playerid)} </span>
         </div>
 
         )
@@ -174,27 +175,9 @@ getMeetingVote(uuid){
     <span> No one </span>
     </div>)
 }
-  if(this.props.role === 0){
-  roleString = "Village";
-  }
-  else if(this.props.role === 1){
-  roleString = "Mafia";
-  }
-  else if(this.props.role === 2 ){
-    roleString = "Doctor"
-  }
-  else if(this.props.role === 4){
-    roleString = "Cop"
-  }
-  else if(this.props.role === 16){
-    roleString = "Drunk"
-  }
-  else if(this.props.role === 17){
-    roleString = "Hooker"
-  }
 	return(
 	    <div>
-		<h1> {roleString} Meeting </h1>
+		<h1> {utils.resolveRoleString(this.props.role)} Meeting </h1>
 		{memberArray}
 
     {this.props.prev === false

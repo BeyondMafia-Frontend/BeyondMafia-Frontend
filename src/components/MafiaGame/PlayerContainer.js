@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './css/PlayerContainer.css'
+import './css/typing.scss'
 import * as utils from '../utils/image-resolver.js';
 
 var defaultRole = '/assets/roles/default-role.png';
@@ -37,10 +38,15 @@ render(){
       roleImage = defaultRole;
     }
     playerArr.push(
-    <div className="player" onClick={this.handlePlayerClick(player.id)}>
+    <div className="player" id={player.playerid} onClick={this.handlePlayerClick(player.playerid)}>
   <img src={roleImage} className="role"/>
   <img className="playerImage" src={"/assets/default-avis/neurondark.png"} />
   <div className="playerName"> {player.name} </div>
+  <div class="typing-indicator">
+      <span></span>
+      <span></span>
+      <span></span>
+      </div>
     </div>
     )}
   )
@@ -51,10 +57,16 @@ render(){
       /* In production we will use roleid + playerid to resolve the player image and the accurate role image. */
     graveyard.map(player => {
       graveyardArr.push(
-        <div className="player">
+        <div className="player" id={player.playerid}>
 	    <img src={utils.resolveRole(player.role)} className="role"/>
 	    <img className="playerImage" src={"/assets/default-avis/neurondark.png"} />
-	<div className="playerName"> {player.name} </div> </div>
+	<div className="playerName"> {player.name} </div>
+  <div class="typing-indicator">
+      <span></span>
+      <span></span>
+      <span></span>
+      </div>
+    </div>
       )
     }
     )

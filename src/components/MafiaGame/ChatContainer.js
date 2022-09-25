@@ -67,12 +67,15 @@ handlePlayerClick = playerName => () => {
 }
 
 async parseSettingsMessage(command){
+  return new Promise(async(resolve)=>{
   if(this.state.parsed === false){
   this.setState({parsed:true});
   this.setState({currentGameState:command.state})
   await this.props.setGameSettings(command);
   this.setState({completed:true});
-}
+  resolve();
+  }
+});
 }
 
 parseVoteMessage(command){
@@ -102,11 +105,11 @@ parseSystemMessage(command){
 }
 
 parseTypingMessage(command){
-    return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerId)} is typing...</body></div>)
+    this.props.setTyping(command.playerId,true);
 }
 parseRoleMessage(command){
-  if(command.action === 1){
     var playerid = command.playerid;
+  if(command.action === 1){
     this.props.removePlayer(playerid);
     this.props.addGraveyard({name: playerid, playerid: playerid,roleid:command.role});
     this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>)]})
@@ -132,7 +135,7 @@ parseRoleMessage(command){
 
 parseNotTypingMessage(command){
     //hidebubble
-    return(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerId)} has stopped typing!</body></div>)
+    this.props.setTyping(command.playerId,false);
 }
 
 parseLeaveMessage(command){
@@ -142,11 +145,14 @@ parseLeaveMessage(command){
 handleType(event) {
    this.setState({msgText: event.target.value});
    var command = {};
-   if(this.state.msgText.length === 1){
+   if(event.target.value.length === 1){
    command.cmd = -1;
    this.props.sendMessage(JSON.stringify(command));
-  }
-
+   }
+   if(!event.target.value){
+     command.cmd = -2;
+     this.props.sendMessage(JSON.stringify(command));
+   }
  }
 
 
@@ -172,20 +178,54 @@ render(){
   if(!this.state.completed){
   for(var i = 0; i < messages.length;i++){
     var command = JSON.parse(messages[i]);
+    var messageElement;
+    if(command.cmd === -4){
+      alert('game over');
+    }
+
     if(command.cmd === -3){
       this.props.setPlayerId(command.playerId)
-      messages.splice(i,1);
+    }
+    if(command.cmd === 0){
+      this.setState({messages: [...this.state.messages, this.parsePlayerMessage(command)]})
+    }
+    if(command.cmd === 1){
+        this.setState({messages: [...this.state.messages, this.parseSystemMessage(command)]})
+    }
+    if(command.cmd === 2){
+      this.setState({messages: [...this.state.messages, this.parseVoteMessage(command)]})
+    }
+    if(command.cmd === 3){
+      this.setState({messages: [...this.state.messages, this.parseRoleMessage(command)]})
+    }
+    if(command.cmd === 4){
+      this.props.setRoleID(command.role);
+        this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
+    }
+    if(command.cmd === 5){
+      var meeting = {
+        members: command.players,
+        role: command.role
+      };
+      this.props.setMembers(meeting);
+    }
+    if(command.cmd === 7){
+      this.setState({currentGameState:command.state});
+      this.props.updateGameState(command.state);
+      this.iterateMessages(command.state);
+      this.setState({messages:this.state.messagesQueue});
+      this.setState({messagesQueue:[]})
+      this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
     }
     if(command.cmd === 8){
       this.props.addPlayer(command.playerid)
-      messages.splice(i,1);
     }
     if(command.cmd === 9){
       await this.parseSettingsMessage(command);
-      res();
-      break;
     }
+    messages.splice(i,1);
   }
+  res();
 }
 else{
   res();
@@ -201,26 +241,26 @@ gameInit.then(()=>{
       alert('game over');
     }
     if(command.cmd === -2){
-      messageElement = this.parseNotTypingMessage(command);
+      this.parseNotTypingMessage(command)
     }
     if(command.cmd === -1){
-      messageElement = this.parseTypingMessage(command);
+      this.parseTypingMessage(command)
     }
     if(command.cmd === 0){
-      messageElement = this.parsePlayerMessage(command);
+      this.setState({messages: [...this.state.messages, this.parsePlayerMessage(command)]})
     }
     if(command.cmd === 1){
-      messageElement = this.parseSystemMessage(command);
+        this.setState({messages: [...this.state.messages, this.parseSystemMessage(command)]})
     }
     if(command.cmd === 2){
-      messageElement = this.parseVoteMessage(command);
+      this.setState({messages: [...this.state.messages, this.parseVoteMessage(command)]})
     }
     if(command.cmd === 3){
-      messageElement = this.parseRoleMessage(command)
+      this.setState({messages: [...this.state.messages, this.parseRoleMessage(command)]})
     }
     if(command.cmd === 4){
       this.props.setRoleID(command.role);
-      messageElement = this.getRoleDetails(command.role);
+        this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
     }
     if(command.cmd === 5){
       var meeting = {
@@ -231,7 +271,7 @@ gameInit.then(()=>{
     }
     if(command.cmd === 6){
       this.props.removePlayer(command.playerid);
-      messageElement = this.parseLeaveMessage(command);
+      this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
     }
     if(command.cmd === 7){
       this.setState({currentGameState:command.state});
@@ -247,7 +287,6 @@ gameInit.then(()=>{
       this.props.addPlayer(command.playerid)
     }
     messages.shift();
-    this.setState({messages: [...this.state.messages, messageElement]})
   });
 })
 if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
@@ -263,7 +302,7 @@ else{
   </div>
   <div className="chatInput">
   <form onSubmit={this.handleSendMessage}>
-  <input type="text" placeholder="Enter a message here..." value={this.state.msgText} onKeyDown={this.typingMessage} onChange={this.handleType}/>
+  <input type="text" placeholder="Enter a message here..." value={this.state.msgText} onChange={this.handleType}/>
 </form>
 </div>
   </div>
