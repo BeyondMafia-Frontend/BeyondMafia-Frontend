@@ -10,7 +10,7 @@ class ChatContainer extends Component {
       messagesQueue:[],
       messageBank:{},
       messageCount:-1,
-      scrollBottom:undefined,
+      scroll:true,
       typing: undefined,
       parsed:false,
       typingDisabled: false,
@@ -45,13 +45,15 @@ getRoleDetails(roleID){
 }
 handleScroll(){
   var chat = document.getElementsByClassName('chatContainer')[0];
-  if(chat + window.innerHeight >= chat.scrollHeight){
-  this.setState({scrollBottom:true});
+  if( obj.scrollTop === (obj.scrollHeight - obj.offsetHeight))
+  {
+    this.setState({scroll:true});
   }
   else{
-    this.setState({scrollBottom:false});
+      this.setState({scroll:false});
   }
 }
+
 handlePlayerClick = playerName => () => {
   var appendedMessage = '@' + playerName + ' ';
   if(this.state.msgText.length === 0){
@@ -295,6 +297,12 @@ if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).le
 else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
+if(this.state.scroll){
+    var node = window.document.getElementById("chatContainer")[0];
+    if (node !== undefined) {
+      node.scrollTop = node.scrollHeight;
+    }
+  }
   return(
   <div>
   <div className="chatContainer" onScroll={this.handleScroll}>
