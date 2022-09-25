@@ -45,7 +45,7 @@ getRoleDetails(roleID){
 }
 handleScroll(){
   var chat = document.getElementsByClassName('chatContainer')[0];
-  if( obj.scrollTop === (obj.scrollHeight - obj.offsetHeight))
+  if( chat.scrollTop === (chat.scrollHeight - chat.offsetHeight))
   {
     this.setState({scroll:true});
   }
@@ -53,7 +53,6 @@ handleScroll(){
       this.setState({scroll:false});
   }
 }
-
 handlePlayerClick = playerName => () => {
   var appendedMessage = '@' + playerName + ' ';
   if(this.state.msgText.length === 0){
@@ -298,7 +297,7 @@ else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
 if(this.state.scroll){
-    var node = window.document.getElementById("chatContainer")[0];
+    var node = window.document.getElementsByClassName("chatContainer")[0];
     if (node !== undefined) {
       node.scrollTop = node.scrollHeight;
     }
