@@ -36,8 +36,8 @@
     color: #C52213!important;
 }
 .meeting{
-    width:25%;
     padding-left:10px;
+    min-width: fit-content;
 }
 .meetingMember{
     padding-top: 5px;

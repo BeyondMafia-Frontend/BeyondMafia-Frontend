@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap');
 .container{
   display: flex;
+  min-width: fit-content;
   flex-direction: column;
   background-color: #e0dcdc;
   row-gap:5px;
@@ -188,6 +189,7 @@ img#settings:hover{
 .stat-content{
   width: 85vw;
   height: 25vw;
+  min-width: fit-content;
   justify-content: center;
   align-self: center;
   display: flex;

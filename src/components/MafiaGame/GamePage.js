@@ -192,7 +192,7 @@ handleChange(event){
         body: JSON.stringify(sendJSON)
       });
        var content = await rawResponse.json();
-       playerMap.push({name:content.username, playerid:playerid});
+       playerMap.push({name:content.username, playerid:playerid,wins:content.wins,losses:content.losses,desertions:content.desertions,points:content.points,gems:content.gems});
   })
   await Promise.all(globalPlayersPromise);
   this.setState({playerMap:playerMap});
@@ -216,7 +216,7 @@ addGraveyard(player){
   var check = false;
   var grave = this.state.graveyard.filter(p =>
     p.playerid !== player.playerid);
-    grave.push({name:player.playerid,playerid:player.playerid,role:player.roleid})
+    grave.push({name:player.name,playerid:player.playerid,role:player.roleid})
   this.setState({graveyard:grave})
 }
 async addPlayer(playerid){
@@ -305,12 +305,12 @@ render(){
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
 
-		<div className="players" style={{paddingRight: "30px",width:"25%","min-width":"300px"}}>
+		<div className="players" style={{paddingRight: "30px",width:"25%","min-width":"fit-content"}}>
 		    <PlayerContainer playerid={this.state.playerid} roleID={this.state.roleID} players={this.state.players} graveyard={this.state.graveyard} />
 		</div>
 
 
-		<div className="chat" style={{margin:'0 auto', overflowX: "hidden",width:"50%","min-width":"500px"}}>
+		<div className="chat" style={{overflowX: "hidden",width:"75%","min-width":"fit-content"}}>
 		    <ChatContainer setTyping={this.setTyping} getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 

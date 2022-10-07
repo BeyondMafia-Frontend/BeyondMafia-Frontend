@@ -34,7 +34,19 @@ class PlayerPage extends Component {
       return;
     });
   }
-  async componentDidMount(){;
+  async componentDidMount(){
+    var loadScript = async function (src) {
+      return new Promise((resolve,reject)=>{
+      var tag = document.createElement('script');
+      tag.async = true;
+      tag.src = src;
+      var body = document.getElementsByTagName('body')[0];
+      body.appendChild(tag);
+      resolve();
+    });
+  }
+
+    await loadScript('/scripts/loader.js');
     var cookie = this.state.cookies.get('bmcookie');
     var arr = window.location.pathname.split('/');
     var sendJSON = {};
@@ -51,6 +63,11 @@ class PlayerPage extends Component {
        content = await rawResponse.json()
       this.setState({username:content.username})
       this.setState({bio:content.bio})
+      this.setState({losses:content.losses});
+      this.setState({wins:content.wins});
+      this.setState({desertions:content.desertions});
+      this.setState({points:content.points});
+      this.setState({gems:content.gems});
       if(content.youtube != null){
         var player = YouTubePlayer('youtube',{
           videoId: content.youtube
@@ -69,6 +86,24 @@ class PlayerPage extends Component {
       this.setState({playerid:content.playerid});
     }
     }
+    if(!(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)){
+    window.google.charts.load('current', {'packages':['corechart']});
+     window.google.charts.setOnLoadCallback(()=>{
+       var data = window.google.visualization.arrayToDataTable([
+         ['Stats', 'Score'],
+         ['Wins',     this.state.wins],
+         ['Losses',      this.state.losses],
+         ['Desertions',  this.state.desertions]
+       ]);
+       var options = {
+           colors: ['#34eb34','#ff2a00','#b8b6b6']
+       };
+
+       var chart = new window.google.visualization.PieChart(document.getElementsByClassName('stat-content')[0]);
+
+       chart.draw(data, options);
+     });
+   }
   }
   render(){
   return(
@@ -132,7 +167,7 @@ class PlayerPage extends Component {
             alt="Points"
             title="Points"
             />
-            <div class="stats"> 0
+            <div class="stats"> {this.state.points}
             </div>
             <img src="/assets/gem.png"
             width="50px"
@@ -140,7 +175,7 @@ class PlayerPage extends Component {
             alt="Gems"
             title="Gems"
             style={{marginTop:"-7px",paddingLeft:"5px"}}
-            />   <div class="stats"> 0
+            />   <div class="stats"> {this.state.gems}
               </div>
             </div>
         </div>

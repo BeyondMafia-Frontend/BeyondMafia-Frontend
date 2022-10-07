@@ -6,14 +6,9 @@
   vertical-align: middle;
 }
 .chatContainer{
-  min-width: 500px;
-  width: 100%;
   height: 650px;
   background: #EBEBEB;
   overflow-y: auto;
-}
-.chatInput{
-  width: 100vw;
 }
 .chatInput form{
   padding-top: 5px;

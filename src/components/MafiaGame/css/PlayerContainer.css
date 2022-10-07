@@ -1,9 +1,38 @@
+.close {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
 .playerContainer{
-    width: 100%;
+  display: flex;
     padding-right:50px;
     min-width: max-content;
+    display: flex;
+    flex-direction: column;
 }
-
+#chart{
+  height: 175px;
+  width:300px
+}
 .playerImage{
   display: inline;
   height: 50px;
@@ -26,9 +55,36 @@
     padding-right: 5px;
     vertical-align: middle
 }
+.infoStats{
+  display: flex;
+  flex-direction: row
+}
+.infoContainer{
+    display: flex;
+    height: 175px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(50, 50, 50, 0.1);
+    padding: 50px 0;
+    width: 50%;
+    margin:auto;
+    flex-direction: column;
+    background:#EBEBEA ;
+    justify-content: space-between;
+    align-items: center;
+}
+.profilePic {
+  display: block;
+  width: 75px;
+  height: 75px;
+  position: relative;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0 0 0 2px black;
+}
 .player {
     padding-bottom: 15px;
-    display: flex
+    display: flex;
+    cursor: pointer;
 }
 .player:hover{
 color:#818181

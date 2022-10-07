@@ -171,7 +171,14 @@ handleType(event) {
     }
 
 
-
+componentDidUpdate(){
+  if(this.state.scroll){
+      var node = window.document.getElementsByClassName("chatContainer")[0];
+      if (node !== undefined) {
+        node.scrollTop = node.scrollHeight;
+      }
+    }
+}
 render(){
   var {messages} = this.props;
   var messagesArr = [];
@@ -296,12 +303,6 @@ if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).le
 else{
   displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
 }
-if(this.state.scroll){
-    var node = window.document.getElementsByClassName("chatContainer")[0];
-    if (node !== undefined) {
-      node.scrollTop = node.scrollHeight;
-    }
-  }
   return(
   <div>
   <div className="chatContainer" onScroll={this.handleScroll}>
