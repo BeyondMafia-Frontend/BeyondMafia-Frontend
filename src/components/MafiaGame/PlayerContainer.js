@@ -30,7 +30,7 @@ class PlayerContainer extends Component {
 flipCard(){
   this.setState({isFlipped:!this.state.isFlipped})
   if(!this.state.isFlipped){
-    if(!(this.state.wins === 0 && this.state.losses === 0 && this.state.desertions === 0)){
+    if(!(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)){
     window.google.charts.load('current', {'packages':['corechart']});
      window.google.charts.setOnLoadCallback(()=>{
        var data = window.google.visualization.arrayToDataTable([
@@ -155,7 +155,7 @@ render(){
   <div onClick={()=>{this.flipCard()}} className="infoContainer" style={{paddingLeft:'20px', width:"350px"}}>
   <div  onClick={()=>{this.setState({displayInfo:false})}} class="close"/>
   {(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)
-    ? <span> {this.displayName} has no stats </span>
+    ? <span> {this.state.displayName} has no stats </span>
     : null
   }
   <div id="chart" style={{display:'flex',width:"100%"}}/>
