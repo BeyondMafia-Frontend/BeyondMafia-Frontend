@@ -16,6 +16,8 @@ class PlayerPage extends Component {
         youtubeUrl:"",
       }
       this.playYoutube = this.playYoutube.bind(this);
+      this.loadScript = this.loadScript.bind(this)
+        this.loadChart = this.loadChart.bind(this)
   }
 
   onOpenModal = () => {
@@ -25,7 +27,26 @@ class PlayerPage extends Component {
   onCloseModal = () => {
     this.setState({ open: false });
   };
+  loadChart(){
+    if(window.google){
+    window.google.charts.load('current', {'packages':['corechart']});
+       window.google.charts.setOnLoadCallback(()=>{
+         var data = window.google.visualization.arrayToDataTable([
+           ['Stats', 'Score'],
+           ['Wins',     this.state.wins],
+           ['Losses',      this.state.losses],
+           ['Desertions',  this.state.desertions]
+         ]);
+         var options = {
+             colors: ['#34eb34','#ff2a00','#b8b6b6']
+         };
 
+         var chart = new window.google.visualization.PieChart(window.document.getElementById('playerchart'));
+
+         chart.draw(data, options);
+       })
+     }
+  }
   playYoutube(){
     var player = YouTubePlayer('youtube',{
       videoId: utils.parseYoutubeString(this.state.youtubeString)
@@ -34,19 +55,15 @@ class PlayerPage extends Component {
       return;
     });
   }
+  loadScript(src){
+    var tag = document.createElement('script');
+    tag.type = "text/javascript";
+    tag.async = true;
+    tag.src = src;
+    tag.id = "googleChart"
+    window.document.head.appendChild(tag);
+}
   async componentDidMount(){
-    var loadScript = async function (src) {
-      return new Promise((resolve,reject)=>{
-      var tag = document.createElement('script');
-      tag.async = true;
-      tag.src = src;
-      var body = document.getElementsByTagName('body')[0];
-      body.appendChild(tag);
-      resolve();
-    });
-  }
-
-    await loadScript('/scripts/loader.js');
     var cookie = this.state.cookies.get('bmcookie');
     var arr = window.location.pathname.split('/');
     var sendJSON = {};
@@ -86,24 +103,6 @@ class PlayerPage extends Component {
       this.setState({playerid:content.playerid});
     }
     }
-    if(!(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)){
-    window.google.charts.load('current', {'packages':['corechart']});
-     window.google.charts.setOnLoadCallback(()=>{
-       var data = window.google.visualization.arrayToDataTable([
-         ['Stats', 'Score'],
-         ['Wins',     this.state.wins],
-         ['Losses',      this.state.losses],
-         ['Desertions',  this.state.desertions]
-       ]);
-       var options = {
-           colors: ['#34eb34','#ff2a00','#b8b6b6']
-       };
-
-       var chart = new window.google.visualization.PieChart(document.getElementsByClassName('stat-content')[0]);
-
-       chart.draw(data, options);
-     });
-   }
   }
   render(){
   return(
@@ -209,7 +208,11 @@ class PlayerPage extends Component {
         </div>
         </div>
         <div class='stat-bar'> {this.state.username}'s Stats </div>
-        <div class='stat-content'> {this.state.username} has no stats!</div>
+        <div class='stat-content'><div id="playerchart"/>{window.document.getElementById("googleChart") === null
+            ?    this.loadScript('/scripts/loader.js')
+          :!(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)
+            ? this.loadChart()
+            : null}</div>
     </div>
     </div>
   );

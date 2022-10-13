@@ -1,13 +1,17 @@
 .headerText{
   display: flex;
   align-items: center;
-  flex-flow: row-wrap;
-    height:40px;
-    background: #EBEBEB;
+  width:100%;
 }
 div.midText{
-  width: 100%;
   text-align:center;
+}
+.midHeader{
+    display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 25%;
+  justify-content: center;
 }
 img.headerRole {
   width:40px;
@@ -20,6 +24,12 @@ div.prev{
 }
 div.next{
   padding-right: 10px;
-  width:33.33333%;
-  text-align:right;
+  margin: 0 0 0 auto;
+}
+.gameBanner{
+  display: flex;
+width: 100%;
+background: #EBEBEB;
+min-height: 50px;
+flex-direction: row;
 }

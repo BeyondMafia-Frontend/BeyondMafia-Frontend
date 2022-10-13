@@ -18,11 +18,14 @@ class PlayerContainer extends Component {
   }
   async componentDidMount() {
     var loadScript = async function (src) {
+      return new Promise((res,reject)=>{
       var tag = document.createElement('script');
       tag.async = true;
       tag.src = src;
       var body = document.getElementsByTagName('body')[0];
       body.appendChild(tag);
+      res();
+    })
     }
 
     await loadScript('/scripts/loader.js');
@@ -119,7 +122,7 @@ render(){
       )
     }
     )
-    graveyardElement = <div className="graveyard"><h1>Graveyard</h1>{graveyardArr}</div>
+    graveyardElement = <div className="graveyard"><h1><img src="/assets/tombstone.png" width="50px" height="50px" style={{paddingRight:"10px"}}/>Graveyard</h1>{graveyardArr}</div>
   }
 
   return(

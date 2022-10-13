@@ -22,6 +22,19 @@ getMeetingVote(uuid){
   if(!Object.keys(this.props.votes).includes(uuid.toString())){
     return undefined;
   }
+  var votes = this.props.votes[uuid.toString()];
+  if(votes.length !== 0){
+    var check = false;
+    for(var i = 0; i < votes.length;i++){
+      if(votes[i].roleAction === this.props.role){
+        check = true;
+        break;
+      }
+    }
+    if(check === false){
+      return undefined;
+    }
+  }
   return this.props.votes[uuid.toString()];
 }
     render(){

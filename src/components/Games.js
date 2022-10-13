@@ -59,7 +59,8 @@ addRole(role){
         }
 
         var game = <div className="game">
-        <div className="joinGame" onClick={async()=>{
+        {games.startedGame === 0
+          ? <div className="joinGame" onClick={async()=>{
           var sendJSON = {
             gameId : games.gameId,
             playerid: this.props.playerid
@@ -78,24 +79,45 @@ addRole(role){
               window.location.href = "/game/" + games.gameId;
             }
             if(content.cmd === -1 ){
-              alert(content.msg);
+
             }
         }}>
-
         Join Game
         </div>
+         : games.gameEnded === 1
+         ?<div className="gamesEnd">
+         Game Ended
+         </div>
+          : games.startedGame === 1
+          ?<div className="inProgress">
+          In Progress
+          </div>
+          :null
+      }
         <div className="players">
         {players}
         </div>
         {"GAME " + games.gameId + ' ' + games.maxPlayers.toString() + ' ' + games.currentPlayers.toString() + ' '}
         {roles}
-        {games.maxPlayers !== games.currentPlayers
-          ?
-          <div className="gameStatus">
+        {games.startedGame === 0
+          ? <div className="gameStatus">
           Pregame
           <img className="lobbyHome" title="Pregame" src="/assets/home.png"/>
           </div>
-          : null}
+         : games.gameEnded === 1
+          ?<div className="gameStatus">
+          Game Ended
+          <img className="lobbyHome" title="Game Ended" src="/assets/tombstone.png"/>
+          </div>
+          : games.state % 2 === 0
+            ?<div className="gameStatus">
+              Day {games.state}
+              <img className="lobbyHome" title="Day" src="/assets/day.png"/>
+              </div>
+            : <div className="gameStatus">
+                 Night {games.state}
+                 <img className="lobbyHome" title="Night" src="/assets/night.png"/>
+                 </div>}
         </div>
         gamesArr.push(game);
       });

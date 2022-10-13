@@ -27,6 +27,13 @@
   align-self: center;
   margin-top:-15px;
 }
+#playerchart{
+  display: flex;
+  height: 50%;
+  width: 100%;
+  min-height: 200px;
+  min-width: 500px;
+}
 #youtube{
   display: flex;
   width: 100%;
@@ -187,8 +194,6 @@ img#settings:hover{
   margin-left: 5vw;
 }
 .stat-content{
-  width: 85vw;
-  height: 25vw;
   min-width: fit-content;
   justify-content: center;
   align-self: center;

@@ -16,6 +16,48 @@
   align-items: center;
   margin: 0 0 0 auto;
 }
+.gamesEnd{
+  height: 4vh;
+width: 5vw;
+padding-left: 10px;
+padding-right: 10px;
+min-width: -moz-fit-content;
+min-width: fit-content;
+min-height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: grey;
+color: white;
+cursor: pointer;
+font-size: 14px;
+text-align: center;
+font-weight: 600;
+letter-spacing: 2px;
+transition: 0.5s;
+border-radius: 5px 5px 5px 5px;
+}
+.inProgress{
+  height: 4vh;
+width: 5vw;
+min-width: -moz-fit-content;
+min-width: fit-content;
+min-height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: orange;
+color: white;
+cursor: pointer;
+font-size: 14px;
+text-align: center;
+font-weight: 600;
+letter-spacing: 2px;
+transition: 0.5s;
+border-radius: 5px 5px 5px 5px;
+padding-left: 10px;
+padding-right: 10px;
+}
 .btn-group{
   width: 100%;
     display: flex;
@@ -79,6 +121,7 @@
 }
 .lobbyRole{
   padding-left:10px;
+  display: flex;
 }
 .currentRoles{
   display: flex;
@@ -96,10 +139,14 @@
 .players{
   padding-left: 25px;
   padding-right: 25px;
+  display: flex;
+    align-items: center;
 }
 .joinGame{
   height:4vh;
   width:5vw;
+  padding-left: 10px;
+  padding-right: 10px;
   min-width: fit-content;
   min-height: 50px;
   display: flex;

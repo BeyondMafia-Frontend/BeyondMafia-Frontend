@@ -87,6 +87,11 @@ if(this.state.roleSet){
     <div>
     <div style={{"display":"flex"}}>
     {rolesArray}
+    {this.props.kickedCount > 0
+    ? <div style={{"margin":"auto","cursor":"pointer"}} onClick={()=>{
+      this.props.sendKicks()
+    }}> <span> {this.props.kickedCount} </span> kicks needed to proceed to next game state...</div>
+    : null}
     </div>
 	    <div>
       <div className = "gameBanner">
@@ -122,34 +127,51 @@ if(this.state.roleSet){
            if(this.props.selectedGameState === -1){
              if(this.props.gameState === 0){
                return(
+                 <div className="midHeader">
              <div className="midText">Pregame</div>
+             </div>
             )
              }
-             if(this.props.selectedGameState % 2){
+             if(this.props.gameState % 2 === 0){
                return(
+                 <div className="midHeader">
+                 <img className="lobbyHome" title="Day" src="/assets/day.png"/>
              <div className="midText">Day {this.props.gameState}</div>
+             </div>
             )
                }
                else{
                  return(
+                   <div className="midHeader">
+               <img className="lobbyHome" title="Night" src="/assets/night.png"/>
                <div className="midText">Night {this.props.gameState}</div>
+               </div>
               )
                }
            }
            else{
              if(this.props.selectedGameState === 0){
                return(
+                  <div className="midHeader">
              <div className="midText">Pregame</div>
+             </div>
             )
              }
-             if(this.props.selectedGameState % 2){
+             if(this.props.selectedGameState % 2 === 1){
                return(
-             <div className="midText">Night {this.props.selectedGameState}</div>
+                 <div className="midHeader">
+                 <img className="lobbyHome" title="Night" src="/assets/night.png"/>
+                 <div className="midText">Night {this.props.gameState}</div>
+                 </div>
             )
                }
                else{
                  return(
-               <div className="midText">Day {this.props.selectedGameState}</div>
+
+                     <div className="midHeader">
+                    <img className="lobbyHome" title="Day" src="/assets/day.png"/>
+                <div className="midText">Day {this.props.gameState}</div>
+                </div>
               )
                }
            }

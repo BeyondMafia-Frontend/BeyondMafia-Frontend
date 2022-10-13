@@ -32,6 +32,7 @@ class GamePage extends Component {
         playerid: 0,
         day: day,
         night: night,
+        kickedCount: -1,
         getSize: ()=>{
           return this.state.players.length;
         },
@@ -56,6 +57,16 @@ class GamePage extends Component {
       this.getPlayerName = this.getPlayerName.bind(this);
       this.containsUser = this.containsUser.bind(this);
       this.setTyping = this.setTyping.bind(this);
+      this.displayKicks = this.displayKicks.bind(this)
+      this.sendKicks = this.sendKicks.bind(this);
+}
+
+sendKicks(){
+    this.state.ws.send(JSON.stringify({cmd:3}))
+}
+
+displayKicks(count){
+  this.setState({kickedCount:count});
 }
 
 setTyping(playerid,bool){
@@ -129,7 +140,6 @@ addVote(vote){
 }))
 }
 else{
-
   var votesArr = this.state.playerVotes[vote.playerid.toString()].filter(votes => votes.roleAction !== vote.roleAction);
   votesArr.push({target:vote.target, roleAction: vote.roleAction})
   this.setState(prevState => ({
@@ -273,7 +283,8 @@ render(){
   if(this.state.meetings.length !== 0){
   if(this.state.selectedGameState === -1 || this.state.messageBankLength+1 === this.state.selectedGameState || this.state.selectedGameState === this.state.gameState){
       this.state.meetings.forEach((stateMeetings) => {
-        meetings.push(<ChatMeeting getPlayerName={this.getPlayerName} prev={false}votes={this.state.playerVotes} sendVote={this.sendVote} members={stateMeetings.members} role={stateMeetings.role} players={this.state.players}/>)
+
+        meetings.push(<ChatMeeting getPlayerName={this.getPlayerName} displayCount={this.state.meetings.length} prev={false}votes={this.state.playerVotes} sendVote={this.sendVote} members={stateMeetings.members} role={stateMeetings.role} players={this.state.players}/>)
       });
   }
   else{
@@ -300,7 +311,7 @@ render(){
       Leave Game
       </div>
 	    <div className="gameHeader">
-	    <GameBanner selectedGameState={this.state.selectedGameState} messageBankLength={this.state.messageBankLength} setSelectedGameState={this.setSelectedGameState} roles={this.state.roles} gameState={this.state.gameState} maxPlayers={this.state.maxSize} players={this.state.players.length} />
+	    <GameBanner sendKicks={this.sendKicks} kickedCount={this.state.kickedCount} selectedGameState={this.state.selectedGameState} messageBankLength={this.state.messageBankLength} setSelectedGameState={this.setSelectedGameState} roles={this.state.roles} gameState={this.state.gameState} maxPlayers={this.state.maxSize} players={this.state.players.length} />
 	    </div>
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
@@ -311,7 +322,7 @@ render(){
 
 
 		<div className="chat" style={{overflowX: "hidden",width:"75%","min-width":"fit-content"}}>
-		    <ChatContainer setTyping={this.setTyping} getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
+		    <ChatContainer displayKicks={this.displayKicks} setTyping={this.setTyping} getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
 		<div className="meeting">

@@ -112,7 +112,7 @@ parseRoleMessage(command){
     var playerid = command.playerid;
   if(command.action === 1){
     this.props.removePlayer(playerid);
-    this.props.addGraveyard({name: playerid, playerid: playerid,roleid:command.role});
+    this.props.addGraveyard({name: this.props.getPlayerName(playerid), playerid: playerid,roleid:command.role});
     this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>)]})
     return;
   }
@@ -187,6 +187,9 @@ render(){
   for(var i = 0; i < messages.length;i++){
     var command = JSON.parse(messages[i]);
     var messageElement;
+    if(command.cmd === -5){
+      this.props.displayKicks(command.count);
+    }
     if(command.cmd === -4){
       alert('game over');
     }
@@ -245,6 +248,13 @@ gameInit.then(()=>{
   messages.map((message) => {
     let messageElement;
     var command = JSON.parse(message);
+    if(command.cmd === -6){
+      this.props.addGraveyard({name: this.props.getPlayerName(command.playerid), playerid: command.playerid,roleid:command.role});
+        this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has deserted the village.</body></div>)]})
+    }
+    if(command.cmd === -5){
+      this.props.displayKicks(command.count);
+    }
     if(command.cmd === -4){
       alert('game over');
     }
