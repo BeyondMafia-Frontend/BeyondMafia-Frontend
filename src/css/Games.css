@@ -11,6 +11,12 @@
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+
+.gamePlayers{
+  padding-left: 25px;
+  padding-right: 25px;
+  display: flex;
+}
 .gameStatus{
   display: flex;
   align-items: center;
