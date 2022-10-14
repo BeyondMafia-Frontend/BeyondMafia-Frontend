@@ -316,7 +316,7 @@ render(){
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
 
-		<div className="players" style={{paddingRight: "30px",width:"25%","min-width":"fit-content"}}>
+		<div className="gamePlayers" style={{paddingRight: "30px",width:"25%","min-width":"fit-content"}}>
 		    <PlayerContainer playerid={this.state.playerid} roleID={this.state.roleID} players={this.state.players} graveyard={this.state.graveyard} />
 		</div>
 

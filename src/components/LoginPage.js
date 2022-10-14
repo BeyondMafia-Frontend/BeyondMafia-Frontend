@@ -52,8 +52,8 @@ class LogIn extends Component {
         <a class='nav-links'>L E A R N</a>
         <img src="/assets/default-avis/neurondark.png" id="player-pfp" alt="BeyondMafia"/>
         </div>
-        <Modal open={this.state.open} onClose={this.onCloseModal} center>
-        <div className="formBox">
+        <Modal classNames={{"modal":"loginModal"}} open={this.state.open} onClose={this.onCloseModal} center>
+        <div className="loginBox">
               <form >
                 <input type="username" placeholder="USERNAME" onChange={e=> this.setState({username:e.target.value})}  />
                 <input type="password"  placeholder="PASSWORD" onChange={e=> this.setState({password:e.target.value})}  />
