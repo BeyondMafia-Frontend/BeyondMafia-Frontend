@@ -5,6 +5,8 @@ import '../css/Login.css'
 import 'react-responsive-modal/styles.css';
 import Modal from "react-responsive-modal";
 import Cookies from 'universal-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class LogIn extends Component {
     constructor(props){
@@ -28,6 +30,18 @@ class LogIn extends Component {
     render(){
     return(
         <div class='login_container'>
+        <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss={false}
+draggable
+pauseOnHover={false}
+theme="light"
+/>
         <div class='header'>
         <img
 			    src="/assets/logo-light.png"
@@ -73,6 +87,9 @@ class LogIn extends Component {
                     if(content['0'] === 1){
                     this.state.cookies.set("bmcookie",content.cookie);
                     window.location.href = "../lobby";
+                  }
+                  else{
+                    toast("Error with username / password combination.")
                   }
               }}value="LOG IN" />
                 </form>

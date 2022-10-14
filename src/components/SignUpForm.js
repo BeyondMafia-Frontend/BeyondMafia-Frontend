@@ -3,6 +3,8 @@ import '../css/SignUpForm.css'
 import UploadAvatar from './UploadAvatarButton.js'
 import Recaptcha from './Recaptcha.js'
 import Cookies from 'universal-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class SignUpForm extends Component {
   constructor(props){
@@ -29,8 +31,20 @@ class SignUpForm extends Component {
 render(){
 
   return(
-<div className="signupBox">
                 <div className="formBox">
+                <div className="signupBox">
+                <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+                theme="light"
+                />
                     <form >
                         <input type="email" placeholder="EMAIL" onChange={e=> this.setState({email:e.target.value})}  />
 			<input type="text"  placeholder="USERNAME" onChange={e=> this.setState({username:e.target.value})}  />
@@ -89,6 +103,9 @@ render(){
                             if(content['0'] === 1){
                             this.state.cookies.set("bmcookie",content.cookie);
                             window.location.href = "../lobby";
+                          }
+                          else{
+                              toast("Error sign-up details")
                           }
                       }}value="SIGN UP" />
 

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import "../css/Games.css"
 import * as utils from './utils/image-resolver.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 class Games extends Component{
     constructor(props){
 	super(props);
@@ -79,7 +81,7 @@ addRole(role){
               window.location.href = "/game/" + games.gameId;
             }
             if(content.cmd === -1 ){
-
+              toast("You are already in a game!")
             }
         }}>
         Join Game
@@ -254,6 +256,18 @@ addRole(role){
 
 	return(
 	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"min-width":"fit-content","font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
+      <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable
+      pauseOnHover={false}
+      theme="light"
+      />
 		<div className="lobbyHeader">
 		    <div className="lobbies">
 			<div class="btn-group">
