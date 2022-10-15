@@ -248,9 +248,14 @@ gameInit.then(()=>{
   messages.map((message) => {
     let messageElement;
     var command = JSON.parse(message);
+    if(command.cmd === -7){
+      this.props.removePlayer(command.playerid)
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has left the game!</body></div>)]})
+    }
     if(command.cmd === -6){
+      this.props.removePlayer(command.playerid)
       this.props.addGraveyard({name: this.props.getPlayerName(command.playerid), playerid: command.playerid,roleid:command.role});
-        this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has deserted the village.</body></div>)]})
+      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has deserted the village...</body></div>)]})
     }
     if(command.cmd === -5){
       this.props.displayKicks(command.count);
