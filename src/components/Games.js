@@ -80,7 +80,7 @@ addRole(role){
             if(content.cmd === 1){
               window.location.href = "/game/" + games.gameId;
             }
-            if(content.cmd === -1 ){
+            if(content.cmd === -2 ){
               toast("You are already in a game!")
             }
         }}>
