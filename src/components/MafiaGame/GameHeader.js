@@ -161,7 +161,7 @@ if(this.state.roleSet){
                return(
                  <div className="midHeader">
                  <img className="lobbyHome" title="Night" src="/assets/night.png"/>
-                 <div className="midText">Night {this.props.gameState}</div>
+                 <div className="midText">Night {this.props.selectedGameState}</div>
                  </div>
             )
                }
@@ -170,7 +170,7 @@ if(this.state.roleSet){
 
                      <div className="midHeader">
                     <img className="lobbyHome" title="Day" src="/assets/day.png"/>
-                <div className="midText">Day {this.props.gameState}</div>
+                <div className="midText">Day {this.props.selectedGameState}</div>
                 </div>
               )
                }
