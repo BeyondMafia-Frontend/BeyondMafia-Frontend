@@ -212,6 +212,36 @@ getMeetingVote(uuid){
       }
     })
   }
+  if(this.props.role === 256){
+    this.props.players.forEach((player, i) => {
+      if(!this.props.members.includes(player.playerid)){
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+      }
+    })
+  }
+  if(this.props.role === 1024){
+    this.props.players.forEach((player, i) => {
+      if(!this.props.members.includes(player.playerid)){
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+      }
+    })
+  }
     votingList.push(<div className="playerVote" onClick={() =>{
       var playerid = -2;
       this.props.sendVote(playerid,this.props.role)}}>
