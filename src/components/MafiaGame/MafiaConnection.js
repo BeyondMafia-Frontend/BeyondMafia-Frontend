@@ -12,6 +12,7 @@ class MafiaConnection extends Component {
       this.onOpen = this.onOpen.bind(this);
       this.onMessage = this.onMessage.bind(this);
       this.getMessages = this.getMessages.bind(this);
+
 }
 componentDidMount(){
     this.handleConnection();
@@ -22,7 +23,7 @@ onOpen(socket){
   this.props.setSocket(socket);
 }
 onMessage(message){
-  this.props.Messages(message);
+  this.props.updateMessages(message);
 }
 
 getMessages(){
