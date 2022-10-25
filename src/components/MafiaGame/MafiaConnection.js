@@ -12,7 +12,6 @@ class MafiaConnection extends Component {
       this.onOpen = this.onOpen.bind(this);
       this.onMessage = this.onMessage.bind(this);
       this.getMessages = this.getMessages.bind(this);
-
 }
 componentDidMount(){
     this.handleConnection();
@@ -23,10 +22,7 @@ onOpen(socket){
   this.props.setSocket(socket);
 }
 onMessage(message){
-  if(message.length === 0){
-    this.state.ws.send('');
-  }
-  this.props.updateMessages(message);
+  this.props.Messages(message);
 }
 
 getMessages(){

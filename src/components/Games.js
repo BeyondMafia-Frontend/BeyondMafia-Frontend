@@ -161,7 +161,7 @@ addRole(role){
    const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
    currentRolesSet.forEach((role) => {
      currentRoles.push(
-       <div>
+       <div style={{"display":"flex"}}>
        <strong> {countOccurrences(this.state.currentRoles,role) > 1
                  ? countOccurrences(this.state.currentRoles,role)
                  : null} </strong>
@@ -255,7 +255,7 @@ addRole(role){
   }
 
 	return(
-	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"min-width":"fit-content","font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
+	    <div style={{display:"flex", marginLeft:"100px", marginTop:"22px", border: "hidden", borderRadius:"0px 15px 0px 0px", backgroundColor:'white', width:'50%',"font-family": `Montserrat`,"border-color":'black','border-style':'groove','border-width':'thin'}}>
       <ToastContainer
       position="top-center"
       autoClose={5000}

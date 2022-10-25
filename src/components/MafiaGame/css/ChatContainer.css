@@ -7,6 +7,7 @@
 }
 .chatContainer{
   height: 650px;
+  min-width: 550px;
   background: #EBEBEB;
   overflow-y: auto;
 }

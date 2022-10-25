@@ -114,6 +114,7 @@ padding-right: 10px;
   display: flex;
   justify-content: center;
   margin-bottom: 220px;
+  flex-flow: wrap;
 }
 .games{
   display: flex;
@@ -141,7 +142,8 @@ padding-right: 10px;
   min-width: 100px;
   min-height: 100px;
   padding-right: 5px;
-  vertical-align: middle
+  vertical-align: middle;
+  cursor: pointer;
 }
 .gamePlayers{
   padding-left: 25px;
@@ -222,6 +224,7 @@ p.lobbyName{
 .createGameRole{
   display:flex;
   justify-content: center;
+  flex-flow: wrap;
 }
 .lobbyHeader{
   display:flex;

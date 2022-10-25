@@ -180,6 +180,7 @@ if(gameState > this.state.state){
   this.setState({meetings:[]});
   this.setState({playerVotes:{}});
   this.setState({selectedGameState:-1});
+  this.setState({kickedCount:-1});
   this.setState({gameState:gameState});
 }
 handleChange(event){
@@ -299,7 +300,7 @@ render(){
   }
 
     return(
-	<div style={{"min-width":"fit-content"}}>
+	<div style={{"min-width":"max-content"}}>
       <div className="websocket">
       {connection}
 
@@ -316,12 +317,12 @@ render(){
 
 	    <div className="gameContainer" style={{display:"flex", paddingTop:"50px"}}>
 
-		<div className="gamePlayers" style={{paddingRight: "30px",width:"25%","min-width":"fit-content"}}>
+		<div className="gamePlayers" style={{paddingRight: "30px",width:"25%","min-width":"max-content"}}>
 		    <PlayerContainer playerid={this.state.playerid} roleID={this.state.roleID} players={this.state.players} graveyard={this.state.graveyard} />
 		</div>
 
 
-		<div className="chat" style={{overflowX: "hidden",width:"75%","min-width":"fit-content"}}>
+		<div className="chat" style={{overflowX: "hidden",width:"75%","min-width":"max-content"}}>
 		    <ChatContainer displayKicks={this.displayKicks} setTyping={this.setTyping} getPlayerName={this.getPlayerName} setMembers={this.setMembers} setMessageBankLength={this.setMessageBankLength} selectedGameState={this.state.selectedGameState} setRoleID={this.setRoleID} removePlayer={this.removePlayer}  updateGameState={this.updateGameState} addGraveyard={this.addGraveyard} addVote={this.addVote} setPlayerId={this.setPlayerId} addPlayer={this.addPlayer} setGameSettings={this.setGameSettings}  sendMessage={this.sendMessage} messages={this.state.messages}/>
 		</div>
 
