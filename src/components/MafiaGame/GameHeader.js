@@ -87,6 +87,11 @@ if(this.state.roleSet){
     <div>
     <div style={{"display":"flex"}}>
     {rolesArray}
+          <div className="leaveMafiaGame" onClick={()=>{
+            this.props.leaveGame();
+          }}>
+          Leave Game
+          </div>
     {this.props.kickedCount > 0
     ? <div style={{"margin":"auto","cursor":"pointer"}} onClick={()=>{
       this.props.sendKicks()
@@ -182,12 +187,12 @@ if(this.state.roleSet){
          ? null
        : <div className="next" onClick={()=>{this.props.setSelectedGameState(this.props.selectedGameState+1)}}>
         {
-          (this.props.selectedGameState < this.props.messageBankLength+1)
+          (this.props.selectedGameState <= this.props.gameState)
           ? <div className="nextText"> {(this.props.selectedGameState % 2)
                     ? "Day"
                     : "Night"} {this.props.selectedGameState+1}
                     </div>
-          : this.props.selectedGameState === this.props.messageBankLength
+          : this.props.selectedGameState === this.props.gameState
            ? null
            : null
          }

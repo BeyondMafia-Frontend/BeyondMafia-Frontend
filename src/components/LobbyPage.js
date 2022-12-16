@@ -22,7 +22,7 @@ class LobbyPage extends Component {
 async componentDidMount(){
   var cookie = this.state.cookies.get('bmcookie');
   if(cookie){
-  var rawResponse = await fetch('https://www.beyondmafia.live/verifyUser',{
+  var rawResponse = await fetch('http://localhost:3001/verifyUser',{
       method: 'GET',
       headers:{
         bmcookie: this.state.cookies.get('bmcookie')
@@ -38,7 +38,7 @@ async componentDidMount(){
   }
   var sendJSON = {};
   sendJSON.page = 1;
-  rawResponse = await fetch('https://www.beyondmafia.live/getGames',{
+  rawResponse = await fetch('http://localhost:3001/getGames',{
       method: 'POST',
       headers: {
         'Accept': 'application/json',

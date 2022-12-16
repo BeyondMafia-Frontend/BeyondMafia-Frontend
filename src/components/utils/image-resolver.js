@@ -1,4 +1,5 @@
-var availableRoles = [0,1,2,4,5,8,16,17,33,64,65,129,256,512,513];
+var availableRoles = [0,1,2,4,5,8,16,17,33,64,65,129,256,512,513,2049,4096,8192,16384,32768];
+
 export function resolveRole(id){
   switch(id){
     case(0):
@@ -31,6 +32,16 @@ export function resolveRole(id){
     return "/assets/roles/roleimg_EM-02-02-sheriff.png"
     case(513):
     return "/assets/roles/roleimg_EM-05-10-sniper.png"
+    case(2049):
+    return "/assets/roles/roleimg_EM-00-12-janitor.png"
+    case(4096):
+    return "/assets/roles/roleimg_EM-03-01-watcher.png"
+    case(8192):
+    return "/assets/roles/roleimg_EM-04-01-tracker.png"
+    case(16384):
+    return "/assets/roles/roleimg_EM-06-06-oracle.png"
+    case(32768):
+    return "/assets/roles/roleimg_EM-03-03-bomb.png"
   }
 }
 export function parseYoutubeString(url){
@@ -71,6 +82,18 @@ export function resolveRoleString(id){
         return "Sniper"
     case(1024):
         return "Gun"
+    case(2049):
+        return "Janitor"
+    case(4096):
+      return "Watcher";
+    case(8192):
+      return "Tracker"
+    case(16384):
+      return "Oracle"
+    case(32768):
+      return "Bomb"
+    case(65536):
+      return "Orb"
   }
 }
 

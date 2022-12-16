@@ -5,19 +5,27 @@ import Cookies from 'universal-cookie';
 import * as utils from './utils/image-resolver.js';
 import YouTubePlayer from 'youtube-player';
 import Modal from "react-responsive-modal";
+import parse from 'html-react-parser'
 class PlayerPage extends Component {
   constructor(props){
     var cookies = new Cookies();
     super(props);
-      this.state = {
+    this.username = "";
+    this.bio = "";
+    this.losses = 0
+    this.wins = 0;
+    this.desertions = 0;
+    this.points = 0;
+    this.gems = 0;
+    this.state = {
         cookies: cookies,
         playerid : -1,
         youtubeString: "https://www.youtube.com/watch?v=Iaoeedmw-H8",
         youtubeUrl:"",
-      }
+    }
       this.playYoutube = this.playYoutube.bind(this);
       this.loadScript = this.loadScript.bind(this)
-        this.loadChart = this.loadChart.bind(this)
+      this.loadChart = this.loadChart.bind(this)
   }
 
   onOpenModal = () => {
@@ -33,9 +41,9 @@ class PlayerPage extends Component {
        window.google.charts.setOnLoadCallback(()=>{
          var data = window.google.visualization.arrayToDataTable([
            ['Stats', 'Score'],
-           ['Wins',     this.state.wins],
-           ['Losses',      this.state.losses],
-           ['Desertions',  this.state.desertions]
+           ['Wins',     this.wins],
+           ['Losses',      this.losses],
+           ['Desertions',  this.desertions]
          ]);
          var options = {
              colors: ['#34eb34','#ff2a00','#b8b6b6']
@@ -61,15 +69,31 @@ class PlayerPage extends Component {
     tag.async = true;
     tag.src = src;
     tag.id = "googleChart"
+    tag.onload = () => {
+        this.loadChart();
+    }
     window.document.head.appendChild(tag);
 }
+
+resetPlayer(){
+  this.setState({username:""})
+  this.setState({bio:""})
+  this.setState({losses:0});
+  this.setState({wins:0});
+  this.setState({desertions:0});
+  this.setState({points:0});
+  this.setState({gems:0});
+}
+componentWillUnmount(){
+  this.resetPlayer();
+}
+
   async componentDidMount(){
     var cookie = this.state.cookies.get('bmcookie');
     var arr = window.location.pathname.split('/');
     var sendJSON = {};
     sendJSON.id = arr[arr.length-1];
-    this.setState({currentId:sendJSON.id});
-    rawResponse = await fetch('https://www.beyondmafia.live/getUser',{
+    rawResponse = await fetch('http://localhost:3001/getUser',{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -78,13 +102,14 @@ class PlayerPage extends Component {
         body: JSON.stringify(sendJSON)
       });
        content = await rawResponse.json()
-      this.setState({username:content.username})
-      this.setState({bio:content.bio})
-      this.setState({losses:content.losses});
-      this.setState({wins:content.wins});
-      this.setState({desertions:content.desertions});
-      this.setState({points:content.points});
-      this.setState({gems:content.gems});
+      this.username = content.username;
+      this.bio = content.bio;
+      this.losses = content.losses;
+      this.wins = content.wins;
+      this.desertions = content.desertions;
+      this.points = content.points;
+      this.gems = content.gems;
+      this.loadScript('/scripts/loader.js');
       if(content.youtube != null){
         var player = YouTubePlayer('youtube',{
           videoId: content.youtube
@@ -92,7 +117,7 @@ class PlayerPage extends Component {
         await player.playVideo()
       }
     if(cookie){
-    var rawResponse = await fetch('https://www.beyondmafia.live/verifyUser',{
+    var rawResponse = await fetch('http://localhost:3001/verifyUser',{
         method: 'GET',
         headers:{
           bmcookie: this.state.cookies.get('bmcookie')
@@ -106,8 +131,11 @@ class PlayerPage extends Component {
   }
   render(){
   return(
-    <div>
-    <div class='header'>
+    <div style={{"min-width":"min-content"}}>
+    <div class='header' onLoad={()=>{
+      let element = document.getElementsByClassName("container")[0];
+      element.style.maxWidth = document.getElementsByClassName("header")[0].getClientRects()[0].width + "px";
+    }}>
     <a href="/">
     <img
       src="/assets/logo-light.png"
@@ -137,6 +165,13 @@ class PlayerPage extends Component {
     <div className="formBox">
           <form >
             <input type="link" placeholder="Enter Youtube URL" onChange={e=> this.setState({youtubeUrl:e.target.value})}  />
+            <input type="text" placeholder="Change BIO" onChange={e=>{this.bio = parse(e.target.value); this.forceUpdate()}} />
+            <input placeholder="Change Avatar" type="file" id="img" name="img" accept="image/*" onChange={e=>{var reader = new FileReader();
+              window.file = e.target.value; 
+              reader.readAsDataURL(e.target.files[0]);
+              reader.onload = function(){
+                  document.getElementById("profile").src = reader.result;
+              }}} />
             <input type="button" onClick={async ()=>{
               if(this.state.youtubeUrl.length > 5){
               var yt = new Promise((res,rej)=>{
@@ -148,7 +183,8 @@ class PlayerPage extends Component {
               this.playYoutube();
             });
             }
-          }}value="SUBMIT" />
+          }} value="SUBMIT" />
+
             </form>
             </div>
     </Modal>
@@ -156,9 +192,7 @@ class PlayerPage extends Component {
         <img src="/assets/default-avis/neurondark.png" id='profile' alt='banner profile'/>
 </div>
         <div class='user-banner'>
-            <p class='user-name'>{this.state.username}</p>
-            <div class='user-banner-bot'>
-            </div>
+            <div style={{display:"flex"}}>
             <div class="leftStats">
             <img src="/assets/points.png"
             width="50px"
@@ -166,7 +200,7 @@ class PlayerPage extends Component {
             alt="Points"
             title="Points"
             />
-            <div class="stats"> {this.state.points}
+            <div class="stats"> {this.points}
             </div>
             <img src="/assets/gem.png"
             width="50px"
@@ -174,10 +208,13 @@ class PlayerPage extends Component {
             alt="Gems"
             title="Gems"
             style={{marginTop:"-7px",paddingLeft:"5px"}}
-            />   <div class="stats"> {this.state.gems}
+            />   <div class="stats"> {this.gems}
               </div>
             </div>
-        </div>
+            <p class='user-name'>{this.username}</p>
+            </div>
+            <div class='user-banner-bot' />
+            </div>
         <div class='msg-bar'>
           <img src="/assets/msg.png" id='msg' alt="msg"/>
           <p>Message</p>
@@ -189,30 +226,26 @@ class PlayerPage extends Component {
         <div class="secondLayer">
         <div class="left-profile">
         <div class='bar-left'>Shoutbox</div>
-        <div class='shout-chat'>{this.state.username} has no comments in their shoutbox!</div>
+        <div class='shout-chat'>{this.username} has no comments in their shoutbox!</div>
         <div class='bar-left'>Friends</div>
-        <div class='friends-content'>{this.state.username} has no friends!</div>
+        <div class='friends-content'>{this.username} has no friends!</div>
         </div>
         <div  class='bio-box'>
         <div className="youtubeHolder"><div id="youtube" /></div>
-        <div class="bio-text">{this.state.bio === null
+        <div class="bio-text">{this.bio === null
                               ? "N/A"
-                              : this.state.bio}
+                              : this.bio}
                               </div>
                             </div>
         <div class="right-profile">
         <div class='bar-right'>Collections</div>
-        <div class='collect-content'>{this.state.username} has no items in their collection!</div>
+        <div class='collect-content'>{this.username} has no items in their collection!</div>
         <div class='bar-right'>Favorites</div>
-        <div class='favs-content'>{this.state.username} has no favorites!</div>
+        <div class='favs-content'>{this.username} has no favorites!</div>
         </div>
         </div>
-        <div class='stat-bar'> {this.state.username}'s Stats </div>
-        <div class='stat-content'><div id="playerchart"/>{window.document.getElementById("googleChart") === null
-            ?    this.loadScript('/scripts/loader.js')
-          :!(this.state.displayWins === 0 && this.state.displayLosses === 0 && this.state.displayDesertions === 0)
-            ? this.loadChart()
-            : null}</div>
+        <div class='stat-bar'> {this.username}'s Stats </div>
+        <div class='stat-content'><div id="playerchart"/></div>
     </div>
     </div>
   );

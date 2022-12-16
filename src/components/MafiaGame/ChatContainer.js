@@ -4,9 +4,13 @@ import * as utils from '../utils/image-resolver.js';
 class ChatContainer extends Component {
   constructor(props){
       super(props);
+      this.messages = [];
+      this.messageQueue = [];
+      this.messageBank = {};
+      this.parsedMessageCount = 0;
+      this.parsing = false;
 	  this.state = {
       reading: false,
-      messages:[],
       messagesQueue:[],
       messageBank:{},
       messageCount:-1,
@@ -28,15 +32,136 @@ class ChatContainer extends Component {
       this.parseRoleMessage = this.parseRoleMessage.bind(this);
       this.getRoleDetails = this.getRoleDetails.bind(this);
       this.parseLeaveMessage = this.parseLeaveMessage.bind(this);
+      this.clearChat = this.clearChat.bind(this);
+      this.parseMessages = this.parseMessages.bind(this);
 }
-iterateMessages(gameState){
-  this.setState(prevState => ({
-    messageBank: {                   // object that we want to update
-        ...prevState.messageBank,    // keep all other key-value pairs
-      [gameState]: this.state.messages      // update the value of specific key
+
+
+parseMessages(){
+  var {messages} = this.props;
+  if(!this.state.parsed && !this.parsing){
+    messages.find((message,index)=>{
+    var command = JSON.parse(message);
+    if(command.cmd === 9){
+        this.parseSettingsMessage(command);
     }
-  })
-)
+    });
+  }
+  if(this.state.parsed){
+  if(!this.chat){
+    this.chat = document.getElementsByClassName('chatContainer')[0];
+  }
+  if(!this.chat || Math.floor(this.chat.scrollTop) <= (this.chat.scrollHeight - this.chat.offsetHeight)+1 && Math.floor(this.chat.scrollTop) >=(this.chat.scrollHeight - this.chat.offsetHeight)-1){
+     this.scroll = true;
+  }
+  else{
+    this.scroll = false;
+  }
+  for(var i = this.parsedMessageCount; i < messages.length;i++){
+    var command = JSON.parse(messages[i]);
+    var messageElement;
+    if(command.cmd === -9){
+        this.messages.push((<div className="systemMessage"><body>Game is starting..</body></div>))
+    }
+    if(command.cmd === -7){
+      this.messages.push(<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has left the game!</body></div>)
+      this.props.removePlayer(command.playerid)
+    }
+    if(command.cmd === -6){
+      this.messages.push((<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has deserted the village...</body></div>))
+      this.props.removePlayer(command.playerid)
+      this.props.addGraveyard({name: this.props.getPlayerName(command.playerid), playerid: command.playerid,roleid:command.role});
+    }
+    if(command.cmd === -5){
+      this.props.displayKicks(command.count);
+    }
+    if(command.cmd === -4){
+      alert('game over');
+    }
+    if(command.cmd === -2){
+      this.parseNotTypingMessage(command)
+    }
+    if(command.cmd === -1){
+      this.parseTypingMessage(command)
+    }
+    if(command.cmd === 0){
+      this.messages.push(this.parsePlayerMessage(command))
+    }
+    if(command.cmd === 1){
+      this.parseVoteMessage(command)
+      this.messages.push(this.parseSystemMessage(command))
+    }
+    if(command.cmd === 2){
+        this.messages.push(this.parseVoteMessage(command))
+    }
+    if(command.cmd === 3){
+      this.messages.push(this.parseRoleMessage(command))
+    }
+    if(command.cmd === 4){
+      this.props.setRoleID(command.role);
+      this.messages.push(this.getRoleDetails(command.role))
+    }
+    if(command.cmd === 5){
+      var meeting = {
+        members: command.players,
+        role: command.role
+      };
+      this.props.setMembers(meeting);
+    }
+    if(command.cmd === 6){
+      this.props.removePlayer(command.playerid);
+      this.messages.push(this.getRoleDetails(command.role))
+    }
+    if(command.cmd === 7){
+      this.setState({currentGameState:command.state});
+      this.props.updateGameState(command.state);
+      this.iterateMessages(command.state);
+      this.props.setMessageBankLength(Object.keys(this.messageBank).length);
+      messages.shift();
+      return;
+    }
+    if(command.cmd === 8){
+      this.props.addPlayer(command.playerid)
+    }
+    if(command.cmd === -5){
+      this.props.displayKicks(command.count);
+    }
+    if(command.cmd === -4){
+      alert('game over');
+    }
+
+    if(command.cmd === -3){
+      this.props.setPlayerId(command.playerId)
+    }
+    this.parsedMessageCount++;
+}
+}
+}
+
+ iterateMessages(gameState){
+   this.messageBank[gameState.toString()] = this.messages;
+   this.messages = this.messageQueue;
+   this.messageQueue = [];
+}
+clearChat(){
+  this.setState({
+    reading: false,
+    messages:[],
+    messagesQueue:[],
+    messageBank:{},
+    messageCount:-1,
+    scroll:true,
+    typing: undefined,
+    parsed:false,
+    typingDisabled: false,
+    msgText: '',
+    completed: false,
+  });
+}
+
+componentWillUnmount(){
+    window.addEventListener('beforeunload', this.clearChat);
+  this.clearChat();
 }
 
 getRoleDetails(roleID){
@@ -44,14 +169,6 @@ getRoleDetails(roleID){
   return(<div className="systemMessage"><body>You have been assigned the {role}!</body></div>)
 }
 handleScroll(){
-  var chat = document.getElementsByClassName('chatContainer')[0];
-  if( chat.scrollTop === (chat.scrollHeight - chat.offsetHeight))
-  {
-    this.setState({scroll:true});
-  }
-  else{
-      this.setState({scroll:false});
-  }
 }
 handlePlayerClick = playerName => () => {
   var appendedMessage = '@' + playerName + ' ';
@@ -67,16 +184,11 @@ handlePlayerClick = playerName => () => {
   window.msgText = this.state.msgText;
 }
 
-async parseSettingsMessage(command){
-  return new Promise(async(resolve)=>{
-  if(this.state.parsed === false){
-  this.setState({parsed:true});
-  this.setState({currentGameState:command.state})
-  await this.props.setGameSettings(command);
-  this.setState({completed:true});
-  resolve();
-  }
-});
+ parseSettingsMessage(command){
+   this.parsing = true;
+  this.props.setGameSettings(command).then(()=>{
+    this.setState({currentGameState:command.state,parsed:true});
+  });
 }
 
 parseVoteMessage(command){
@@ -113,24 +225,105 @@ parseRoleMessage(command){
   if(command.action === 1){
     this.props.removePlayer(playerid);
     this.props.addGraveyard({name: this.props.getPlayerName(playerid), playerid: playerid,roleid:command.role});
-    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>)]})
+    if(this.props.currentGameState % 2 !== 0){
+    this.messageQueue.push((<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>));
     return;
+  }
+  else{
+    this.messages.push((<div className="systemMessage"><body>{this.props.getPlayerName(playerid)} has been sent to the guillotine. </body></div>));
+  }
   }
   if(command.action === 2){
     if(command.alignment === 1){
-      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the mafia.</body></div>)]})
+      if(this.props.currentGameState % 2 !== 0){
+        this.messageQueue.push((<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the mafia.</body></div>));
       return;
     }
     else{
-      this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the village.</body></div>)]})
+      this.messages.push((<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the mafia.</body></div>));
+    }
+    }
+    else{
+      if(this.props.currentGameState % 2 !== 0){
+      this.messageQueue.push((<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the village.</body></div>));
       return;
+    }
+    else{
+      this.messages.push((<div className="systemMessage"><body>After investigations, you suspect that {this.props.getPlayerName(playerid)} is sided with the village.</body></div>));
+    }
     }
   }
   if(command.action === 3){
-    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>)]})
+    if(this.props.currentGameState % 2 !== 0){
+        this.messageQueue.push((<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>));
+  }
+  else{
+        this.messages.push((<div className="systemMessage"><body>A bullet hits your vest! You cannot survive another hit!</body></div>));
+  }
   }
   if(command.action === 4){
-    this.setState({messagesQueue: [...this.state.messagesQueue, (<div className="systemMessage"><body>You learned that {this.props.getPlayerName(playerid)} is {utils.resolveRoleString(command.role)}! </body></div>)]})
+    if(this.props.currentGameState % 2 !== 0){
+      this.messageQueue.push((<div className="systemMessage"><body>You learned that {this.props.getPlayerName(playerid)} is {utils.resolveRoleString(command.role)}! </body></div>));
+  }
+  else{
+      this.messageQueue.push((<div className="systemMessage"><body>You learned that {this.props.getPlayerName(playerid)} is {utils.resolveRoleString(command.role)}! </body></div>));
+  }
+  }
+  if(command.action === 5){
+    var playerString = "";
+    for(var i = 0; i < command.playerids.length;i++){
+      if(i != 0&&i+1 === command.playerids.length){
+        playerString += ' and '
+      }
+      else if(i > 0){
+        playerString += ', ';
+      }
+      playerString += this.props.getPlayerName(command.playerids[i]);
+    }
+    if (this.props.currentGameState % 2 !== 0) {
+      if (command.playerids.length === 0) {
+          this.messageQueue.push((<div className="systemMessage"><body>You watched {this.props.getPlayerName(playerid)} throughout the night, no one has visited {this.props.getPlayerName(playerid)}. </body></div>))
+      }
+      else{
+          this.messages.push((<div className="systemMessage"><body>You watched {this.props.getPlayerName(playerid)} throughout the night, {playerString} has visited {this.props.getPlayerName(playerid)}. </body></div>))
+        }
+      }
+  else {
+    if (command.playerids.length === 0) {
+        this.messageQueue.push((<div className="systemMessage"><body>You watched {this.props.getPlayerName(playerid)} throughout the night, no one has visited {this.props.getPlayerName(playerid)}. </body></div>))
+    }
+    else{
+        this.messages.push((<div className="systemMessage"><body>You watched {this.props.getPlayerName(playerid)} throughout the night, {playerString} has visited {this.props.getPlayerName(playerid)}. </body></div>))
+      }
+  }
+  }
+  if(command.action === 6){
+    var playerString = "";
+    for(var i = 0; i < command.playerids.length;i++){
+      if(i != 0&&i+1 === command.playerids.length){
+        playerString += ' and '
+      }
+      else if(i > 0){
+        playerString += ', ';
+      }
+      playerString += this.props.getPlayerName(command.playerids[i]);
+    }
+    if(this.props.currentGameState % 2 !== 0){
+      if (command.playerids.length === 0) {
+          this.messageQueue.push( (<div className="systemMessage"><body>You tracked {this.props.getPlayerName(playerid)} throughout the night, they have visited {playerString}. </body></div>));
+      }
+      else {
+            this.messagesQueue.push((<div className="systemMessage"><body>You tracked {this.props.getPlayerName(playerid)} throughout the night, they have visited {playerString}. </body></div>));
+      }
+    }
+  else{
+    if (command.playerids.length === 0) {
+        this.messages.push( (<div className="systemMessage"><body>You tracked {this.props.getPlayerName(playerid)} throughout the night, they have visited {playerString}. </body></div>));
+    }
+    else {
+          this.messages.push((<div className="systemMessage"><body>You tracked {this.props.getPlayerName(playerid)} throughout the night, they have visited {playerString}. </body></div>));
+    }
+  }
   }
 }
 
@@ -172,160 +365,33 @@ handleType(event) {
 
 
 componentDidUpdate(){
-  if(this.state.scroll){
+  if(this.scroll){
       var node = window.document.getElementsByClassName("chatContainer")[0];
       if (node !== undefined) {
         node.scrollTop = node.scrollHeight;
       }
     }
 }
-render(){
-  var {messages} = this.props;
+ render(){
   var messagesArr = [];
-  var gameInit = new Promise(async (res,reject)=>{
-  if(!this.state.completed){
-  for(var i = 0; i < messages.length;i++){
-    var command = JSON.parse(messages[i]);
-    var messageElement;
-    if(command.cmd === -5){
-      this.props.displayKicks(command.count);
-    }
-    if(command.cmd === -4){
-      alert('game over');
-    }
-
-    if(command.cmd === -3){
-      this.props.setPlayerId(command.playerId)
-    }
-    if(command.cmd === 0){
-      this.setState({messages: [...this.state.messages, this.parsePlayerMessage(command)]})
-    }
-    if(command.cmd === 1){
-        this.setState({messages: [...this.state.messages, this.parseSystemMessage(command)]})
-    }
-    if(command.cmd === 2){
-      this.setState({messages: [...this.state.messages, this.parseVoteMessage(command)]})
-    }
-    if(command.cmd === 3){
-      this.setState({messages: [...this.state.messages, this.parseRoleMessage(command)]})
-    }
-    if(command.cmd === 4){
-      this.props.setRoleID(command.role);
-        this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
-    }
-    if(command.cmd === 5){
-      var meeting = {
-        members: command.players,
-        role: command.role
-      };
-      this.props.setMembers(meeting);
-    }
-    if(command.cmd === 7){
-      this.setState({currentGameState:command.state});
-      this.props.updateGameState(command.state);
-      this.iterateMessages(command.state);
-      this.setState({messages:this.state.messagesQueue});
-      this.setState({messagesQueue:[]})
-      this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
-    }
-    if(command.cmd === 8){
-      this.props.addPlayer(command.playerid)
-    }
-    if(command.cmd === 9){
-      await this.parseSettingsMessage(command);
-    }
-    messages.splice(i,1);
-  }
-  res();
-}
-else{
-  res();
-}
-});
-
 var displayedMessages;
-gameInit.then(()=>{
+this.parseMessages();
+/*
   messages.map((message) => {
     let messageElement;
     try{
     var command = JSON.parse(message);
-    if(command.cmd === -9){
-      this.setState({messages: [...this.state.messages, (<div className="systemMessage"><body>Game is starting..</body></div>)]})
-      this.props.removePlayer(command.playerid)
-    }
-    if(command.cmd === -7){
-      this.setState({messages: [...this.state.messages, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has left the game!</body></div>)]})
-      this.props.removePlayer(command.playerid)
-    }
-    if(command.cmd === -6){
-      this.setState({messages: [...this.state.messages, (<div className="systemMessage"><body>{this.props.getPlayerName(command.playerid)} has deserted the village...</body></div>)]})
-      this.props.removePlayer(command.playerid)
-      this.props.addGraveyard({name: this.props.getPlayerName(command.playerid), playerid: command.playerid,roleid:command.role});
-    }
-    if(command.cmd === -5){
-      this.props.displayKicks(command.count);
-    }
-    if(command.cmd === -4){
-      alert('game over');
-    }
-    if(command.cmd === -2){
-      this.parseNotTypingMessage(command)
-    }
-    if(command.cmd === -1){
-      this.parseTypingMessage(command)
-    }
-    if(command.cmd === 0){
-      this.setState({messages: [...this.state.messages, this.parsePlayerMessage(command)]})
-    }
-    if(command.cmd === 1){
-        this.setState({messages: [...this.state.messages, this.parseSystemMessage(command)]})
-    }
-    if(command.cmd === 2){
-      this.setState({messages: [...this.state.messages, this.parseVoteMessage(command)]})
-    }
-    if(command.cmd === 3){
-      this.setState({messages: [...this.state.messages, this.parseRoleMessage(command)]})
-    }
-    if(command.cmd === 4){
-      this.props.setRoleID(command.role);
-        this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
-    }
-    if(command.cmd === 5){
-      var meeting = {
-        members: command.players,
-        role: command.role
-      };
-      this.props.setMembers(meeting);
-    }
-    if(command.cmd === 6){
-      this.props.removePlayer(command.playerid);
-      this.setState({messages: [...this.state.messages, this.getRoleDetails(command.role)]})
-    }
-    if(command.cmd === 7){
-      this.setState({currentGameState:command.state});
-      this.props.updateGameState(command.state);
-      this.iterateMessages(command.state);
-      this.setState({messages:this.state.messagesQueue});
-      this.setState({messagesQueue:[]})
-      this.props.setMessageBankLength(Object.keys(this.state.messageBank).length);
-      messages.shift();
-      return;
-    }
-    if(command.cmd === 8){
-      this.props.addPlayer(command.playerid)
-    }
-  }
   catch(e){
       messages.shift();
   }
     messages.shift();
   });
-})
-if(this.props.selectedGameState === -1 || Object.keys(this.state.messageBank).length <= this.props.selectedGameState){
-  displayedMessages = this.state.messages;
+  */
+if(this.props.selectedGameState === -1 || this.props.selectedGameState === this.props.currentGameState){
+  displayedMessages = this.messages;
 }
 else{
-  displayedMessages = this.state.messageBank[this.props.selectedGameState+1];
+  displayedMessages = this.messageBank[(this.props.selectedGameState+1).toString()];
 }
   return(
   <div>

@@ -3,6 +3,26 @@
   align-items: center;
   width:100%;
 }
+.leaveMafiaGame{
+  margin: 0 0 0 auto;
+  height:3vh;
+  width:5vw;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d22e2d;
+  color: white;
+  cursor:pointer;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+  transition: 0.5s;
+  border-radius: 5px 5px 5px 5px;
+}
 div.midText{
   text-align:center;
 }

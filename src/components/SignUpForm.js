@@ -91,7 +91,7 @@ render(){
                           sendJSON.username = this.state.username;
                           sendJSON.password = this.state.password;
                           sendJSON.email = this.state.email;
-                          const rawResponse = await fetch('https://www.beyondmafia.live/users/register',{
+                          const rawResponse = await fetch('http://localhost:3001/users/register',{
                               method: 'POST',
                               headers: {
                                 'Accept': 'application/json',

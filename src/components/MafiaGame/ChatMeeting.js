@@ -43,7 +43,7 @@ getMeetingVote(uuid){
 	let memberArray = [];
 	let votingList = [];
   var roleString;
-	members.map((playerid) =>{
+	members.forEach((playerid) =>{
       var votes = this.getMeetingVote(playerid);
 	    if(votes === undefined){
         memberArray.push(
@@ -227,6 +227,36 @@ getMeetingVote(uuid){
       }
     })
   }
+  if(this.props.role ===  512){
+    this.props.players.forEach((player, i) => {
+      if(!this.props.members.includes(player.playerid)){
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+      }
+    })
+  }
+  if(this.props.role ===  513){
+    this.props.players.forEach((player, i) => {
+      if(!this.props.members.includes(player.playerid)){
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+      }
+    })
+  }
   if(this.props.role === 1024){
     this.props.players.forEach((player, i) => {
       if(!this.props.members.includes(player.playerid)){
@@ -242,9 +272,50 @@ getMeetingVote(uuid){
       }
     })
   }
+  if(this.props.role === 4096){
+    this.props.players.forEach((player, i) => {
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+    })
+  }
+  if(this.props.role === 8192){
+    this.props.players.forEach((player, i) => {
+      if(!this.props.members.includes(player.playerid)){
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+
+        )
+      }
+    })
+  }
+  if(this.props.role === 16384){
+    this.props.players.forEach((player, i) => {
+    votingList.push(
+        <div key={player.playerid} className="playerVote" onClick={() =>{this.props.sendVote(player.playerid,this.props.role)}}>
+
+        {/*should use playerid to get image of photo*/}
+        <img src={role} className="votingImage" width="25" length="25" />
+        <span> {this.props.getPlayerName(player.playerid)} </span>
+        </div>
+        )
+    })
+  }
     votingList.push(<div className="playerVote" onClick={() =>{
       var playerid = -2;
-      this.props.sendVote(playerid,this.props.role)}}>
+      this.props.sendVote(playerid,this.props.role)
+      }}>
     <span> No one </span>
     </div>)
 }
